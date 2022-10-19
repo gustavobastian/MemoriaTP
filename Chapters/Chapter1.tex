@@ -4,7 +4,7 @@
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
-
+En este capítulo se presentan  nociones generales para comprender la necesidad que busca satisfacer el proyecto así como el marco histórico en el que se realiza.
 %----------------------------------------------------------------------------------------
 
 % Define some commands to keep the formatting separated from the content 
@@ -22,6 +22,36 @@
 %----------------------------------------------------------------------------------------
 \section{Generalidades del proyecto}
 
+En la actualidad, el avance de la Internet de las Cosas (IoT de Internet of Things) y la disminución de costos asociados a la tecnología hacen factible su incorporación a distintos campos de la vida cotidiana. Uno de esos campos es el de infraestructuras hospitalarias inteligentes\citep{ARTICLE:1}.
+
+Por otra parte, dentro de las múltiples opciones para realizar la comunicación entre los dispositivos IoT, el protocolo Message Queuing Telemetry Transport (en adelante MQTT) se ha probado como un protocolo confiable y ampliamente utilizado.
+
+Dentro del contexto, en este trabajo se desarrollará una aplicación multiplataforma que utilizará el protocolo MQTT para los distintos participantes de la actividad hospitalaria. El proyecto es una necesidad de la empresa Surix S.R.L. y se lleva a cabo como parte de la carrera Especialización de Internet de las Cosas. Surix S.R.L. es una firma que se dedica al desarrollo, fabricación y comercialización de productos IP y sistemas hospitalarios de calidad. Posee una comprobada trayectoria dentro del mercado
+local e internacional. Se destaca por su compromiso con la industria nacional, la mejora continua de sus productos y el soporte que brinda a sus clientes. Este proyecto se enmarca dentro del segundo ı́tem de su misión, porque mejora y extiende capacidades a un sistema existente.
+
+Surix S.R.L fabrica un sistema IP de llamado a enfermera que está basado en el protocolo SIP.
+Este consiste en un servidor central y terminales que se encuentran en las habitaciones del
+hospital. La aplicación principal se ejecuta en una pc o bien en una tablet y monitorea el estado
+de las habitaciones.
+El objetivo del proyecto es realizar un sistema con las ventajas que provee el protocolo MQTT,
+como es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware
+e implementación.
+MQTT es un protocolo open source liviano, hecho que permite aplicarlo en dispositivos con
+pocos recursos y baja velocidad de transmisión, ampliamente utilizado en dispositivos IoT.
+Está basado en la pila TCP/IP, se implementa en la capa de aplicación y sus mensajes se
+transmiten como colas de publicación/subscripción.
+El desafı́o de este proyecto consiste en la programación de un sistema que contenga un
+servidor o broker MQTT, una base de datos donde alojar información de reportes de habi-
+taciones/enfermeras y datos relevantes al paciente (incluyendo temporizadores para suministro
+de ciertos medicamentos y/o control), una página web para configuración y una aplicación
+multiplataforma donde se realice la gestión de datos e interacción con los clientes. La aplicación
+será capaz de identificar la cama correspondiente (mediante lectura de sı́mbolos QR) y de
+transmitir mensajes de voz en caso de ser necesario.
+La motivación que origina la realización del proyecto es generar las bases para poder incorporar
+otros dispositivos inteligentes al sistema principal a bajo costo. Por ejemplo, en un futuro
+se puede monitorear la temperatura de la habitación y saber si sufre un desperfecto el aire
+acondicionado, escuchar sonidos dentro de la sala en caso de que el paciente no pueda acceder
+al llamador, etc.
 %\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
 
 \section{Motivación}
@@ -240,54 +270,54 @@ En el preámbulo se puede encontrar el código que incluye el paquete biblatex, 
 
 %En el archivo \file{reference.bib} se encuentran las referencias bibliográficas que se pueden citar en el documento.  Para incorporar una nueva cita al documento lo primero es agregarla en este archivo con todos los campos necesario.  Todas las entradas bibliográficas comienzan con $@$ y una palabra que define el formato de la entrada.  Para cada formato existen campos obligatorios que deben completarse. No importa el orden en que las entradas estén definidas en el archivo .bib.  Tampoco es importante el orden en que estén definidos los campos de una entrada bibliográfica. A continuación se muestran algunos ejemplos:
 
-\begin{lstlisting}
-@ARTICLE{ARTICLE:1,
-    AUTHOR="John Doe",
-    TITLE="Title",
-    JOURNAL="Journal",
-    YEAR="2017",
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%@ARTICLE{ARTICLE:1,
+%    AUTHOR="John Doe",
+%    TITLE="Title",
+%    JOURNAL="Journal",
+%    YEAR="2017",
+%}
+%\end{lstlisting}
 
 
-\begin{lstlisting}
-@BOOK{BOOK:1,
-    AUTHOR="John Doe",
-    TITLE="The Book without Title",
-    PUBLISHER="Dummy Publisher",
-    YEAR="2100",
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%@BOOK{BOOK:1,
+%    AUTHOR="John Doe",
+%    TITLE="The Book without Title",
+%    PUBLISHER="Dummy Publisher",
+%    YEAR="2100",
+%}
+%\end{lstlisting}
 
 
-\begin{lstlisting}
-@INBOOK{BOOK:2,
-    AUTHOR="John Doe",
-    TITLE="The Book without Title",
-    PUBLISHER="Dummy Publisher",
-    YEAR="2100",
-    PAGES="100-200",
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%@INBOOK{BOOK:2,
+%    AUTHOR="John Doe",
+%    TITLE="The Book without Title",
+%    PUBLISHER="Dummy Publisher",
+%    YEAR="2100",
+%    PAGES="100-200",
+%}
+%\end{lstlisting}
 
 
-\begin{lstlisting}
-@MISC{WEBSITE:1,
-    HOWPUBLISHED = "\url{http://example.com}",
-    AUTHOR = "Intel",
-    TITLE = "Example Website",
-    MONTH = "12",
-    YEAR = "1988",
-    URLDATE = {2012-11-26}
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%@MISC{WEBSITE:1,
+%    HOWPUBLISHED = "\url{http://example.com}",
+%    AUTHOR = "Intel",
+%    TITLE = "Example Website",
+%    MONTH = "12",
+%    YEAR = "1988",
+%    URLDATE = {2012-11-26}
+%}
+%\end{lstlisting}
 
-Se debe notar que los nombres \emph{ARTICLE:1}, \emph{BOOK:1}, \emph{BOOK:2} y \emph{WEBSITE:1} son nombres de fantasía que le sirve al autor del documento para identificar la entrada. En este sentido, se podrían reemplazar por cualquier otro nombre.  Tampoco es necesario poner : seguido de un número, en los ejemplos sólo se incluye como un posible estilo para identificar las entradas.
+%Se debe notar que los nombres \emph{ARTICLE:1}, \emph{BOOK:1}, \emph{BOOK:2} y \emph{WEBSITE:1} son nombres de fantasía que le sirve al autor del documento para identificar la entrada. En este sentido, se podrían reemplazar por cualquier otro nombre.  Tampoco es necesario poner : seguido de un número, en los ejemplos sólo se incluye como un posible estilo para identificar las entradas.
 
-La entradas se citan en el documento con el comando: 
+%La entradas se citan en el documento con el comando: 
 
-\begin{verbatim}
-\citep{nombre_de_la_entrada}
-\end{verbatim}
+%\begin{verbatim}
+%\citep{nombre_de_la_entrada}
+%\end{verbatim}
 
-Y cuando se usan, se muestran así: \citep{ARTICLE:1}, \citep{BOOK:1}, \citep{BOOK:2}, \citep{WEBSITE:1}.  Notar cómo se conforma la sección Bibliografía al final del documento. 
+%Y cuando se usan, se muestran así: \citep{ARTICLE:1}, \citep{BOOK:1}, \citep{BOOK:2}, \citep{WEBSITE:1}.  Notar cómo se conforma la sección Bibliografía al final del documento. 
