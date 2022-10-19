@@ -39,7 +39,7 @@ headsepline, % Uncomment to get a line under the header
 %\posgrado{Maestría en Sistemas Embebidos} 
 %\posgrado{Maestría en Internet de las cosas}
 
-\author{Esp. Ing. Gustavo Adrián Bastian} % Tu nombre, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \authorname
+\author{Ing. Gustavo Adrián Bastian} % Tu nombre, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \authorname
 
 \director{Mg.Ing. Ericson Joseph Estupiñan Pineda
 (Surix S.R.L)} % El nombre del director, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \dirname
@@ -50,7 +50,7 @@ headsepline, % Uncomment to get a line under the header
 \juradoTRES{Nombre del jurado 3 (pertenencia)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur3name
 
 %\ciudad{Ciudad Autónoma de Buenos Aires}
-\ciudad{ciudad de Santo Tomé, Santa Fé}
+\ciudad{Ciudad de Santo Tomé, Santa Fé}
 
 \fechaINICIO{Octubre de 2019}
 \fechaFINAL{diciembre de 2022}
@@ -58,14 +58,11 @@ headsepline, % Uncomment to get a line under the header
 
 \keywords{MQTT,HOSPITAL, FIUBA} % Keywords for your thesis, print it elsewhere with \keywordnames
 
-
 \begin{document}
-
 
 \frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
 \pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
-
 
 %----------------------------------------------------------------------------------------
 %	RESUMEN - ABSTRACT 
@@ -78,9 +75,9 @@ headsepline, % Uncomment to get a line under the header
 \centering
 
 
-La presente memoria describe el desarrollo de un sistema de mensajería para ser utilizado por enfermeros y médicos en el ámbito hospitalario implementado con un protocolo de bajo consumo de recursos. El proyecto se realizó para satisfacer una necesidad de la empresa Surix SRL.
-La arquitectura del sistema posee 5 elementos principales(los cuales se estudiaron durante el transcurso de la carrera): un broker que gestiona los mensajes, una base de datos con información de los pacientes, un programa que genera acciones basado en distintos eventos, una aplicación web que permite la gestión de la base de datos y una aplicación móvil. 
+La presente memoria describe el desarrollo de un sistema para ser utilizado por enfermeros y médicos en el ámbito hospitalario implementado con un protocolo de bajo consumo de recursos. El trabajo se realizó para satisfacer una necesidad de la empresa Surix SRL. 
 
+La arquitectura del sistema está compuesta por cinco elementos principales que fueron abordados durante la carrera: un broker que gestiona los mensajes, una base de datos con información de los pacientes, un programa que genera acciones basado en distintos eventos, una aplicación web que permite la gestión de la base de datos y una aplicación móvil.  
 
 \end{abstract}
 
@@ -92,7 +89,19 @@ La arquitectura del sistema posee 5 elementos principales(los cuales se estudiar
 \addchaptertocentry{\acknowledgementname} % Descomentando esta línea se puede agregar los agradecimientos al índice
 \vspace{1.5cm}
 
-Esta sección es para agradecimientos personales y es totalmente \textbf{OPCIONAL}.  
+En primer lugar agradezco al director de este trabajo final, Mg. Ing. Ericson Estupiñan por la guía y los consejos brindados durante este tiempo.
+
+Asi mismo, agradezco a Sergio Starkoff por proporcionar la idea originaria del proyecto y por la confianza ofrecida desde un primer momento.
+
+No puedo olvidar agradecer a los docentes, por el incalculable valor de realizar muy buenos contenidos para las clases y por la excelente predisposición para responder mis dudas.
+
+Agradezco tambien a mis compañeros/as por demostrar mucho interés en las asignaturas y participar activamente en las clases.
+
+Especialmente agradezco a mi familia, que comprendieron el tiempo que debía dedicarle al estudio, brindandome apoyo moral y humano. Y a Lucia y Alejo, quienes llenaron de alegrías todos los días.
+
+
+
+  %\textbf{OPCIONAL}.  
 
 \end{acknowledgements}
 
@@ -111,7 +120,7 @@ Esta sección es para agradecimientos personales y es totalmente \textbf{OPCIONA
 %	CONTENIDO DE LA MEMORIA  - DEDICATORIA
 %----------------------------------------------------------------------------------------
 
-\dedicatory{\textbf{Dedicado a... [OPCIONAL]}}  % escribir acá si se desea una dedicatoria
+\dedicatory{\textbf{Dedicado a todas las personas que participaron en mi formación humana y profesional, que ya no se encuentran en este plano de existencia.}}  % escribir acá si se desea una dedicatoria
 
 %----------------------------------------------------------------------------------------
 %	CONTENIDO DE LA MEMORIA  - CAPÍTULOS
