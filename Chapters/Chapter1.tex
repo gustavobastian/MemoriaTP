@@ -4,7 +4,7 @@
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
-En este capítulo se presentan  nociones generales para comprender la necesidad que busca satisfacer el proyecto así como el marco histórico en el que se realiza.
+En este capítulo se presentan nociones sobre la necesidad que satisface el trabajo y el contexto en el que se realizó.
 %----------------------------------------------------------------------------------------
 
 % Define some commands to keep the formatting separated from the content 
@@ -20,27 +20,40 @@ En este capítulo se presentan  nociones generales para comprender la necesidad 
 %\section{Introducción}
 
 %----------------------------------------------------------------------------------------
-\section{Generalidades del proyecto}
+\section{Descripción de los sistemas de Internet de las cosas}
 
 En la actualidad, el avance de la Internet de las Cosas (IoT de Internet of Things) y la disminución de costos asociados a la tecnología hacen factible su incorporación a distintos campos de la vida cotidiana. Uno de esos campos es el de infraestructuras hospitalarias inteligentes\citep{ARTICLE:1}.
 
-Por otra parte, dentro de las múltiples opciones para realizar la comunicación entre los dispositivos IoT, el protocolo Message Queuing Telemetry Transport (en adelante MQTT) se ha probado como un protocolo confiable y ampliamente utilizado.
+Por otra parte, dentro de las múltiples opciones para realizar la comunicación entre los dispositivos IoT, el protocolo Message Queuing Telemetry Transport (en adelante MQTT) se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado\citep{ARTICLE:2}.
 
-Dentro del contexto, en este trabajo se desarrollará una aplicación multiplataforma que utilizará el protocolo MQTT para los distintos participantes de la actividad hospitalaria. El proyecto es una necesidad de la empresa Surix S.R.L. y se lleva a cabo como parte de la carrera Especialización de Internet de las Cosas. Surix S.R.L. es una firma que se dedica al desarrollo, fabricación y comercialización de productos IP y sistemas hospitalarios de calidad. Posee una comprobada trayectoria dentro del mercado
-local e internacional. Se destaca por su compromiso con la industria nacional, la mejora continua de sus productos y el soporte que brinda a sus clientes. Este proyecto se enmarca dentro del segundo ı́tem de su misión, porque mejora y extiende capacidades a un sistema existente.
+MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP, se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción.
+
+
+
+%\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
+
+
+\section{Motivación}
+
+%Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
+\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
+
+Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
 
 Surix S.R.L fabrica un sistema IP de llamado a enfermera que está basado en el protocolo SIP.
 Este consiste en un servidor central y terminales que se encuentran en las habitaciones del
 hospital. La aplicación principal se ejecuta en una pc o bien en una tablet y monitorea el estado
 de las habitaciones.
-El objetivo del proyecto es realizar un sistema con las ventajas que provee el protocolo MQTT,
-como es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware
-e implementación.
-MQTT es un protocolo open source liviano, hecho que permite aplicarlo en dispositivos con
-pocos recursos y baja velocidad de transmisión, ampliamente utilizado en dispositivos IoT.
-Está basado en la pila TCP/IP, se implementa en la capa de aplicación y sus mensajes se
-transmiten como colas de publicación/subscripción.
-El desafı́o de este proyecto consiste en la programación de un sistema que contenga un
+El resultado del trabajo es un sistema con las ventajas que provee el protocolo MQTT, como es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware e implementación.
+
+
+
+\section{Estado de arte}
+
+Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
+
+\section{Objetivos y alcance}
+Los componentes resultante contienen un sistema que contenga un
 servidor o broker MQTT, una base de datos donde alojar información de reportes de habi-
 taciones/enfermeras y datos relevantes al paciente (incluyendo temporizadores para suministro
 de ciertos medicamentos y/o control), una página web para configuración y una aplicación
@@ -52,20 +65,19 @@ otros dispositivos inteligentes al sistema principal a bajo costo. Por ejemplo, 
 se puede monitorear la temperatura de la habitación y saber si sufre un desperfecto el aire
 acondicionado, escuchar sonidos dentro de la sala en caso de que el paciente no pueda acceder
 al llamador, etc.
-%\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
 
-\section{Motivación}
 
-%Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
-\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
+\vspace{1cm}
 
-Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.7\textwidth]{./Figures/DiagramaSistema.png}
+	\caption{Diagrama del Sistema requerido.}
+	\label{fig:texmaker}
+\end{figure}
 
-\section{Estado de arte}
+\vspace{1cm}
 
-Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
-
-\section{Objetivos y alcance}
 
 Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
 
@@ -253,20 +265,20 @@ Si estás escribiendo un documento con mucho contenido matemático, entonces es 
 %Finalmente, se encuentra el código para incluir la bibliografía en el documento final.  Este código tampoco debe modificarse. La metodología para trabajar las referencias bibliográficas se desarrolla en la sección \ref{sec:biblio}.
 %----------------------------------------------------------------------------------------
 
-\section{Bibliografía}
-\label{sec:biblio}
+%\section{Bibliografía}
+%\label{sec:biblio}
 
-Las opciones de formato de la bibliografía se controlan a través del paquete de latex \option{biblatex} que se incluye en la memoria en el archivo memoria.tex.  Estas opciones determinan cómo se generan las citas bibliográficas en el cuerpo del documento y cómo se genera la bibliografía al final de la memoria.
+%Las opciones de formato de la bibliografía se controlan a través del paquete de latex \option{biblatex} que se incluye en la memoria en el archivo memoria.tex.  Estas opciones determinan cómo se generan las citas bibliográficas en el cuerpo del documento y cómo se genera la bibliografía al final de la memoria.
 
-En el preámbulo se puede encontrar el código que incluye el paquete biblatex, que no requiere ninguna modificación del usuario de la plantilla, y que contiene las siguientes opciones:
+%En el preámbulo se puede encontrar el código que incluye el paquete biblatex, que no requiere ninguna modificación del usuario de la plantilla, y que contiene las siguientes opciones:
 
-\begin{lstlisting}
-\usepackage[backend=bibtex,
-	natbib=true, 
-	style=numeric, 
-	sorting=none]
-{biblatex}
-\end{lstlisting}
+%\begin{lstlisting}
+%\usepackage[backend=bibtex,
+%	natbib=true, 
+%	style=numeric, 
+%	sorting=none]
+%{biblatex}
+%\end{lstlisting}
 
 %En el archivo \file{reference.bib} se encuentran las referencias bibliográficas que se pueden citar en el documento.  Para incorporar una nueva cita al documento lo primero es agregarla en este archivo con todos los campos necesario.  Todas las entradas bibliográficas comienzan con $@$ y una palabra que define el formato de la entrada.  Para cada formato existen campos obligatorios que deben completarse. No importa el orden en que las entradas estén definidas en el archivo .bib.  Tampoco es importante el orden en que estén definidos los campos de una entrada bibliográfica. A continuación se muestran algunos ejemplos:
 
