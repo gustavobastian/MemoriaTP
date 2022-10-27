@@ -4,7 +4,7 @@
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
-En este capítulo se presentan nociones sobre la necesidad que satisface el trabajo y el contexto en el que se realizó.
+En este capítulo se presentan las necesidades de los sistemas hospitalarios junto con nociones sobre el Internet de las cosas y el protocolo MQTT. Además se mencionan las motivaciones, el estado de arte y el alcance del trabajo.
 %----------------------------------------------------------------------------------------
 
 % Define some commands to keep the formatting separated from the content 
@@ -20,14 +20,39 @@ En este capítulo se presentan nociones sobre la necesidad que satisface el trab
 %\section{Introducción}
 
 %----------------------------------------------------------------------------------------
-\section{Descripción de los sistemas de Internet de las cosas}
+\section{Descripción de los sistemas de Internet de las cosas y su aplicación para gestionar actividades hospitalarias}
 
-En la actualidad, el avance de la Internet de las Cosas (IoT de Internet of Things) y la disminución de costos asociados a la tecnología hacen factible su incorporación a distintos campos de la vida cotidiana. Uno de esos campos es el de infraestructuras hospitalarias inteligentes\citep{ARTICLE:1}.
+En la actualidad, el avance de la Internet de las Cosas (IoT de \textit{Internet of Things} ) y la disminución de costos asociados a la tecnología hacen factible su incorporación a distintos contextos de la vida cotidiana. Un campo de mucho interés es el de infraestructuras hospitalarias inteligentes\citep{ARTICLE:1}.
 
-Por otra parte, dentro de las múltiples opciones para realizar la comunicación entre los dispositivos IoT, el protocolo Message Queuing Telemetry Transport (en adelante MQTT) se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado\citep{ARTICLE:2}.
+El término Internet de las Cosas fue utilizado por primera vez en 1990 para describir un sistema cuyos componentes del mundo físico se conectaban a la internet mediante sensores. En la actualidad se utiliza el término para referirse a escenarios donde la conectividad en red y la capacidad de computo se extiende a objetos, sensores y elementos cotidianos no considerados computadoras, permitiendoles generar, intercambiar y consumir datos con un mínimo de intervención humana.\citep{ARTICLE:3}.
 
-MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP, se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción.
 
+Si consideramos a las diferentes personas como un elemento más de un sistema, el ámbito hospitalario cuenta con numerosas entidades que interactuan entre sí como ser: médicos, pacientes, enfermeros, personal de limpieza, personal de seguridad, personal administrativo, dispositivos de iluminación, dispositivos   sonoros, herramientas médicas, puertas, ventanas, ventiladores, acondicionadores de aire, termómetros, etc. Un entorno de estas cualidades es ideal para gestionar con IoT, ya que permite mejorar la calidad del servicio de salud\citep{ARTICLE:1}.
+
+Un sistema de estas características posee un modelo de capas, presentado en \citep{ARTICLE:4} que separa los conocimientos en cinco categorías con responsabilidades bien definidas: negocio, aplicación, procesamiento, red y percepción. La tabla \ref{tab:Modelo} presenta las funciones reducidas de cada modelo:
+\pagebreak
+
+%\begin{verbatim}
+\begin{table}[h]
+	\centering
+	\caption[Modelo de capas IoT]{Modelo de capas sistema IoT}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{Capa}     & \textbf{Función} \\
+		\midrule
+		Negocio & Establecer reglas y controlar sistema    \\		
+		Aplicación    & Interactuar con el usuario           \\
+		Procesamiento  & Almacenar y analizar los datos obtenidos  \\
+		Red  & Transportar datos entre dispositivos      \\
+		Percepción  & Realizar mediciones o acciones\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:Modelo}
+\end{table}
+%\end{verbatim}
+
+Para mayor información sobre la funcionalidad de cada capa consultar \citep{ARTICLE:4}.
 
 
 %\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
@@ -36,50 +61,101 @@ MQTT es un protocolo open source simple, liviano y orientado a dispositivos con 
 \section{Motivación}
 
 %Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
-\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
+%\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
 
-Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
+%Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
+En Argentina muchos hospitales están retrasados en su progreso tecnológico. Por dicha razón, todos los avances en este campo son  necesarios. Por lo explicado anteriormente, el gestionar la institución con un sistema de IoT es de suma utilidad.
 
-Surix S.R.L fabrica un sistema IP de llamado a enfermera que está basado en el protocolo SIP.
-Este consiste en un servidor central y terminales que se encuentran en las habitaciones del
-hospital. La aplicación principal se ejecuta en una pc o bien en una tablet y monitorea el estado
-de las habitaciones.
-El resultado del trabajo es un sistema con las ventajas que provee el protocolo MQTT, como es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware e implementación.
+Surix S.R.L fabrica un sistema IP de llamado a enfermera que está basado en el protocolo SIP. Este consiste en un servidor central y terminales que se encuentran en las habitaciones del hospital. La aplicación principal se ejecuta en una pc o bien en una tablet y monitorea el estado
+de las habitaciones. La principal motivación para migrar el protocolo radica en el alto costo de hardware que genera el agregar dispositivos a su sistema actual. En este contexto, se encargó la realización de este trabajo.
+
+Dentro de las múltiples opciones para realizar la comunicación entre los dispositivos IoT, Surix seleccionó el protocolo \textit{Message Queuing Telemetry Transport} (en adelante MQTT) ya que se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado \citep{ARTICLE:2}.
+
+MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP(del ingles \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet ), se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware e implementación\citep{ARTICLE:2}.
+
+En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP(\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP(\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP(\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
+
+Cabe resaltar que MQTT no es el único protocolo de la capa de aplicación utilizado en este trabajo, ya que la página de configuración/administración del sistema utiliza HTTP. MQTT es utilizado en la aplicación móvil como única forma de comunicarse con el sistema.
 
 
 
 \section{Estado de arte}
 
-Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
+En el mercado internacional se encontró un producto similar  desarrollado por la firma TigerConnect(antes llamada TigerText), \textit{TigerConnect Clinical Collaboration Platform}(Plataforma de Colaboración Clínica TigerConnect)\citep{WEBSITE:2}, cuyas principales características detallo a continuación:
+\begin{itemize}
+\item Aplicación de Mensajería para celulares y estaciones de trabajo.
+\item Solución en la nube asegurando disponibilidad en un 99.99\%.
+\item Mensajería por texto asegurada con encriptación.  
+\item Homologado por HIPPA(del ingles, \textit{Health Insurance Portability and Accountability Act},ley de Portabilidad y Responsabilidad del Seguro Médico)\citep{WEBSITE:3}.  
+\item Certificado HITRUST(es un framework para gestionar riesgos utilizado por muchas redes de salud y hospitales\citep{WEBSITE:1}).  
+\item Control administrativo total, permitiendo a los administradores gestionar usuarios, configuraciones y políticas de seguridad por medio de una consola. Los usuarios pueden ser cargados utilizando plantillas csv y, en caso de robo o extravío de dispositivo, prohibir el acceso.  
+\item Posibilidad de incorporar mensajería de voz como servicio extra.  
+\item Mensajes a grupos de personas.  
+\end{itemize}
+
+Entre las diferencias que posee la solución presentada en este trabajo con respecto a la disponible en el mercado, el hecho de utilizar MQTT como protocolo base permite incorporar con muy poco esfuerzo dispositivos IoT de mediciones paramétricas de los pacientes ya que la estructura de la red asi lo permite. Por otra parte, la solución desarrollada presenta de base la posibilidad de transmisión de audio. 
+
+TigerConnect es una firma nacida en 2010 con 281 empleados cuya principal producto es este sistema\citep{WEBSITE:4}.
+
+
 
 \section{Objetivos y alcance}
-Los componentes resultante contienen un sistema que contenga un
-servidor o broker MQTT, una base de datos donde alojar información de reportes de habi-
-taciones/enfermeras y datos relevantes al paciente (incluyendo temporizadores para suministro
-de ciertos medicamentos y/o control), una página web para configuración y una aplicación
-multiplataforma donde se realice la gestión de datos e interacción con los clientes. La aplicación
-será capaz de identificar la cama correspondiente (mediante lectura de sı́mbolos QR) y de
-transmitir mensajes de voz en caso de ser necesario.
-La motivación que origina la realización del proyecto es generar las bases para poder incorporar
-otros dispositivos inteligentes al sistema principal a bajo costo. Por ejemplo, en un futuro
-se puede monitorear la temperatura de la habitación y saber si sufre un desperfecto el aire
-acondicionado, escuchar sonidos dentro de la sala en caso de que el paciente no pueda acceder
-al llamador, etc.
 
+El sistema resultante de este trabajo está orientado a gestionar las relaciones entre pacientes, enfermeras y médicos solamente. Un diagrama reducido puede observarse en la figura \ref{fig:Figura-reducida}.  
+%La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
 
-\vspace{1cm}
-
-\begin{figure}[htbp]
+\begin{figure}[ht]
 	\centering
-	\includegraphics[width=.7\textwidth]{./Figures/DiagramaSistema.png}
-	\caption{Diagrama del Sistema requerido.}
-	\label{fig:texmaker}
+	\includegraphics[scale=.45]{./Figures/diag-redux.pdf}
+	\caption{Figura del sistema.}
+	\label{fig:Figura-reducida}
 \end{figure}
 
-\vspace{1cm}
+
+Los componentes del sistema son:
+\begin{itemize}
+\item broker MQTT: permite gestionar los mensajes entre los elementos del sistema.
+\item base de datos: donde alojar información de reportes de habitaciones, personal y datos relevantes al paciente
+\item página web para configuración: permite gestionar usuarios, camas, pacientes, observar estado del sistema
+\item aplicación móvil multiplataforma que permite a los usuarios enfermeros interactuar con el sistema y con los médicos. La aplicación es capaz de identificar la cama correspondiente (mediante lectura de sı́mbolos QR) y de transmitir mensajes de voz en caso de ser necesario.
+\end{itemize}
 
 
-Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
+El alcance del trabajo consiste en:
+\begin{itemize}
+\item Confección de un plan de trabajo.
+\item Selección y configuración de un broker MQTT.
+\item Desarrollo local de una página web de configuración, que permite asignar medicos a pacientes, asignar tareas programadas a pacientes, asignar códigos QR a camas, asignar tratamientos a pacientes, asignar especialidades a los usuarios enfermeros.
+\item Desarrollo local de una aplicación móvil con 3 modos de funcionamiento: modo médico, con envío/recepción de audio/texto/alarmas;modo enfermera con envío/recepción de audio/texto/alarmas y escaneo de QR para identificar paciente; y modo sistema que permite el monitoreo de habitaciones.
+\item Código fuente/documentación de las aplicaciones realizadas.
+\end{itemize}
+
+El presente trabajo no incluye:
+\begin{itemize}
+\item Manuales de las distintas aplicaciones.
+\item Traducciones a distintos idiomas de las aplicaciones.
+\item Sistema llamador.
+\item Análisis de tráfico en la red.
+\item Análisis de seguridad(no se certifica).
+\item Contratación de base de dato remota.
+\item Contratación e instalación de servidores remotos.
+\end{itemize}
+
+
+
+%\vspace{1cm}
+
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=.7\textwidth]{./Figures/DiagramaSistema.png}
+%	\caption{Diagrama del Sistema requerido.}
+%	\label{fig:texmaker}
+%\end{figure}
+
+%\vspace{1cm}
+
+
+%Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
 
 
 %----------------------------------------------------------------------------------------
@@ -333,3 +409,4 @@ Si estás escribiendo un documento con mucho contenido matemático, entonces es 
 %\end{verbatim}
 
 %Y cuando se usan, se muestran así: \citep{ARTICLE:1}, \citep{BOOK:1}, \citep{BOOK:2}, \citep{WEBSITE:1}.  Notar cómo se conforma la sección Bibliografía al final del documento. 
+

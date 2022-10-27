@@ -6,217 +6,483 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 %Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
-
+En este capítulo se presentan las bases teóricas que sustentan el trabajo realizado. Se describen distintas soluciones a cada una de las partes del sistemas.
 
 \section{Descripción del protocolo MQTT}
 \label{sec:Descripción del protocolo MQTT}
 
-\section{Diagrama Del Sistema}
-\label{sec:ejemplo}
-\subsection{Uso de mayúscula inicial para los título de secciones}
+MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería por suscripción/publicación especialmente diseñado para la comunicación M2M(\textit{Machine to Machine}, Máquina a Máquina) en dispositivos con bajos recursos \citep{WEBSITE:5} .
 
-Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
-
-Cuando se quiere poner una lista tabulada, se hace así:
+Para poder explicar el funcionamiento del protocolo es necesario incorporar conceptos definidos en la especificación \citep{WEBSITE:5}:
 
 \begin{itemize}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
+\item Mensaje: datos transmitidos mediante el protocolo MQTT  a través de la red por la aplicación. Cuando un mensaje es transmitido, el mismo contiene datos útiles(\textit{"payload"}), Calidad de Servicio, ciertas propiedades y un nombre de tópico.
+\item Cliente: programa o dispositivo que utiliza MQTT.
+\item Servidor o Broker: programa o dispositivo que actúa como intermediario entre Clientes que publican Mensajes y Clientes que han realizado suscripciones.
+\item Sesión: una interacción entre Cliente y Servidor con estados bien definidos.
+\item suscripción: una  suscripción implica un filtrado de tópicos y una máxima Calidad de Servicio. Una suscripción está asociada a una sola sesión y una sesión puede poseer varias suscripciones.
+\item Nombre de Tópico: etiqueta que se adjunta a un mensaje la cual es comparada con las suscripciones conocidas en el Servidor.
+\item Filtro de Tópico: es una expresión contenida dentro de la suscripción para indicar interés, por parte del Cliente, en uno o más Tópicos.
+\item suscripción con Wildcard: es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\#', que representan un nivel único y nivel múltiple respectivamente.
 \end{itemize}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
+En este protocolo, el funcionamiento es el siguiente: 
 
-Si se desea poner una lista numerada el formato es este:
+Al iniciar la conexión, el Cliente envía un mensaje CONNECT al Broker y este contesta con un CONNECTACK y un código de estado. El Broker mantiene abierta la conexión hasta que el cliente envía un comando de desconexión o la conexión se pierde por algún motivo. Los puertos estándar son 1883 para comunicación no encriptada y 8883 para comunicación utilizando TLS/SSL \citep{ARTICLE:4}.
 
-\begin{enumerate}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{enumerate}
-
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-\subsection{Este es el título de una subsección}
-\label{subsec:ejemplo}
-
-Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
-
-La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
-
-El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
-
-En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
-
-''En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
-
-Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
-
-Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
-
-\subsection{Figuras} 
-
-Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-\end{figure}
-
-La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
+Luego Cliente MQTT publica mensajes en un Broker MQTT, los cuales son recibidos por los Clientes suscriptos o bien retenidos para una futura suscripción \citep{WEBSITE:5}. En la figura \ref{fig:Sistema MQTT} se presentan todos los componentes de una red MQTT.  
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
-	\label{fig:cuadradoAzul}
+	\includegraphics[scale=.45]{./Figures/MQTT-minimal.png}
+	\caption{Esquema de un sistema MQTT.}
+	\label{fig:Sistema MQTT}
 \end{figure}
 
-El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
-
-\begin{figure}[htpb]
-	\centering
-	\includegraphics[scale=.3]{./Figures/word.jpeg}
-	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
-	\label{fig:palabraIngles}
-\end{figure}
-
-\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
-
-La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
+La conexión MQTT siempre es entre Cliente y Broker, nunca entre Clientes directamente.
 
 
+Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de 2-bytes y una dato útil (\textit{"payload"}) de hasta 256 MB\citep{ARTICLE:2} . 
+
+Ejemplos de tópicos:
+
+\begin{itemize}
+\item  1: /user/1/question
+\item  2: /user/1/\#
+\item  3: /user/+/question
+%\item Capítulo 2: Introducción específica
+%\item Capítulo 3: Diseño e implementación
+%\item Capítulo 4: Ensayos y resultados
+%\item Capítulo 5: Conclusiones
+\end{itemize}
+
+En el ejemplo 1, en caso de suscribirse a ese Tópico, el cliente recibirá todos los mensajes publicados en el subtópico "question".
+En el ejemplo 2, el cliente recibirá todos los mensajes dirigidos al usuario 1.
+En el ejemplo 3, el cliente que se suscriba a ese Tópico recibirá los mensajes enviados a "question" independientemente del número de usuario.
+
+
+Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos\citep{ARTICLE:4}\citep{WEBSITE:5} .
+
+La carga útil del mensaje debe ser codificada en UTF-8(\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits)\citep{WEBSITE:5}.
+
+MQTT posee tres niveles de calidad de servicio("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes\citep{WEBSITE:5} .
+\label{subsec:WebSockets}
+\subsection{Uso de WebSockets en MQTT}
+
+Actualmente, no es posible utilizar MQTT natural en un browser debido a la imposibilidad de abrir una conexión TCP pura. 
+
+Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un browser pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil\citep{WEBSITE:6}. 
+
+
+WebSocket es un protocolo de red que provee comunicación bidireccional entre un browser y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los browser modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.37]{./Figures/questionMark.png}
-	\caption{¿Por qué de pronto aparece esta figura?}
-	\label{fig:questionMark}
+	\includegraphics[scale=.45]{./Figures/websocket.png}
+	\caption{Uso de WebSockets con MQTT.}
+	\label{fig:WebSockets MQTT}
 \end{figure}
 
-Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
+En MQTT sobre WebSockets, el mensaje MQTT se transfiere a través de la red y es encapsulado por una o más tramas WebSockets. La ventaja de este método de transmisión es que provee una comunicación bi-direcional, ordenada y sin pérdidas\citep{WEBSITE:6} .
 
-Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
+Para poder utilizar MQTT sobre WebSockets el Broker debe ser capaz de manejar WebSocket nativos. 
+
+Para mejorar la seguridad, se puede implementar TLS utilizando WebSockets seguros para encriptar toda la conexión.
+
+\label{subsec:Broker MOSQUITTO}
+\subsection{Broker MOSQUITTO}
+
+Existen muchos brokers MQTT disponibles. Para este trabajo se seleccionó Eclipse Mosquitto como Broker ya que es de código abierto con licencia EPL/EDL que implementa MQTT en sus versiones 5.0, 3.1.1 y 3.1.\citep{WEBSITE:7}.
+
+Otra característica que lo hace muy conveniente es que se encuentra disponible en los repositorios de varias distribuciones de Linux como ser Ubuntu, Debian, etc, por lo que su instalación se simplifica. 
+
+En mosquitto, el puerto que usualmente se utiliza para WebSockets es el 9001.
+
+
+%\label{sec:ejemplo}
+%\subsection{Uso de mayúscula inicial para los título de secciones}
+
+%Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
+
+%Cuando se quiere poner una lista tabulada, se hace así:
+
+%\begin{itemize}
+%	\item Este es el primer elemento de la lista.
+%	\item Este es el segundo elemento de la lista.
+%\end{itemize}
+
+%Notar el uso de las mayúsculas y el punto al final de cada elemento.
+
+%Si se desea poner una lista numerada el formato es este:
+
+%\begin{enumerate}
+%	\item Este es el primer elemento de la lista.
+%	\item Este es el segundo elemento de la lista.
+%\end{enumerate}
+
+%Notar el uso de las mayúsculas y el punto al final de cada elemento.
+
+%\subsection{Este es el título de una subsección}
+%\label{subsec:ejemplo}
+
+%Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, %ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar %\textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
+
+%La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
+
+%El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
+
+%En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
+
+%''En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
+
+%Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
+
+%Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
+
+%\subsection{Figuras} 
+
+%Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
+%\end{figure}
+
+%La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
+%	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
+%	\label{fig:cuadradoAzul}
+%\end{figure}
+
+%El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
+
+%\begin{figure}[htpb]
+%	\centering
+%	\includegraphics[scale=.3]{./Figures/word.jpeg}
+%	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
+%	\label{fig:palabraIngles}
+%\end{figure}
+
+%\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
+
+%La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
+
+
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[scale=.37]{./Figures/questionMark.png}
+%	\caption{¿Por qué de pronto aparece esta figura?}
+%	\label{fig:questionMark}
+%\end{figure}
+
+%Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
+
+%Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
  
-\begin{figure}[!htpb]
-     \centering
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Un caption.}
-         \label{fig:1de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Otro.}
-         \label{fig:2de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Y otro más.}
-         \label{fig:3de3}
-     \end{subfigure}
-        \caption{Tres gráficos simples}
-        \label{fig:three graphs}
+%\begin{figure}[!htpb]
+%     \centering
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Un caption.}
+%         \label{fig:1de3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Otro.}
+%         \label{fig:2de3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Y otro más.}
+%         \label{fig:3de3}
+%     \end{subfigure}
+%        \caption{Tres gráficos simples}
+%        \label{fig:three graphs}
+%\end{figure}
+
+%El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
+
+%\subsection{Tablas}
+
+%Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
+
+%\begin{verbatim}
+%\begin{table}[h]
+%	\centering
+%	\caption[caption corto]{caption largo más descriptivo}
+%	\begin{tabular}{l c c}    
+%		\toprule
+%		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
+%		\midrule
+%		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
+%		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
+%		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
+%		\bottomrule
+%		\hline
+%	\end{tabular}
+%	\label{tab:peces}
+%\end{table}
+%\end{verbatim}
+
+
+%\begin{table}[h]
+%	\centering
+%	\caption[caption corto]{caption largo más descriptivo}
+%	\begin{tabular}{l c c}    
+%		\toprule
+%		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
+%		\midrule
+%		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
+%		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
+%		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
+%		\bottomrule
+%		\hline
+%	\end{tabular}
+%	\label{tab:peces}
+%\end{table}
+
+%En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
+
+%\subsection{Ecuaciones}
+%\label{sec:Ecuaciones}
+
+%Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
+
+%\begin{equation}
+%	\label{eq:metric}
+%	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
+%\end{equation}
+                                                        
+%Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
+
+%\begin{equation}
+%	\label{eq:schrodinger}
+%	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar %%\frac{\partial\Psi}{\partial t}
+%\end{equation}
+
+%Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
+
+%\begin{verbatim}
+%\begin{equation}
+%	\label{eq:metric}
+%	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
+%	\sigma^2\left[ d\theta^2 + 
+%	\sin^2\theta d\phi^2 \right] \right)
+%\end{equation}
+%\end{verbatim}
+
+%Y para la ecuación \ref{eq:schrodinger}:
+
+%\begin{verbatim}
+%\begin{equation}
+%	\label{eq:schrodinger}
+%	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
+%	-i\hbar \frac{\partial\Psi}{\partial t}
+%\end{equation}
+
+%\end{verbatim}
+\pagebreak
+
+\section{Componentes del sistema}
+\label{sec:Sistema General}
+
+El sistema desarrollado se lo puede descomponer en seis partes definidas:
+
+\begin{itemize}
+\item  Broker MQTT: servidor encargado de gestionar los mensajes
+\item  Base de datos: almacena información relevante de los pacientes, usuarios y sistema.
+\item  Servidor de Base de datos: proporciona una API (\textit{Application Programming Interface}, interfaz de programación de aplicaciones) del tipo REST (\textit{representational state transfer}, transferencia de estado representacional) que permite la modificación/consulta de la base de datos desde un dispositivo web. La API provee \textit{endpoints}(puntos de acceso en español) que permiten realizar operaciones.
+\item  Servidor web/ página web: entrega información a un browser para que pueda mostrar una página web de administración del sistema y de carga de la base de datos.
+\item  Sistema: Recibe los mensajes MQTT y responde/actúa acorde a las peticiones.
+\item Cliente browser: muestra en la pantalla de una computadora o dispositivo la página web de administración.
+\item Cliente teléfono: permite a médicos y enfermeras interactuar con el sistema.
+\end{itemize}
+
+Como se puede observar, se trata de un sistema distribuido y sus partes pueden estar ubicadas en distintas localidades.
+
+Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedores que permite correr tres de las 6 partes: la base de datos, el servidor de base de datos y el sistema propiamente dicho. Además se agrupó los subsistemas que modifican la base de datos en una sola aplicación que provee ambos servicios: el sistema y el servidor REST. En la figura  \ref{fig:División del sistema} se presenta un esquema general según esta división.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/DiagramaSistemaOrganizado.png}
+	\caption{División del sistema.}
+	\label{fig:División del sistema}
 \end{figure}
 
-El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
-
-\subsection{Tablas}
-
-Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
-
-\begin{verbatim}
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
-		\midrule
-		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
-		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
-		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-\end{verbatim}
-
-
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
-		\midrule
-		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
-		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
-		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-
-En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
-
-\subsection{Ecuaciones}
-\label{sec:Ecuaciones}
-
-Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
-
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-                                                        
-Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
-
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
-	\sigma^2\left[ d\theta^2 + 
-	\sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-\end{verbatim}
-
-Y para la ecuación \ref{eq:schrodinger}:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
-	-i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-\end{verbatim}
 
 
 \section{Sistemas de contenedores Docker}
 \label{sec:Docker}
 
-\section{Distintos tipos de bases de datos}
-\label{sec: Bases de datos}
+Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Multiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
 
+Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
+
+Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema\citep{WEBSITE:8}.
+
+Resumo brevemente las partes del ecosistema Docker, para información más detallada consultar\citep{WEBSITE:8} o bien \citep{WEBSITE:9}.
+
+\begin{itemize}
+\item \textit{Images} : son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
+\item \textit{Containers} : son instancias de ejecución de una imagen. Se pueden iniciar, detener, mover o eliminar mediante comandos. Se puede conectar un contenedor a una o mas redes.
+\item \textit{Networks} : Docker utiliza una interfaz virtual para comunicarse con la red del equipo host.
+\item \textit{Volumes} : permiten generar espacios de almacenamiento dentro de cada contenedor, el funcionamiento es similar a las carpetas compartidas en las máquinas virtuales.
+\item \textit{Registry} : un registro almacena imágenes de docker. Dockerhub es un registro público que cualquiera puede utilizar.
+\end{itemize}
+
+Para poder correr un contenedor docker es necesario ejecutar el comando:
+\begin{lstlisting}[label=docker:vControl,caption=Ejecución de contenedor]  
+>docker-run --[parametro1] --[parametro2] ...
+nombre_contendor:version
+\end{lstlisting}
+
+
+\subsection{Uso de Docker-compose}
+\label{subsec:Docker-compose}
+
+Docker Compose es una herramienta del ecosistema Docker que sirve para definir aplicaciones multicontenedor en un archivo de texto llamado "docker-compose.yml". 
+Con esta herramienta se facilita el paso de parámetros al contenedor y posibilita generar imágenes complejas utilizando e interconectando distintos contenedores.
+
+Como ejemplo, en \citep{WEBSITE:11} se presenta un archivo para ejecutar un contenedor \textit{Wordpress}  junto con una base de datos MySQL. 
+
+\section{Introducción a las bases de datos}
+\label{sec: Introducción a las bases de datos}
+
+Que es un dato? Es un elemento o característica que permite hacer la descripción de un objeto\citep{WEBSITE:12}.
+
+Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada.\citep{WEBSITE:11}
+
+Durante los años 80 se popularizó el tipo de base de dato relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.
+
+En 1970, IBM (junto con contribuciones de Oracle) desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es apliamente utilizado hoy en día, aún cuando surgen nuevos.
+
+Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y estan diseñadas para manejar grandes volumentes de datos\citep{WEBSITE:12}.
+
+
+\subsection{Descripción de MySQL}
+\label{subsec: Bases de datos relacionales}
+
+En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la decada de los 90, y es de uso libre. Es potente, rápido y altamente escalable\citep{BOOK:2}.
+
+Existen tres formas de interactuar con una base de datos MySQL: utilizando la consola, a través de una interfaz web como phpMyAdmin y mediante un lenguaje de programación.
+
+En la figura \ref{fig:Página phpMyAdmin} se puede observar la interfaz:
+\pagebreak
+ 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.35]{./Figures/phpMyAdmin.png}
+	\caption{Página de gestión phpMyAdmin.}
+	\label{fig:Página phpMyAdmin}
+\end{figure}
+
+
+Las sentencias SQL finalizan siempre con el símbolo `;`.
+
+Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones SQL}\citep{BOOK:2}:
+
+%\begin{verbatim}
+\begin{table}[h]
+	\centering
+	\caption[Comandos SQL]{Comandos básicos SQL}
+	\begin{tabular}{l c }    
+		\toprule
+		\textbf{Comando}     & \textbf{Función} \\
+		\midrule
+		ALTER & Modificar una base de datos o una tabla.    \\		
+		BACKUP    & Copia de seguridad de una tabla.      \\
+		$\backslash$c  & Cancelar la entrada.\\
+		CREATE  & Crear la base de datos.\\
+		DELETE  & Borrar una fila de una tabla.\\
+		DESCRIBE  & Describir columnas de una tabla.\\
+		DROP  & Eliminar una base de datos o una tabla.\\
+		Exit & Salir.\\
+		GRANT & Cambiar permisos de un usuario.\\
+		INSERT INTO..VALUES & Insertar datos.\\
+		RENAME & Cambiar nombre de una tabla.\\
+		USE & Usar una base de datos.\\
+		UPDATE & Actualizar un registro existente.\\
+		SELECT  & Consultar una fila\\
+		JOIN... ON & Consultar multiples tablas\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:Funciones SQL}
+\end{table}
+
+Ejemplo de uso, suponiendo 2 tablas:
+
+\begin{table}[h]
+	\centering
+	\caption[Tabla 1 Ejemplo SQL]{TABLA1 para el ejemplo 1}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{PacienteId}     & \textbf{Nombre} \\
+		\midrule
+		 1& Pedro    \\		
+ 		 2& Juan    \\				
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:Ejemplo 1}
+\end{table}
+\pagebreak
+\begin{table}[h]
+	\centering
+	\caption[Tabla 2 Ejemplo SQL]{TABLA2 para el ejemplo 1}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{PacienteId}     & \textbf{Apellido} \\
+		\midrule
+		 1& Perez    \\		
+ 		 2& Salvador    \\	
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:Ejemplo 2}
+\end{table}
+
+Si se quiere obtener el nombre y apellido del paciente con pacienteId igual a 1, una forma de obternerlo es ejecutando el código:
+
+\begin{lstlisting}[label=código:SQL:vControl,caption=Ejecución de comando sql]  
+>SELECT Nombre,Apellido FROM TABLA1 as TB1 \
+JOIN TABLA2 as TB2 ON TB1.pacienteId=TB2.pacienteId \
+WHERE TB1.pacienteId=1;
+>Pedro Perez
+\end{lstlisting}
+
+Uno de las multiples ventajas que poseen los motores de bases de datos relacionales es la posibilidad de realizar transacciones. Las mismas consisten en secuencias de operaciones que se ejecutan en orden y se completan con éxito.
+
+\begin{lstlisting}[label=código:SQL2:vControl,caption=Secuencia de transacción sql]  
+>BEGIN;
+>SELECT Nombre FROM  TABLA1;
+>SELECT Apellido FROM  TABLA2;
+>COMMIT;
+>Pedro 
+>Juan
+>Perez
+>Salvador
+\end{lstlisting}
+
+Existe muchas referencias sobre programación con MySQL, para un estudio mas profundo se puede utilizar tutoriales como \citep{WEBSITE:13}.
+\pagebreak
 \section{Frameworks/librerías para desarrollo web/móvil}
+En esta sección se presentarán varias librerías que se analizaron y se utilizarán para el desarrollo.
 \subsection{Librerías Node.js, Express y JWT}
-\label{sec: Node}
+\label{subsec: Node}
 \subsection{Librería Eclipse Paho}
-\label{sec: Paho}
+\label{subsec: Paho}
 \subsection{Framework Ionic/Angular}
-\label{sec: Ionic}
+\label{subsec: Ionic}
 
 
