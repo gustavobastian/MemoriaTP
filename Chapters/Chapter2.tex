@@ -6,7 +6,26 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 %Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
-En este capítulo se presentan las bases teóricas que sustentan el trabajo realizado. Se describen distintas soluciones a cada una de las partes del sistemas.
+En este capítulo se presentan las bases teóricas que sustentan el trabajo realizado. Se describen distintas soluciones a cada una de las partes del sistema.
+
+\section{Descripción de Tecnologías Web para IoT}
+\label{sec:Descripción de Tecnologías Web para IoT}
+
+En la ingeniería de software existe una arquitectura llamada cliente/servidor, en el cual la tarea a desarrollar se  distribuye entre los proveedores de servicios o recursos y quienes los consultan llamados clientes o demandantes. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .
+
+El \textit{backend}  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el \textit{backend} se comunica con los clientes utilizando 2 protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
+
+El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
+
+MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP(del ingles \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet ), se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware e implementación \citep{ARTICLE:2}.
+
+En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP(\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
+
+En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node}, \ref{subsec: Paho} se explicará el funcionamiento del backend.
+
+El \textit{frontend} es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación. El equipo que desarrolla el \textit{frontend} consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario ) y diseñadores gráficos. Las más conocidas tecnologías que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo: \citep{WEBSITE:13}).  
+
+En los últimos años, se busca facilitar el diseño de  \textit{frontend} mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como ser Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16}, Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
 
 \section{Descripción del protocolo MQTT}
 \label{sec:Descripción del protocolo MQTT}
@@ -16,21 +35,21 @@ MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería 
 Para poder explicar el funcionamiento del protocolo es necesario incorporar conceptos definidos en la especificación \citep{WEBSITE:5}:
 
 \begin{itemize}
-\item Mensaje: datos transmitidos mediante el protocolo MQTT  a través de la red por la aplicación. Cuando un mensaje es transmitido, el mismo contiene datos útiles(\textit{"payload"}), Calidad de Servicio, ciertas propiedades y un nombre de tópico.
+\item Mensaje: datos transmitidos mediante el protocolo MQTT  a través de la red por la aplicación. Cuando un mensaje es transmitido, el mismo contiene datos útiles(\textit{"payload"}), un campo que identifica la Calidad de Servicio (\textit{Quality of Service}, QoS), ciertas propiedades y un nombre de tópico.
 \item Cliente: programa o dispositivo que utiliza MQTT.
-\item Servidor o Broker: programa o dispositivo que actúa como intermediario entre Clientes que publican Mensajes y Clientes que han realizado suscripciones.
-\item Sesión: una interacción entre Cliente y Servidor con estados bien definidos.
-\item suscripción: una  suscripción implica un filtrado de tópicos y una máxima Calidad de Servicio. Una suscripción está asociada a una sola sesión y una sesión puede poseer varias suscripciones.
-\item Nombre de Tópico: etiqueta que se adjunta a un mensaje la cual es comparada con las suscripciones conocidas en el Servidor.
-\item Filtro de Tópico: es una expresión contenida dentro de la suscripción para indicar interés, por parte del Cliente, en uno o más Tópicos.
-\item suscripción con Wildcard: es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\#', que representan un nivel único y nivel múltiple respectivamente.
+\item Servidor o Broker: programa o dispositivo que actúa como intermediario entre clientes que publican mensajes y clientes que han realizado suscripciones.
+\item Sesión: una interacción entre cliente y servidor con estados bien definidos.
+\item suscripción: una  suscripción implica un filtrado de tópicos y una máxima calidad de servicio. Una suscripción está asociada a una sola sesión y una sesión puede poseer varias suscripciones.
+\item Nombre de tópico: etiqueta que se adjunta a un mensaje la cual es comparada con las suscripciones conocidas en el servidor.
+\item Filtro de tópico: es una expresión contenida dentro de la suscripción para indicar interés, por parte del cliente, en uno o más tópicos.
+\item suscripción con \texit{Wildcard} o comodín: es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\#', que representan un nivel único y nivel múltiple respectivamente.
 \end{itemize}
 
 En este protocolo, el funcionamiento es el siguiente: 
 
-Al iniciar la conexión, el Cliente envía un mensaje CONNECT al Broker y este contesta con un CONNECTACK y un código de estado. El Broker mantiene abierta la conexión hasta que el cliente envía un comando de desconexión o la conexión se pierde por algún motivo. Los puertos estándar son 1883 para comunicación no encriptada y 8883 para comunicación utilizando TLS/SSL \citep{ARTICLE:4}.
+Al iniciar la conexión, el cliente envía un mensaje CONNECT al broker y este contesta con un CONNECTACK y un código de estado. El broker mantiene abierta la conexión hasta que el cliente envía un comando de desconexión o la conexión se pierde por algún motivo. Los puertos estándar son 1883 para comunicación no encriptada y 8883 para comunicación encriptada utilizando TLS/SSL \citep{ARTICLE:4}.
 
-Luego Cliente MQTT publica mensajes en un Broker MQTT, los cuales son recibidos por los Clientes suscriptos o bien retenidos para una futura suscripción \citep{WEBSITE:5}. En la figura \ref{fig:Sistema MQTT} se presentan todos los componentes de una red MQTT.  
+Luego el cliente MQTT publica mensajes en un broker MQTT, los cuales son recibidos por los clientes suscriptos o bien retenidos para una futura suscripción \citep{WEBSITE:5}. En la figura \ref{fig:Sistema MQTT} se presentan todos los componentes de una red MQTT:  
 
 \begin{figure}[ht]
 	\centering
@@ -39,10 +58,10 @@ Luego Cliente MQTT publica mensajes en un Broker MQTT, los cuales son recibidos 
 	\label{fig:Sistema MQTT}
 \end{figure}
 
-La conexión MQTT siempre es entre Cliente y Broker, nunca entre Clientes directamente.
+La conexión MQTT siempre es entre cliente y broker, nunca entre clientes directamente.
 
 
-Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de 2-bytes y una dato útil (\textit{"payload"}) de hasta 256 MB\citep{ARTICLE:2} . 
+Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de dos \textit{bytes} y un dato útil (\textit{"payload"}) de hasta 256 MB \citep{ARTICLE:2} . 
 
 Ejemplos de tópicos:
 
@@ -56,25 +75,33 @@ Ejemplos de tópicos:
 %\item Capítulo 5: Conclusiones
 \end{itemize}
 
-En el ejemplo 1, en caso de suscribirse a ese Tópico, el cliente recibirá todos los mensajes publicados en el subtópico "question".
+En el ejemplo 1, en caso de suscribirse a ese tópico, el cliente recibirá todos los mensajes publicados en el subtópico "question".
 En el ejemplo 2, el cliente recibirá todos los mensajes dirigidos al usuario 1.
-En el ejemplo 3, el cliente que se suscriba a ese Tópico recibirá los mensajes enviados a "question" independientemente del número de usuario.
+En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes enviados a "question" independientemente del número de usuario.
 
 
-Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos\citep{ARTICLE:4}\citep{WEBSITE:5} .
+Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
 
-La carga útil del mensaje debe ser codificada en UTF-8(\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits)\citep{WEBSITE:5}.
+La carga útil del mensaje debe ser codificada en UTF-8(\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits) \citep{WEBSITE:5}.
 
-MQTT posee tres niveles de calidad de servicio("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes\citep{WEBSITE:5} .
+MQTT posee tres niveles de calidad de servicio("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes\citep{WEBSITE:5}:
+
+\begin{itemize}
+\item Calidad 0:
+\item Calidad 1:
+\item Calidad 2:
+\end{itemize}
+
+
 \label{subsec:WebSockets}
 \subsection{Uso de WebSockets en MQTT}
 
-Actualmente, no es posible utilizar MQTT natural en un browser debido a la imposibilidad de abrir una conexión TCP pura. 
+Actualmente no es posible utilizar MQTT natural en un \texit{browser} o navegador debido a la imposibilidad de abrir una conexión TCP pura. 
 
-Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un browser pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil\citep{WEBSITE:6}. 
+Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un \texit{browser} pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil \citep{WEBSITE:6}. 
 
 
-WebSocket es un protocolo de red que provee comunicación bidireccional entre un browser y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los browser modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket.
+WebSocket es un protocolo de red que provee comunicación bidireccional entre un \texit{browser} y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los navegadores modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket:
 
 \begin{figure}[ht]
 	\centering
@@ -89,14 +116,14 @@ Para poder utilizar MQTT sobre WebSockets el Broker debe ser capaz de manejar We
 
 Para mejorar la seguridad, se puede implementar TLS utilizando WebSockets seguros para encriptar toda la conexión.
 
-\label{subsec:Broker MOSQUITTO}
+\label{subsec:Broker Mosquitto}
 \subsection{Broker MOSQUITTO}
 
-Existen muchos brokers MQTT disponibles. Para este trabajo se seleccionó Eclipse Mosquitto como Broker ya que es de código abierto con licencia EPL/EDL que implementa MQTT en sus versiones 5.0, 3.1.1 y 3.1.\citep{WEBSITE:7}.
+Existen muchos brokers MQTT disponibles. Para este trabajo se seleccionó Eclipse Mosquitto como Broker ya que es de código abierto con licencia EPL/EDL que implementa MQTT en sus versiones 5.0, 3.1.1 y 3.1. \citep{WEBSITE:7}.
 
-Otra característica que lo hace muy conveniente es que se encuentra disponible en los repositorios de varias distribuciones de Linux como ser Ubuntu, Debian, etc, por lo que su instalación se simplifica. 
+Otra característica que lo hace muy conveniente es que se encuentra disponible en los repositorios de varias distribuciones de Linux. 
 
-En mosquitto, el puerto que usualmente se utiliza para WebSockets es el 9001.
+
 
 
 %\label{sec:ejemplo}
@@ -291,6 +318,38 @@ En mosquitto, el puerto que usualmente se utiliza para WebSockets es el 9001.
 
 %\end{verbatim}
 \pagebreak
+\section{Descripción del protocolo HTTP}
+\label{sec:Descripción del protocolo HTTP}
+
+HTTP es un protocolo que nos permite realizar una petición de datos y recursos como ser documentos HTML que pueden mostrarse en navegadores. Es la base de cualquier intercambio en la red \citep{WEBSITE:19}. En la figura \ref{fig:Protocolo HTTP } se observa donde se ubica el protocolo dentro del modelo de comunicación TCP/IP.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.5]{./Figures/http.png}
+	\caption{Pila de comunciaciones en un navegador.}
+	\label{fig:Protocolo HTTP }
+\end{figure}
+
+HTTP se basa en el modelo cliente-servidor: las peticiones son enviadas por una entidad al servidor, el cual gestiona y responde.
+
+Entre las características principales figuran \citep{WEBSITE:19}:
+\begin{itemize}
+\item Es sencillo.
+\item Puede expandirse.
+\item Es un protocolo de sesiones pero no de estados: no guarda ningún dato entre dos peticiones en la mismao sesión.
+\item Las conexiones en la capa de transporte por lo que quedan fuera del protocolo HTTP.
+\end{itemize}
+
+La secuencia de la comunicación entre el cliente y el servidor es la siguiente \citep{WEBSITE:19}:
+\begin{enumerate}
+\item Se abre conexión TCP: la conexión TCP se utiliza para hacer una petición, o varias, y recibir la respuesta. El cliente puede abrir una conexión nueva, reusar la existente o abrir varias a la vez hacia el servidor.
+\item Hacer una peticion HTTP: los mensajes HTTP son legibles en texto plano.
+\item Se lee la respuesta enviada por el servidor.
+\item Se cierra o reusa la conexión.
+\end{enumerate}
+
+En el encabezado del mensaje http se puede introducir información de la sesión. Lo cual es muy importante en referencia a la seguridad. 
 
 \section{Componentes del sistema}
 \label{sec:Sistema General}
@@ -328,7 +387,7 @@ Desde los origenes de la programación, existió una necesidad de abstraer la ap
 
 Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
 
-Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema\citep{WEBSITE:8}.
+Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema \citep{WEBSITE:8}.
 
 Resumo brevemente las partes del ecosistema Docker, para información más detallada consultar\citep{WEBSITE:8} o bien \citep{WEBSITE:9}.
 
@@ -358,21 +417,21 @@ Como ejemplo, en \citep{WEBSITE:11} se presenta un archivo para ejecutar un cont
 \section{Introducción a las bases de datos}
 \label{sec: Introducción a las bases de datos}
 
-Que es un dato? Es un elemento o característica que permite hacer la descripción de un objeto\citep{WEBSITE:12}.
+Que es un dato? Es un elemento o característica que permite hacer la descripción de un objeto \citep{WEBSITE:12}.
 
-Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada.\citep{WEBSITE:11}
+Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada \citep{WEBSITE:11}.
 
 Durante los años 80 se popularizó el tipo de base de dato relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.
 
 En 1970, IBM (junto con contribuciones de Oracle) desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es apliamente utilizado hoy en día, aún cuando surgen nuevos.
 
-Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y estan diseñadas para manejar grandes volumentes de datos\citep{WEBSITE:12}.
+Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y estan diseñadas para manejar grandes volumentes de datos \citep{WEBSITE:12}.
 
 
 \subsection{Descripción de MySQL}
 \label{subsec: Bases de datos relacionales}
 
-En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la decada de los 90, y es de uso libre. Es potente, rápido y altamente escalable\citep{BOOK:2}.
+En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la decada de los 90, y es de uso libre. Es potente, rápido y altamente escalable \citep{BOOK:2}.
 
 Existen tres formas de interactuar con una base de datos MySQL: utilizando la consola, a través de una interfaz web como phpMyAdmin y mediante un lenguaje de programación.
 
@@ -389,7 +448,7 @@ En la figura \ref{fig:Página phpMyAdmin} se puede observar la interfaz:
 
 Las sentencias SQL finalizan siempre con el símbolo `;`.
 
-Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones SQL}\citep{BOOK:2}:
+Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones SQL} \citep{BOOK:2}:
 
 %\begin{verbatim}
 \begin{table}[h]
@@ -477,12 +536,48 @@ Uno de las multiples ventajas que poseen los motores de bases de datos relaciona
 Existe muchas referencias sobre programación con MySQL, para un estudio mas profundo se puede utilizar tutoriales como \citep{WEBSITE:13}.
 \pagebreak
 \section{Frameworks/librerías para desarrollo web/móvil}
-En esta sección se presentarán varias librerías que se analizaron y se utilizarán para el desarrollo.
+
+
+
 \subsection{Librerías Node.js, Express y JWT}
 \label{subsec: Node}
+El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, el cuales es un \textit{runtime environment}(entorno de ejecución) de javascript. Node.js se encuentra orientada a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
+
+Ademas de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar multiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
+
+Por ultimo, es importante mecionar que node posee un gestor de packetes/librerías NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
+
+Para mas información sobre Node.js consultar \citep{WEBSITE:20}.
+
+
+Para el ruteo de los endpoints con los que se comunica la página web se utiliza Express.js \citep{WEBSITE:21} que es una infraestructura web rápida, minimalista y flexible para Node.js. 
+
+Express.js facilita la creación de la API(\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como incorporar software \textit{Middleware}. 
+
+Con respecto a la seguridad para el acceso de la página web, existen dos métodos: por medio de \textit{cookies} o por medio de web \textit{tokens}. Se seleccionó utilizar el segundo y para ello se utiliza JWT \citep{WEBSITE:22} que implementa el estandar RFC 7519. 
+
+
+
+
 \subsection{Librería Eclipse Paho}
 \label{subsec: Paho}
-\subsection{Framework Ionic/Angular}
+
+Para interconectar el programa servidor escripto en Node.js con el broker MQTT se utiliza la librería PAHO MQTT \citep{WEBSITE:23}.
+
+
+\subsection{Framework Ionic/Angular, Capacitor y Android Studio}
 \label{subsec: Ionic}
 
+Drifty.co introdujo Ionic en el año 2013 \citep{WEBSITE:24}. Nació originalmente para desarrollar aplicaciones móviles con Angular 1 pero hoy en día permite desarrollar para dispositivos celulares, páginas web progresivas y aplicaciones de escritorio junto con Electron \citep{WEBSITE:25}. Ionic permite trabajar con Vue, React y Angular en su última versión.
 
+Este framework posee muchos \textit{plugins}(o software de ayuda) que permiten acceder a los recursos de los dispositivos móviles como ser su microfono, la cámara, la información de posicionamiento. Junto con Ionic se utiliza Capacitor \citep{WEBSITE:26}, que es un runtime nativo para iOS, Android y Aplicaciones Web Progresivas.
+
+El código que genera Ionic debe compilarse para generar el archivo ejecutable(ya sea .ipa para iOS o apk para Android). Para ello, se utilizan los entornos de desarrollo Xcode para iOS, y Android Studio para Android.
+
+Por ejemplo, el método de desarrollo para una aplicación que se ejecutará en un dispositivo Android es el siguiente:
+
+\begin{enumerate}
+\item Desarrollo: se genera el código fuente en una pc.
+\item Prueba virtual en el navegador:  se realiza debug localmente, utilizando los comandos ionic serve o ionic-lab
+\item Prueba en el disposito: se genera un \textit{build}(construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
+\end{enumerate}
