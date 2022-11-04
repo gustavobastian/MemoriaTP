@@ -8,8 +8,8 @@
 %Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
 En este capítulo se presentan las bases teóricas que sustentan el trabajo realizado. Se describen distintas soluciones a cada una de las partes del sistema.
 
-\section{Descripción de Tecnologías Web para IoT}
-\label{sec:Descripción de Tecnologías Web para IoT}
+\section{Descripción de tecnologías web para IoT}
+\label{sec:Descripción de tecnologías web para IoT}
 
 En la ingeniería de software existe una arquitectura llamada cliente/servidor, en el cual la tarea a desarrollar se  distribuye entre los proveedores de servicios o recursos y quienes los consultan llamados clientes o demandantes. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .
 
@@ -42,7 +42,8 @@ Para poder explicar el funcionamiento del protocolo es necesario incorporar conc
 \item suscripción: una  suscripción implica un filtrado de tópicos y una máxima calidad de servicio. Una suscripción está asociada a una sola sesión y una sesión puede poseer varias suscripciones.
 \item Nombre de tópico: etiqueta que se adjunta a un mensaje la cual es comparada con las suscripciones conocidas en el servidor.
 \item Filtro de tópico: es una expresión contenida dentro de la suscripción para indicar interés, por parte del cliente, en uno o más tópicos.
-\item suscripción con \texit{Wildcard} o comodín: es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\#', que representan un nivel único y nivel múltiple respectivamente.
+\item Suscripción con comodín o \textit{Wildcard} : es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\# ', que representan un nivel único y nivel múltiple respectivamente.
+
 \end{itemize}
 
 En este protocolo, el funcionamiento es el siguiente: 
@@ -82,26 +83,29 @@ En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes
 
 Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
 
-La carga útil del mensaje debe ser codificada en UTF-8(\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits) \citep{WEBSITE:5}.
+La carga útil del mensaje debe ser codificada en UTF-8 (\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits) \citep{WEBSITE:5}.
 
-MQTT posee tres niveles de calidad de servicio("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes\citep{WEBSITE:5}:
+MQTT posee tres niveles de calidad de servicio ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
 
 \begin{itemize}
-\item Calidad 0:
-\item Calidad 1:
-\item Calidad 2:
+\item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo mas rápido de entrega.
+\item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo "DUP" establecido hasta que se reciba acuse de recibo.
+\item Calidad 2: el mensaje se entrega exactamente una sola vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. El emisor recibe un mensaje acuse de recibo. Si el emisor no recibe un acuse de recibo, el mensaje se envía de nuevo con el distintivo DUP establecido hasta que se reciba un acuse de recibo.
+En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje,“PUBREL”. Si el remitente no recibe un acuse de recibo del“PUBREL”mensaje, el“PUBREL”se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al“PUBREL”mensaje
+El receptor puede procesar el mensaje proporcionado en la primera o segunda fase, no tiene que volver a procesarlo. Si el receptor es un intermediario, publica el mensaje a los suscriptores. Si el receptor es un cliente, el mensaje se entrega a la aplicación de suscriptor. El receptor devuelve un mensaje de finalización al emisor para comunicarle que ha terminado de procesar el mensaje.
+
 \end{itemize}
 
 
 \label{subsec:WebSockets}
 \subsection{Uso de WebSockets en MQTT}
 
-Actualmente no es posible utilizar MQTT natural en un \texit{browser} o navegador debido a la imposibilidad de abrir una conexión TCP pura. 
+Actualmente no es posible utilizar MQTT natural en un \textit{browser} o navegador debido a la imposibilidad de abrir una conexión TCP pura. 
 
-Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un \texit{browser} pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil \citep{WEBSITE:6}. 
+Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un \textit{browser} pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil \citep{WEBSITE:6}. 
 
 
-WebSocket es un protocolo de red que provee comunicación bidireccional entre un \texit{browser} y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los navegadores modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket:
+WebSocket es un protocolo de red que provee comunicación bidireccional entre un \textit{browser} y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los navegadores modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket:
 
 \begin{figure}[ht]
 	\centering
@@ -110,7 +114,7 @@ WebSocket es un protocolo de red que provee comunicación bidireccional entre un
 	\label{fig:WebSockets MQTT}
 \end{figure}
 
-En MQTT sobre WebSockets, el mensaje MQTT se transfiere a través de la red y es encapsulado por una o más tramas WebSockets. La ventaja de este método de transmisión es que provee una comunicación bi-direcional, ordenada y sin pérdidas\citep{WEBSITE:6} .
+En MQTT sobre WebSockets, el mensaje MQTT se transfiere a través de la red y es encapsulado por una o más tramas WebSockets. La ventaja de este método de transmisión es que provee una comunicación bi-direcional, ordenada y sin pérdidas \citep{WEBSITE:6} .
 
 Para poder utilizar MQTT sobre WebSockets el Broker debe ser capaz de manejar WebSocket nativos. 
 
@@ -317,7 +321,7 @@ Otra característica que lo hace muy conveniente es que se encuentra disponible 
 %\end{equation}
 
 %\end{verbatim}
-\pagebreak
+
 \section{Descripción del protocolo HTTP}
 \label{sec:Descripción del protocolo HTTP}
 
@@ -563,6 +567,8 @@ Con respecto a la seguridad para el acceso de la página web, existen dos métod
 \label{subsec: Paho}
 
 Para interconectar el programa servidor escripto en Node.js con el broker MQTT se utiliza la librería PAHO MQTT \citep{WEBSITE:23}.
+
+En las aplicaciones móviles se utilizó un wrapper (rsup - MQTT )que utiliza la misma librería \citep{WEBSITE:27}.
 
 
 \subsection{Framework Ionic/Angular, Capacitor y Android Studio}

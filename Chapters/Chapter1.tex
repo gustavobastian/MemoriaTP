@@ -26,11 +26,28 @@ En la actualidad, el avance de la Internet de las Cosas (IoT de \textit{Internet
 
 El término Internet de las Cosas fue utilizado por primera vez en 1990 para describir un sistema cuyos componentes del mundo físico se conectaban a la Internet mediante sensores. En la actualidad se utiliza el término para referirse a escenarios donde la conectividad en red y la capacidad de computo se extiende a objetos, sensores y elementos cotidianos no considerados computadoras, permitiendoles generar, intercambiar y consumir datos con un mínimo de intervención humana \citep{ARTICLE:3}.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/InfraestructuraHospi.png}
+	\caption{Infraestructura Hospitalaria.}
+	\label{fig:Infraestructura Hospitalaria}
+\end{figure}
+
+
 
 Si consideramos a las diferentes personas como un elemento más de un sistema, el ámbito hospitalario cuenta con numerosas entidades que interactuan entre sí como ser: médicos, pacientes, enfermeros, personal de limpieza, personal de seguridad, personal administrativo, dispositivos de iluminación, dispositivos   sonoros, herramientas médicas, puertas, ventanas, ventiladores, acondicionadores de aire, termómetros, etc. Un entorno de estas cualidades es ideal para gestionar con IoT, ya que permite mejorar la calidad del servicio de la salud \citep{ARTICLE:1}.
 
+
+Los principares beneficios de aplicar Internet de las Cosas son dos \citep{ARTICLE:1}:
+\begin{itemize}
+\item Cuidado clínico: el uso de sensores inteligentes permite monitorear el estado de los pacientes automáticamente. Como ejemplo se puede mencionar: cada quince minutos tomar la presión arterial del paciente y guardarla en una base de datos, cada una hora medir la temperatura y almacenar su valor en una base de datos, etc. Con los datos obtenidos se pueden generar mejores diagnósticos y tratamientos. El hecho de automatizar la gestión de los datos y la utilización de algoritmos de Inteligencia Artifical para los diagnósticos disiminuye el tiempo análisis y la posibilidad de errores. El objetivo final es  efectuar tratamientos preventivos en momentos iniciales de la presencia de síntomas.
+\item Monitoreo remoto: otro beneficio muy importante radica en el hecho de que al estar almacenado en una red (o en la nube), la disponibilidad de la información facilita la consulta de la misma por parte de los médicos en todo momento, permitiendo que actuar de manera eficiente y rápida ante eventos.
+\end{itemize}
+
+
+
 Un sistema de estas características posee un modelo de capas, presentado en \citep{ARTICLE:4} que separa los conocimientos en cinco categorías con responsabilidades bien definidas: negocio, aplicación, procesamiento, red y percepción. La tabla \ref{tab:Modelo} presenta las funciones reducidas de cada modelo:
-\pagebreak
+
 
 %\begin{verbatim}
 \begin{table}[h]
@@ -107,7 +124,7 @@ Los componentes del sistema son:
 \item broker MQTT: permite gestionar los mensajes entre los elementos del sistema.
 \item base de datos: donde alojar información de reportes de habitaciones, personal y datos relevantes al paciente.
 \item página web para configuración: permite gestionar usuarios, camas, pacientes, observar estado del sistema.
-\item aplicación móvil multiplataforma: permite a los usuarios enfermeros interactuar con el sistema y con los médicos. La aplicación es capaz de identificar la cama correspondiente (mediante lectura de sı́mbolos QR) y de transmitir mensajes de voz en caso de ser necesario.
+\item aplicación móvil multiplataforma: permite a los usuarios enfermeros interactuar con el sistema y con los médicos. La aplicación es capaz de identificar la cama correspondiente (mediante lectura de símbolos QR) y de transmitir mensajes de voz en caso de ser necesario.
 \end{itemize}
 
 

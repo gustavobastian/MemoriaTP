@@ -92,17 +92,154 @@ En este capítulo se explica como se utilizaron las herramientas mencionadas en 
 %\end{lstlisting}
 \section{Broker Mosquitto}
 
-El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos del sistema. Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
+El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos del sistema. El único requisito es que se encuentre instalado en la misma red que los clientes (en un sistema que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
 
 
+
+
+\begin{lstlisting}[caption=  Instalación/lanzamiento del broker Mosquitto]
+		sudo apt-get install mosquitto mosquitto-clients
+		sudo systemctl enable mosquitto.service
+\end{lstlisting}
+
+Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf":
+
+\begin{lstlisting}[caption=  Contenido archivo mosquitto.conf]
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+listener 9001
+protocol websockets
+allow_anonymous true
+
+\end{lstlisting}
+
+En este archivo, se especifíca los puertos que se utilizará, en este caso, el puerto 9001 con el protocolo Websockets. Se permite la interconexión de cualquier cliente y el archivo donde se guardará un log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log".
+
+\pagebreak
+\section{Sistema Docker}
+
+El archivo docker-compose.yml contiene los siguientes servicios instalados:
+
+\begin{itemize}
+\item servidor mysql:
+
+
+
+
+\end{itemize}
 
 
 
 
 \section{Base de datos del sistema}
+En esta sección se describiran las distintas tablas que se almacenan en la base de datos y son útiles para el sistema.
+
+\begin{enumerate}
+
+\item Tabla usuarios (\textit{User}): tabla que contiene la información de los usuarios del sistema. El campo id se incrementa automáticamente, es decir, al incorporar un nuevo usuario al sistema la base de datos asigna el id (se utiliza este campo como llave primaria).En el campo contraseña se almacena el hash de la misma(generado con Bcrypt \citep{WEBSITE:31}). En el campo ocupación se almacena uno de valores: "Enfermero","Médico" o "Administrador". El campo estado (\textit{State}) se utiliza en versiones posteriores del sistema.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{./Figures/dB(user).png}
+	\caption{Tabla Usuarios.}
+	\label{fig:Tabla Usuarios (base de datos)}
+\end{figure}
+
+\item Tabla Camas(\textit{Bed}): tabla que contiene la información de las camas como ser su identificación (como en el item anterior se incrementa automáticamente y es clave primaria), ubicación(piso y cuarto) y el número de dispositivo llamador. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{./Figures/dB(bed).png}
+	\caption{Tabla Camas.}
+	\label{fig:Tabla Camas (base de datos)}
+\end{figure}
+
+\item Tabla Paciente (\textit{Patient}): tabla que contiene la información de los pacientes. En esta tabla el id no se incrementa automáticamente (ya que puede ser asignado manualmente por el administrador). Ademas, los campos \textbf{bedId}, \textbf{notesTableId} y \textbf{userTableId} contienen claves foraneas que identifican un elemento de la tabla \textit{Bed} (cama), \textit{notesTable} (tablas de notas) y \textit{userTable} (tablas de médicos relacionados al paciente).
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{./Figures/dB(patient).png}
+	\caption{Tabla pacientes.}
+	\label{fig:Tabla pacientes (base de datos)}
+\end{figure}
+
+
+\item Relación médicos-pacientes : para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos tratándolo. Además, un paciente puede utilizar a los mísmos médicos de otro paciente... es una de las ventajas de las bases de datos relacionales.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/tabla-medicos-pacientes.png}
+	\caption{Relación médicos-pacientes.}
+	\label{fig:Relación médicos-pacientes (base de datos)}
+\end{figure}
+
+
+
+\item Relación tabla de notas- pacientes: como en el caso anterior, se utiliza una tabla de notas generales con una tabla intermedia que los indexa. En este caso y como es particular de cada paciente no se puede repetir.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/patient-notes.png}
+	\caption{Relación notas-pacientes.}
+	\label{fig:Relación notas-pacientes (base de datos)}
+\end{figure}
+
+\pagebreak
+
+\item Tabla de eventos programados: En esta tabla se cargan las tareas programadas para un paciente. El identificador se incrementa al generarse, el nro de paciente es enviado por el cliente, el campo tipo de evento puede ser \textbf{diario},\textbf{mensual} o \textbf{diario} y el campo datetime a la hora que se requiere que se realice. El campo nota es donde se coloca la tarea a realizar (Por ejemplo, suministrar X gramos de medicamento Y).
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/Events.png}
+	\caption{Tabla de eventos programados.}
+	\label{fig:Tabla de eventos programados (base de datos)}
+\end{figure}
+
+
+\item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. El id se asigna al guardarse el evento. El tipo puede ser \textbf{tarea programada} o \textbf{llamada paciente}. El id del paciente, el id de usuario y la nota se cargan por el usuario que finalizó la accion.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/logEvents.png}
+	\caption{Tabla de registro de eventos.}
+	\label{fig:Tabla de registro de eventos (base de datos)}
+\end{figure}
+
+\item Tabla de especialidades (\textit{SpecTable}): En esta tabla se las distintas especialidades que poseen todos los enfermeros. 
+
+\item Tabla de especialidades de enfermeros (\textit{NurseSpecTable}): En esta tabla se relacionan a los enfermeros con su Id y las distintas especialidades que pueden realizar. Un enfermero puede poseer más de una especialidad.
+
+\item Tabla de tratamientos de pacientes(\textit{PatientSpecTable}): En esta tabla se relacionan a los pacientes con su Id y una tratamiento(se obtiene de la SpecTable). 
+
+\item Tabla de códigos QR (\textit{QRbed}): En esta tabla se almacenan en string los códigos QR correspondientes a las camas para su reconocimiento.
+
+\item Tabla de prioridades (\textit{PriorityTable}): En esta tabla el administrador puede asignar prioridades a las distintas camas del sistema, las prioridades son de 5 niveles, siendo 5 la más alta prioridad.
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+
+
 \section{Sistema de gestión}
 \subsection{Descripción de API REST para aplicación Web}
 \subsection{Descripción de API MQTT para la mensajeria de la aplicación móvil}
+
+
 \section{Página Web(frontend)}
 \subsection{Estructura y organización del software}
 \subsection{Acceso de usuario}
