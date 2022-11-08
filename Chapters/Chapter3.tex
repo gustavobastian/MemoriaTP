@@ -393,6 +393,8 @@ Como se puede observar en el código anterior, el sistema recibe mensajería por
 Por último, se llama a 2 funciones publishBedStates y publishUserStates que publican los listados de los estados de camas y usuarios cada cierto tiempo respectivamente.
 
 
+
+
 En general, contenido útil de los mensajes MQTT tiene la siguiente forma:
 
 \begin{lstlisting}[caption=  Formato mensaje MQTT]
@@ -611,7 +613,7 @@ Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app'
 	\centering
 	\includegraphics[scale=.60]{./Figures/codigoFront.png}
 	\caption{Estructura de carpetas página web.}
-	\label{fig:Carpetas página web}
+	\label{fig:Carpetas página web.}
 \end{figure}
 
 Dentro de la carpeta \textit{models} se encuentran las distintas clases que se utilizan para la comunicación con el backend. Las características se presentan a continuación:
@@ -703,7 +705,7 @@ Si se quiere monitorear al sistema en tiempo real, es necesario configurar la ub
 	\centering
 	\includegraphics[scale=.40]{./Figures/monitoreo-camas.png}
 	\caption{Monitoreo de camas.}
-	\label{fig:Monitoreo de camas}
+	\label{fig:Monitoreo de camas.}
 \end{figure} 
 
 \subsection{Gestión de tareas programadas}
@@ -714,18 +716,26 @@ Si se desea generar un nuevo evento programado, se completa el formulario y se p
 	\centering
 	\includegraphics[scale=.40]{./Figures/tarea-programada.png}
 	\caption{Tareas programadas.}
-	\label{fig:Tareas programadas}
+	\label{fig:Tareas programadas.}
 \end{figure} 
 
 El backend guarda en la base de datos la nueva tarea y genera la acción correspondiente.
 
 \subsection{Estadísticas del sistema}
 
-En esta función se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. 
+En esta función se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. Para generar las graficas se utiliza HighCharts \citep{WEBSITE:33}. 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.40]{./Figures/web/pacientes-Tratamiento.png}
+	\caption{Relación paciente tratamiento.}
+	\label{fig:Relación paciente tratamiento.}
+\end{figure} 
 
 
 
 \section{Aplicación Móvil}
+En esta sección se presenta la funcionalidad de la aplicación móvil y algunos detalles de la implementación. Como se utiliza el framework IONIC/Angular, l
+
 \subsection{Estructura y organización del software}
 \pagebreak
 \subsection{Configuración del broker y acceso de usuario}
@@ -735,11 +745,39 @@ Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno
 	\centering
 	\includegraphics[scale=.80]{./Figures/app/inicioApp.png}
 	\caption{ Pantalla inicial, configuración y acceso de la aplicación.}
-	\label{fig: Pantalla inicial, configuración y acceso de la aplicación}
+	\label{fig: Pantalla inicial, configuración y acceso de la aplicación.}
 \end{figure} 
+
+En la página de configuración se ingresa la ip del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
+
+\begin{lstlisting}[caption=  Funciones del servicio que guardan en el localStorage]
+  /**
+   * Saving port values to localStorage
+   */
+  public saveValues = async () => {     
+    this.localSto.saveValuesString('MQTTSERVER',this.MQTTSERVER);
+    this.localSto.saveValuesNumber('MQTTPORT',this.MQTTPORT);
+  };
+\end{lstlisting}
+
+En la página de logueo se ingresan el nombre de usuario, y su contraseña.
 
 
 \subsection{Modo administrador}
+En el modo administrador se puede monitorear el estado de los usuarios y las camas. Para seleccionar, se presiona el botón correspondiente.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.70]{./Figures/app/administracion.png}
+	\caption{ Pantallas de administración.}
+	\label{fig: Pantallas de administración.}
+\end{figure} 
+
+El orden en que se presentan las camas tienen que ver con la prioridad que se les asignó a cada una.
+
+
+
+
 \subsection{Modo médico}
 \subsection{Modo enfermera}
 \subsection{Interacción médico-enfermera}
