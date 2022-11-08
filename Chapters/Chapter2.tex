@@ -10,9 +10,9 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 
 \section{Descripción de tecnologías web para IoT}
 \label{sec:Descripción de tecnologías web para IoT}
-
+*********
 En la ingeniería de software existe una arquitectura llamada cliente/servidor, en el cual la tarea a desarrollar se  distribuye entre los proveedores de servicios o recursos y quienes los consultan llamados clientes o demandantes. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .
-
+*********
 El \textit{backend}  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el \textit{backend} se comunica con los clientes utilizando 2 protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
 
 El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
@@ -26,6 +26,37 @@ En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker}
 El \textit{frontend} es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación. El equipo que desarrolla el \textit{frontend} consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario ) y diseñadores gráficos. Las más conocidas tecnologías que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo: \citep{WEBSITE:13}).  
 
 En los últimos años, se busca facilitar el diseño de  \textit{frontend} mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como ser Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16}, Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
+
+\section{Componentes del sistema}
+\label{sec:Sistema General}
+
+Al sistema desarrollado se lo puede descomponer en seis partes definidas:
+
+\begin{itemize}
+\item  Broker MQTT: servidor encargado de gestionar los mensajes.
+\item  Base de datos: almacena información relevante de los pacientes, usuarios y sistema.
+\item  Servidor de base de datos: proporciona una API (\textit{Application Programming Interface}, interfaz de programación de aplicaciones) del tipo REST (\textit{representational state transfer}, transferencia de estado representacional) que permite la modificación/consulta de la base de datos desde un dispositivo web. La API provee \textit{endpoints}(puntos de acceso en español) que permiten realizar distintas operaciones como ser carga, consulta, alteración o eliminación de información.
+\item  Servidor web/ página web: entrega información a un browser para que pueda mostrar una página web de administración del sistema y de carga de la base de datos.
+\item  Sistema: recibe los mensajes MQTT y responde/actúa acorde a las peticiones.
+\item Cliente browser: muestra en la pantalla de una computadora o dispositivo la página web de administración.
+\item Cliente teléfono: permite a médicos y enfermeras interactuar con el sistema.
+\end{itemize}
+
+Como se puede observar, se trata de un sistema distribuido y sus partes pueden estar ubicadas en distintas localidades.
+
+Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedores que permite correr tres de las 6 partes: la base de datos, el servidor de base de datos y el sistema propiamente dicho. Además  agrupó los subsistemas que modifican la base de datos en una sola aplicación que provee ambos servicios: el sistema y el servidor REST. En la figura  \ref{fig:División del sistema} se presenta un esquema general según esta división.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.45]{./Figures/DiagramaSistemaOrganizado.png}
+	\caption{División del sistema.}
+	\label{fig:División del sistema}
+\end{figure}
+
+
+
+\pagebreak
 
 \section{Descripción del protocolo MQTT}
 \label{sec:Descripción del protocolo MQTT}
@@ -83,15 +114,14 @@ En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes
 
 Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
 
-La carga útil del mensaje debe ser codificada en UTF-8 (\textit{8-bit Unicode Tranformation Format}, Formato Unicode de Codificación de 8-bits) \citep{WEBSITE:5}.
 
-MQTT posee tres niveles de calidad de servicio ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
+Por otro lado, el protocolo posee tres niveles de calidad de servicio ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
 
 \begin{itemize}
 \item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo mas rápido de entrega.
-\item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo "DUP" establecido hasta que se reciba acuse de recibo.
+\item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo ''DUP'' establecido hasta que se reciba acuse de recibo.
 \item Calidad 2: el mensaje se entrega exactamente una sola vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. El emisor recibe un mensaje acuse de recibo. Si el emisor no recibe un acuse de recibo, el mensaje se envía de nuevo con el distintivo DUP establecido hasta que se reciba un acuse de recibo.
-En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje,“PUBREL”. Si el remitente no recibe un acuse de recibo del“PUBREL”mensaje, el“PUBREL”se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al“PUBREL”mensaje
+En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje, ''PUBREL''. Si el remitente no recibe un acuse de recibo del ''PUBREL'' mensaje, el ''PUBREL'' se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al“PUBREL”mensaje
 El receptor puede procesar el mensaje proporcionado en la primera o segunda fase, no tiene que volver a procesarlo. Si el receptor es un intermediario, publica el mensaje a los suscriptores. Si el receptor es un cliente, el mensaje se entrega a la aplicación de suscriptor. El receptor devuelve un mensaje de finalización al emisor para comunicarle que ha terminado de procesar el mensaje.
 
 \end{itemize}
@@ -121,7 +151,7 @@ Para poder utilizar MQTT sobre WebSockets el Broker debe ser capaz de manejar We
 Para mejorar la seguridad, se puede implementar TLS utilizando WebSockets seguros para encriptar toda la conexión.
 
 \label{subsec:Broker Mosquitto}
-\subsection{Broker MOSQUITTO}
+\subsection{Broker Mosquitto}
 
 Existen muchos brokers MQTT disponibles. Para este trabajo se seleccionó Eclipse Mosquitto como Broker ya que es de código abierto con licencia EPL/EDL que implementa MQTT en sus versiones 5.0, 3.1.1 y 3.1. \citep{WEBSITE:7}.
 
@@ -325,13 +355,13 @@ Otra característica que lo hace muy conveniente es que se encuentra disponible 
 \section{Descripción del protocolo HTTP}
 \label{sec:Descripción del protocolo HTTP}
 
-HTTP es un protocolo que nos permite realizar una petición de datos y recursos como ser documentos HTML que pueden mostrarse en navegadores. Es la base de cualquier intercambio en la red \citep{WEBSITE:19}. En la figura \ref{fig:Protocolo HTTP } se observa donde se ubica el protocolo dentro del modelo de comunicación TCP/IP.
+HTTP es un protocolo que nos permite realizar una petición de datos y recursos como ser documentos HTML que pueden mostrarse en navegadores. Es la base de cualquier intercambio en la red \citep{WEBSITE:19}. En la figura \ref{fig:Protocolo HTTP } se observa donde se ubica el protocolo dentro del modelo de comunicación TCP/IP :
 
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.5]{./Figures/http.png}
-	\caption{Pila de comunciaciones en un navegador.}
+	\caption{Pila de comunicaciones en un navegador.}
 	\label{fig:Protocolo HTTP }
 \end{figure}
 
@@ -342,7 +372,7 @@ Entre las características principales figuran \citep{WEBSITE:19}:
 \item Es sencillo.
 \item Puede expandirse.
 \item Es un protocolo de sesiones pero no de estados: no guarda ningún dato entre dos peticiones en la misma sesión.
-\item Las conexiones en la capa de transporte por lo que quedan fuera del protocolo HTTP.
+\item Las conexiones se realizan en la capa de transporte por lo que quedan fuera del protocolo HTTP.
 \end{itemize}
 
 La secuencia de la comunicación entre el cliente y el servidor es la siguiente \citep{WEBSITE:19}:
@@ -353,58 +383,30 @@ La secuencia de la comunicación entre el cliente y el servidor es la siguiente 
 \item Se cierra o reusa la conexión.
 \end{enumerate}
 
-En el encabezado del mensaje http se puede introducir información de la sesión. Lo cual es muy importante en referencia a la seguridad. 
-
-\section{Componentes del sistema}
-\label{sec:Sistema General}
-
-El sistema desarrollado se lo puede descomponer en seis partes definidas:
-
-\begin{itemize}
-\item  Broker MQTT: servidor encargado de gestionar los mensajes
-\item  Base de datos: almacena información relevante de los pacientes, usuarios y sistema.
-\item  Servidor de Base de datos: proporciona una API (\textit{Application Programming Interface}, interfaz de programación de aplicaciones) del tipo REST (\textit{representational state transfer}, transferencia de estado representacional) que permite la modificación/consulta de la base de datos desde un dispositivo web. La API provee \textit{endpoints}(puntos de acceso en español) que permiten realizar operaciones.
-\item  Servidor web/ página web: entrega información a un browser para que pueda mostrar una página web de administración del sistema y de carga de la base de datos.
-\item  Sistema: Recibe los mensajes MQTT y responde/actúa acorde a las peticiones.
-\item Cliente browser: muestra en la pantalla de una computadora o dispositivo la página web de administración.
-\item Cliente teléfono: permite a médicos y enfermeras interactuar con el sistema.
-\end{itemize}
-
-Como se puede observar, se trata de un sistema distribuido y sus partes pueden estar ubicadas en distintas localidades.
-
-Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedores que permite correr tres de las 6 partes: la base de datos, el servidor de base de datos y el sistema propiamente dicho. Además se agrupó los subsistemas que modifican la base de datos en una sola aplicación que provee ambos servicios: el sistema y el servidor REST. En la figura  \ref{fig:División del sistema} se presenta un esquema general según esta división.
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.45]{./Figures/DiagramaSistemaOrganizado.png}
-	\caption{División del sistema.}
-	\label{fig:División del sistema}
-\end{figure}
-
+En el encabezado del mensaje HTTP se puede introducir información de la sesión. Lo cual resulta muy importante en referencia a la seguridad. 
 
 
 \section{Sistemas de contenedores Docker}
 \label{sec:Docker}
 
-Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Multiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
+Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Múltiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
 
-Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
+Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
 
 Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema \citep{WEBSITE:8}.
 
 Resumo brevemente las partes del ecosistema Docker, para información más detallada consultar\citep{WEBSITE:8} o bien \citep{WEBSITE:9}.
 
 \begin{itemize}
-\item \textit{Images} : son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
-\item \textit{Containers} : son instancias de ejecución de una imagen. Se pueden iniciar, detener, mover o eliminar mediante comandos. Se puede conectar un contenedor a una o mas redes.
-\item \textit{Networks} : Docker utiliza una interfaz virtual para comunicarse con la red del equipo host.
-\item \textit{Volumes} : permiten generar espacios de almacenamiento dentro de cada contenedor, el funcionamiento es similar a las carpetas compartidas en las máquinas virtuales.
-\item \textit{Registry} : un registro almacena imágenes de docker. Dockerhub es un registro público que cualquiera puede utilizar.
+\item \textit{Images}: son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
+\item \textit{Containers}: son instancias de ejecución de una imagen. Se pueden iniciar, detener, mover o eliminar mediante comandos. Se puede conectar un contenedor a una o mas redes.
+\item \textit{Networks}: Docker utiliza una interfaz virtual para comunicarse con la red del equipo host.
+\item \textit{Volumes}: permiten generar espacios de almacenamiento dentro de cada contenedor, el funcionamiento es similar a las carpetas compartidas en las máquinas virtuales.
+\item \textit{Registry}: un registro almacena imágenes de docker. Dockerhub es un registro público que cualquiera puede utilizar.
 \end{itemize}
 
 Para poder correr un contenedor docker es necesario ejecutar el comando:
-\begin{lstlisting}[label=docker:vControl,caption=Ejecución de contenedor]  
+\begin{lstlisting}[label=docker:vControl,caption=Ejecución de contenedor.]  
 >docker-run --[parametro1] --[parametro2] ...
 nombre_contendor:version
 \end{lstlisting}
@@ -416,18 +418,18 @@ nombre_contendor:version
 Docker Compose es una herramienta del ecosistema Docker que sirve para definir aplicaciones multicontenedor en un archivo de texto llamado "docker-compose.yml". 
 Con esta herramienta se facilita el paso de parámetros al contenedor y posibilita generar imágenes complejas utilizando e interconectando distintos contenedores.
 
-Como ejemplo, en \citep{WEBSITE:11} se presenta un archivo para ejecutar un contenedor \textit{Wordpress}  junto con una base de datos MySQL. 
+ 
 
 \section{Introducción a las bases de datos}
 \label{sec: Introducción a las bases de datos}
-
+********
 Que es un dato? Es un elemento o característica que permite hacer la descripción de un objeto \citep{WEBSITE:12}.
-
+*********
 Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada \citep{WEBSITE:11}.
 
 Durante los años 80 se popularizó el tipo de base de dato relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.
 
-En 1970, IBM (junto con contribuciones de Oracle) desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es apliamente utilizado hoy en día, aún cuando surgen nuevos.
+En 1970, IBM junto a Oracle desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es apliamente utilizado hoy en día, aún cuando surgen nuevos.
 
 Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y estan diseñadas para manejar grandes volumentes de datos \citep{WEBSITE:12}.
 
@@ -435,7 +437,7 @@ Se podría empezar a clasificar las bases de datos en relacionales y no relacion
 \subsection{Descripción de MySQL}
 \label{subsec: Bases de datos relacionales}
 
-En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la decada de los 90, y es de uso libre. Es potente, rápido y altamente escalable \citep{BOOK:2}.
+En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la década de los 90, y es de uso libre. Es potente, rápido y altamente escalable \citep{BOOK:2}.
 
 Existen tres formas de interactuar con una base de datos MySQL: utilizando la consola, a través de una interfaz web como phpMyAdmin y mediante un lenguaje de programación.
 
@@ -449,45 +451,42 @@ En la figura \ref{fig:Página phpMyAdmin} se puede observar la interfaz:
 	\label{fig:Página phpMyAdmin}
 \end{figure}
 
-
-Las sentencias SQL finalizan siempre con el símbolo `;`.
-
 Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones SQL} \citep{BOOK:2}:
 
 %\begin{verbatim}
 \begin{table}[h]
 	\centering
-	\caption[Comandos SQL]{Comandos básicos SQL}
+	\caption[Comandos SQL]{Comandos básicos SQL.}
 	\begin{tabular}{l c }    
 		\toprule
 		\textbf{Comando}     & \textbf{Función} \\
 		\midrule
-		ALTER & Modificar una base de datos o una tabla.    \\		
-		BACKUP    & Copia de seguridad de una tabla.      \\
-		$\backslash$c  & Cancelar la entrada.\\
-		CREATE  & Crear la base de datos.\\
-		DELETE  & Borrar una fila de una tabla.\\
-		DESCRIBE  & Describir columnas de una tabla.\\
-		DROP  & Eliminar una base de datos o una tabla.\\
+		ALTER & Modificar una base de datos o una tabla    \\		
+		BACKUP    & Copia de seguridad de una tabla      \\
+		$\backslash$c  & Cancelar la entrada\\
+		CREATE  & Crear la base de datos\\
+		DELETE  & Borrar una fila de una tabla\\
+		DESCRIBE  & Describir columnas de una tabla\\
+		DROP  & Eliminar una base de datos o una tabla\\
 		Exit & Salir.\\
-		GRANT & Cambiar permisos de un usuario.\\
-		INSERT INTO..VALUES & Insertar datos.\\
-		RENAME & Cambiar nombre de una tabla.\\
-		USE & Usar una base de datos.\\
-		UPDATE & Actualizar un registro existente.\\
+		GRANT & Cambiar permisos de un usuario\\
+		INSERT INTO..VALUES & Insertar datos\\
+		RENAME & Cambiar nombre de una tabla\\
+		USE & Usar una base de datos\\
+		UPDATE & Actualizar un registro existente\\
 		SELECT  & Consultar una fila\\
-		JOIN... ON & Consultar multiples tablas\\
+		JOIN... ON & Consultar múltiples tablas\\
 		\bottomrule
 		\hline
 	\end{tabular}
 	\label{tab:Funciones SQL}
 \end{table}
-
+\pagebreak
 Ejemplo de uso, suponiendo 2 tablas:
 
 \begin{table}[h]
 	\centering
-	\caption[Tabla 1 Ejemplo SQL]{TABLA1 para el ejemplo 1}
+	\caption[Tabla 1 Ejemplo SQL]{TABLA1 para el ejemplo 1.}
 	\begin{tabular}{l c c}    
 		\toprule
 		\textbf{PacienteId}     & \textbf{Nombre} \\
@@ -502,7 +501,7 @@ Ejemplo de uso, suponiendo 2 tablas:
 \pagebreak
 \begin{table}[h]
 	\centering
-	\caption[Tabla 2 Ejemplo SQL]{TABLA2 para el ejemplo 1}
+	\caption[Tabla 2 Ejemplo SQL]{TABLA2 para el ejemplo 1.}
 	\begin{tabular}{l c c}    
 		\toprule
 		\textbf{PacienteId}     & \textbf{Apellido} \\
@@ -524,9 +523,9 @@ WHERE TB1.pacienteId=1;
 >Pedro Perez
 \end{lstlisting}
 
-Uno de las multiples ventajas que poseen los motores de bases de datos relacionales es la posibilidad de realizar transacciones. Las mismas consisten en secuencias de operaciones que se ejecutan en orden y se completan con éxito.
+Una de las múltiples ventajas que poseen los motores de bases de datos relacionales es la posibilidad de realizar transacciones. Las mismas consisten en secuencias de operaciones que se ejecutan en orden y se completan con éxito.
 
-\begin{lstlisting}[label=código:SQL2:vControl,caption=Secuencia de transacción sql]  
+\begin{lstlisting}[label=código:SQL2:vControl,caption=Secuencia de transacción SQL.]  
 >BEGIN;
 >SELECT Nombre FROM  TABLA1;
 >SELECT Apellido FROM  TABLA2;
@@ -537,7 +536,7 @@ Uno de las multiples ventajas que poseen los motores de bases de datos relaciona
 >Salvador
 \end{lstlisting}
 
-Existe muchas referencias sobre programación con MySQL, para un estudio mas profundo se puede utilizar tutoriales como \citep{WEBSITE:13}.
+
 \pagebreak
 \section{Frameworks/librerías para desarrollo web/móvil}
 
@@ -545,30 +544,19 @@ Existe muchas referencias sobre programación con MySQL, para un estudio mas pro
 
 \subsection{Librerías Node.js, Express y JWT}
 \label{subsec: Node}
-El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, el cuales es un \textit{runtime environment}(entorno de ejecución) de javascript. Node.js se encuentra orientada a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
+El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, que es un \textit{runtime environment}(entorno de ejecución) de Javascript. Node.js se encuentra orientado a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
 
-Ademas de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar multiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
+Ademas de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
 
-Por ultimo, es importante mecionar que node posee un gestor de packetes/librerías NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
-
-Para mas información sobre Node.js consultar \citep{WEBSITE:20}.
+Por ultimo, es importante mecionar que Node.js posee un gestor de paquetes/librerías llamado NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
 
 
 Para el ruteo de los endpoints con los que se comunica la página web se utiliza Express.js \citep{WEBSITE:21} que es una infraestructura web rápida, minimalista y flexible para Node.js. 
 
-Express.js facilita la creación de la API(\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como incorporar software \textit{Middleware}. 
+Express.js facilita la creación de la API(\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como la incorporación de software \textit{Middleware}. 
 
 Con respecto a la seguridad para el acceso de la página web, existen dos métodos: por medio de \textit{cookies} o por medio de web \textit{tokens}. Se seleccionó utilizar el segundo y para ello se utiliza JWT \citep{WEBSITE:22} que implementa el estandar RFC 7519. 
 
-
-
-
-\subsection{Librería Eclipse Paho}
-\label{subsec: Paho}
-
-Para interconectar el programa servidor escripto en Node.js con el broker MQTT se utiliza la librería PAHO MQTT \citep{WEBSITE:23}.
-
-En las aplicaciones móviles se utilizó un wrapper (rsup - MQTT )que utiliza la misma librería \citep{WEBSITE:27}.
 
 
 \subsection{Framework Ionic/Angular, Capacitor y Android Studio}
@@ -576,9 +564,9 @@ En las aplicaciones móviles se utilizó un wrapper (rsup - MQTT )que utiliza la
 
 Drifty.co introdujo Ionic en el año 2013 \citep{WEBSITE:24}. Nació originalmente para desarrollar aplicaciones móviles con Angular 1 pero hoy en día permite desarrollar para dispositivos celulares, páginas web progresivas y aplicaciones de escritorio junto con Electron \citep{WEBSITE:25}. Ionic permite trabajar con Vue, React y Angular en su última versión.
 
-Este framework posee muchos \textit{plugins}(o software de ayuda) que permiten acceder a los recursos de los dispositivos móviles como ser su microfono, la cámara, la información de posicionamiento. Junto con Ionic se utiliza Capacitor \citep{WEBSITE:26}, que es un runtime nativo para iOS, Android y Aplicaciones Web Progresivas.
+Este framework posee muchos \textit{plugins}(o software de ayuda) que permiten acceder a los recursos de los dispositivos móviles como ser su micrófono, la cámara, la información de posicionamiento, entre otros. Junto con Ionic se utiliza Capacitor \citep{WEBSITE:26}, que es un runtime nativo para iOS, Android y aplicaciones web progresivas.
 
-El código que genera Ionic debe compilarse para generar el archivo ejecutable(ya sea .ipa para iOS o apk para Android). Para ello, se utilizan los entornos de desarrollo Xcode para iOS, y Android Studio para Android.
+El código que genera Ionic debe compilarse para generar el archivo ejecutable(ya sea .ipa para iOS o .apk para Android). Para ello, se utilizan los entornos de desarrollo Xcode para iOS, y Android Studio para Android.
 
 Por ejemplo, el método de desarrollo para una aplicación que se ejecutará en un dispositivo Android es el siguiente:
 

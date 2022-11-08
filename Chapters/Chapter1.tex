@@ -21,6 +21,7 @@ En este capítulo se presentan las necesidades de los sistemas hospitalarios jun
 
 %----------------------------------------------------------------------------------------
 \section{Internet de las Cosas y las actividades hospitalarias}
+\label{sec:Internet de las Cosas y las actividades hospitalarias}
 
 En la actualidad, el avance de la Internet de las Cosas (IoT de \textit{Internet of Things} ) y la disminución de costos asociados a la tecnología hacen factible su incorporación a distintos contextos de la vida cotidiana. Un campo de mucho interés es el de infraestructuras hospitalarias inteligentes \citep{ARTICLE:1}.
 
@@ -29,7 +30,7 @@ El término Internet de las Cosas fue utilizado por primera vez en 1990 para des
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.45]{./Figures/InfraestructuraHospi.png}
-	\caption{Infraestructura Hospitalaria.}
+	\caption{Infraestructura hospitalaria.}
 	\label{fig:Infraestructura Hospitalaria}
 \end{figure}
 
@@ -41,7 +42,7 @@ Si consideramos a las diferentes personas como un elemento más de un sistema, e
 Los principares beneficios de aplicar Internet de las Cosas son dos \citep{ARTICLE:1}:
 \begin{itemize}
 \item Cuidado clínico: el uso de sensores inteligentes permite monitorear el estado de los pacientes automáticamente. Como ejemplo se puede mencionar: cada quince minutos tomar la presión arterial del paciente y guardarla en una base de datos, cada una hora medir la temperatura y almacenar su valor en una base de datos, etc. Con los datos obtenidos se pueden generar mejores diagnósticos y tratamientos. El hecho de automatizar la gestión de los datos y la utilización de algoritmos de Inteligencia Artifical para los diagnósticos disiminuye el tiempo análisis y la posibilidad de errores. El objetivo final es  efectuar tratamientos preventivos en momentos iniciales de la presencia de síntomas.
-\item Monitoreo remoto: otro beneficio muy importante radica en el hecho de que al estar almacenado en una red (o en la nube), la disponibilidad de la información facilita la consulta de la misma por parte de los médicos en todo momento, permitiendo que actuar de manera eficiente y rápida ante eventos.
+\item Monitoreo remoto: otro beneficio muy importante radica en el hecho de que al estar almacenado en una red (o en la nube), la disponibilidad de la información facilita la consulta de la misma por parte de los médicos en todo momento, permitiendo actuar de manera eficiente y rápida ante eventos.
 \end{itemize}
 
 
@@ -76,12 +77,13 @@ Un sistema de estas características posee un modelo de capas, presentado en \ci
 
 
 \section{Motivación}
+\label{Motivación}
 
 %Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
 %\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
 
 %Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
-En Argentina muchos hospitales están retrasados en su progreso tecnológico. Por dicha razón, todos los avances en este campo son  necesarios. Por lo explicado en la sección anterior, el gestionar la institución con un sistema de IoT es de suma utilidad.
+En Argentina muchos hospitales están retrasados en su progreso tecnológico. Por dicha razón, todos los avances en este campo son  necesarios. Por lo explicado en la sección \ref{sec:Internet de las Cosas y las actividades hospitalarias}, el gestionar la institución con un sistema de IoT es de suma utilidad.
 
 Surix S.R.L fabrica un sistema IP de llamado a enfermera que está basado en el protocolo SIP. Este consiste en un servidor central y terminales que se encuentran en las habitaciones del hospital. La aplicación principal se ejecuta en una computadora o bien en una tablet y monitorea el estado
 de las habitaciones. La principal motivación para migrar el protocolo radica en el alto costo de hardware que genera el agregar dispositivos a su sistema actual. En este contexto, se encargó la realización de este trabajo.
@@ -89,6 +91,7 @@ de las habitaciones. La principal motivación para migrar el protocolo radica en
 
 
 \section{Estado de arte}
+\label{Estado de arte}
 
 En el mercado internacional se encontró un producto similar  desarrollado por la firma TigerConnect (antes llamada TigerText), \textit{TigerConnect Clinical Collaboration Platform}(Plataforma de Colaboración Clínica TigerConnect) \citep{WEBSITE:2}, cuyas principales características se detallan a continuación:
 \begin{itemize}
@@ -121,13 +124,13 @@ El sistema resultante de este trabajo está orientado a gestionar las relaciones
 
 Los componentes del sistema son:
 \begin{itemize}
-\item broker MQTT: permite gestionar los mensajes entre los elementos del sistema.
-\item base de datos: donde alojar información de reportes de habitaciones, personal y datos relevantes al paciente.
-\item página web para configuración: permite gestionar usuarios, camas, pacientes, observar estado del sistema.
-\item aplicación móvil multiplataforma: permite a los usuarios enfermeros interactuar con el sistema y con los médicos. La aplicación es capaz de identificar la cama correspondiente (mediante lectura de símbolos QR) y de transmitir mensajes de voz en caso de ser necesario.
+\item Broker MQTT: permite gestionar los mensajes entre los elementos del sistema.
+\item Base de datos: donde alojar información de reportes de habitaciones, personal y datos relevantes al paciente.
+\item Página web para configuración: permite gestionar usuarios, camas, pacientes, observar estado del sistema.
+\item Aplicación móvil multiplataforma: permite a los usuarios enfermeros interactuar con el sistema y con los médicos. La aplicación es capaz de identificar la cama correspondiente (mediante lectura de símbolos QR) y de transmitir mensajes de voz en caso de ser necesario.
 \end{itemize}
 
-
+\pagebreak
 El alcance del trabajo consiste en:
 \begin{itemize}
 \item Confección de un plan de trabajo.

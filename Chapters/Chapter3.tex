@@ -383,7 +383,7 @@ client.on('connect', function () {
 
   //task that will publish beds state each second
   setInterval(publishBedStates, 10000);
-  //task that will publish users state each second
+  //task that will publish users state 
   setInterval(publishUserStates, 15000);
 })
 \end{lstlisting}
@@ -606,7 +606,7 @@ El software web generado contiene dos versiones: una para un entorno de desarrol
 
 Para ejecutar la aplicación en la máquina local se debe ejecutar el comando:  \textit{'' ionic lab ''}, mientras que para compilar la página productiva se debe ejecutar \textit{'' ionic build prod ''}. El resultado de la construcción se encuentra dentro de la carpeta \textit{''/www''}.
 
-Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app''} y se presenta una captura en la figura \ref{fig:Carpetas página web}.
+Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app''} y se presenta una captura en la figura \ref{fig:Carpetas página web.}.
 
 
 \begin{figure}[ht]
@@ -628,10 +628,10 @@ Dentro de la carpeta \textit{models} se encuentran las distintas clases que se u
 \item message: modelo de mensaje almacenado en base de datos(no utilizado).
 \item note: modelo de nota para un paciente(no utilizado en la aplicación web).
 \item nurseSpec: clase que se utiliza para observar las especialidades de los distintos enfermeros. Propiedades: numero, numero de especialidad y nombre de especialidad.
-\item patient: clase que contiene información del paciente (id, nombre, apellido, cama, indice en la tabla de notas, indice en la tabla de médicos)
-\item patientTreat: clase que relaciona un paciente con un tratamiento. Propiedades: indice, número de paciente, número de tratamiento y nombre de tratamiento.
-\item qr: relaciona un indice con un texto (se utiliza para guardar / recuperar indices de qr)
-\item spec: clase que contiene una especialidad/tratamiento. Contiene un indice y un texto con el nombre.
+\item patient: clase que contiene información del paciente (id, nombre, apellido, cama, índice en la tabla de notas, índice en la tabla de médicos)
+\item patientTreat: clase que relaciona un paciente con un tratamiento. Propiedades: índice, número de paciente, número de tratamiento y nombre de tratamiento.
+\item qr: relaciona un índice con un texto (se utiliza para guardar / recuperar índices de qr)
+\item spec: clase que contiene una especialidad/tratamiento. Contiene un índice y un texto con el nombre.
 \item user-status: clase que permite obtener desde el sistema el estado de los usuarios (identificación de usuario y estado "logueado"- "no logeado").
 \item user: contiene información del usuario (nombre, apellido, ocupación, contraseña, nombre de usuario).
  
@@ -699,7 +699,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 \end{lstlisting}
 
 \subsection{Monitoreo del sistema}
-Si se quiere monitorear al sistema en tiempo real, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas}.
+Si se quiere monitorear al sistema, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas.}. El sistema reporta el estado de las camas cada un segundo (o cuando hay un cambio abrupto) y el estado de los usuarios cada un segundo y quinientos milisegundos.
 
 \begin{figure}[ht]
 	\centering
@@ -732,12 +732,26 @@ En esta función se puede observar la cantidad de atenciones por enfermero guard
 \end{figure} 
 
 
-
+\pagebreak
 \section{Aplicación Móvil}
-En esta sección se presenta la funcionalidad de la aplicación móvil y algunos detalles de la implementación. Como se utiliza el framework IONIC/Angular, l
+En esta sección se presenta la funcionalidad de la aplicación móvil y algunos detalles de la implementación.
 
 \subsection{Estructura y organización del software}
+La estructura de archivos del proyecto es la presentada en la figura \ref{fig: Estructura de código fuente de la aplicación móvil.}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.70]{./Figures/app/estructura-app.png}
+	\caption{ Estructura de código fuente de la aplicación móvil.}
+	\label{fig: Estructura de código fuente de la aplicación móvil.}
+\end{figure} 
+
+El código de las distintas páginas por las que navega el usuario se encuentra dentro de \textit{''./src/app/pages''}. Los modelos (''clases'') utilizados se encuentra en la carpeta \textit{''./src/app/pages''} y los servicios en la carpeta \textit{''./src/app/services''}. La carpeta \textit{''./src/app/chat''} contiene la primera versión la intercomunicación entre enfermeros-médicos que simulaba una sala de reunión (similar a la ofrecida por el producto en el mercado). Luego se migró a la definitiva, que cumple estrictamente con lo solicitado en un principio, pero por solicitud del cliente, no se eliminó la carpeta.
+
+Como se mencionó en secciones anteriores, la aplicación móvil interactua con el backend solo utilizando websockets MQTT. 
+
 \pagebreak
+
 \subsection{Configuración del broker y acceso de usuario}
 
 Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno redirige a la página de configuración del broker MQTT y otro a la página de ingreso.
@@ -777,9 +791,11 @@ El orden en que se presentan las camas tienen que ver con la prioridad que se le
 
 
 
-
+\pagebreak
 \subsection{Modo médico}
+\pagebreak
 \subsection{Modo enfermera}
+\pagebreak
 \subsection{Interacción médico-enfermera}
 \pagebreak
 \section{Contraste con los requerimientos}
