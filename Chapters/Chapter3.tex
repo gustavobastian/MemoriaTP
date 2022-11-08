@@ -93,7 +93,7 @@ En este capítulo se explica como se utilizaron las herramientas mencionadas en 
 %\end{lstlisting}
 \section{Broker Mosquitto}
 
-El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos del sistema. El único requisito es que se encuentre instalado en la misma red que los clientes (en un sistema que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
+El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos. El único requisito es que se encuentre instalado en la misma red que los clientes (en un dispositivo que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
 
 
 
@@ -249,11 +249,11 @@ En la figura \ref{fig:Estructura de directorio(backend)} se presenta la estructu
 
 La descripción de los contenidos de cada carpeta es:
 \begin{itemize}
-\item middleware: contiene el programa que filtra el acceso a la api desde el front end web.
-\item Monitoring: contiene clases con información del estado del sistema que se actualiza de en tiempo real. Cada una de estas clases contiene una lista de todos los elementos y se presenta a los tópicos correspondientes.
-\item mqtt: contiene clases que se encargan de procesar y responder los mensajes que arriban por medio del protocolo mqtt.
-\item mysql: contiene la clase con el pool de conexiones a la base de datos.
-\item routes: contiene las rutas de express para poder obtener acceso a la base de datos desde http.
+\item middleware: contiene el programa que filtra el acceso a la api desde el la página web.
+\item Monitoring: contiene clases con información del estado del sistema que se actualiza en tiempo real. Cada una de estas clases contiene una lista de todos los elementos y se presenta a los tópicos correspondientes.
+\item mqtt: contiene clases que se encargan de procesar y responder los mensajes que se reciben por medio del protocolo mqtt.
+\item mysql: contiene la clase con el \textit{pool} (''grupo'') de conexiones a la base de datos.
+\item routes: contiene las rutas de express para acceder a la base de datos desde http.
 \end{itemize}
 
 \subsection{Descripción de las clases para monitoreo del sistema}
@@ -263,7 +263,7 @@ Las siguientes son clases que se utilizan para reportar mediante MQTT los estado
 \begin{itemize}
 
 \item \textbf{ Monitoreo de camas:}\\
-Se genera una clase \textit{Bedslist} la cual contiente una lista de elementos json con información de cada cama.
+Una  clase llamada \textit{Bedslist} la cual contiente una lista de elementos json con información de cada cama (se instancia al iniciar el backend).
 
 \begin{lstlisting}[caption=  Clase Bedlist]
 class  BedsList  {    
@@ -290,7 +290,7 @@ Los componentes de cada elemento son
 \end{enumerate}
 
 \item \textbf{ Monitoreo de usuarios:}\\
-Se genera una clase \textit{UserList} la cual contiente una lista de elementos json con información de cada usuario.
+Una clase \textit{UserList} la cual contiente una lista de elementos json con información de cada usuario (se instancia al iniciar el backend):
 
 \begin{lstlisting}[caption=  Clase Userlist]
 constructor() {
@@ -471,7 +471,7 @@ Las excepciones al formato general de los mensajes vienen dadas por:
 
 La API del trabajo utiliza Express junto con Cookie-parser. 
  
-En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Por definición la página web de configuración solo puede ser accedida por los usuarios administradores, para lograr autenticación el \textit{backend} utiliza las librería \texbf{jsonwebtoken} \citep{WEBSITE:32} y \textbf{bcrypt} \citep{WEBSITE:31}. 
+En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Por definición la página web de configuración solo puede ser accedida por los usuarios administradores, para lograr autenticación el \textit{backend} utiliza las librería \textbf{jsonwebtoken} \citep{WEBSITE:32} y \textbf{bcrypt} \citep{WEBSITE:31}. 
 
 Se denomina ruteo a la forma que un \textit{endpoint} (punto de acceso, en español) de una aplicación responde a las peticiones de los clientes. En las aplicaciones express, el objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema.
 
@@ -572,10 +572,10 @@ Cada recurso posee su ruta correspondiente. Esta forma de organizar el código p
 
 \pagebreak
 
-\section{Página Web(frontend)}
+\section{Página Web}
 
 La página web de administración consiste en un \textit{dashboard} (tablero de control) que permite al usuario administrador gestionar el sistema.
-Es implementada utilizando el framework Ionic/Angular y las principales áreas de la visualización se observa en la figura \ref{fig:Página web}.
+Es implementada utilizando el framework Ionic/Angular, con el lenguaje de programación Typescript y las principales áreas de la visualización se observa en la figura \ref{fig:Página web}.
 
 \begin{figure}[ht]
 	\centering
@@ -584,7 +584,7 @@ Es implementada utilizando el framework Ionic/Angular y las principales áreas d
 	\label{fig:Página web}
 \end{figure}
 
-En el area menú se presentan las distintas utilizades de la página:
+En el área menú se presentan las distintas utilidades de la página:
 \begin{itemize}
 \item Login: acceso al sistema. El visitante ingresa su nombre de usuario y contraseña y se le otorga los permisos correspondientes (la conexión recibe el \textit{token} del \textit{backend}).
 \item MQTT: permite editar o probar la conexión al broker MQTT del sistema. Es necesario si se desea monitorear el estado de los usuarios o camas en tiempo real.
@@ -592,16 +592,112 @@ En el area menú se presentan las distintas utilizades de la página:
 \item Camas: permite editar información de las camas como ser código QR, numero de llamador, cuarto y piso.
 \item Usuarios: permite agregar,editar o dar de baja usuarios.
 \item Pacientes: permite agregar,editar o dar de baja pacientes.
-\item Log Eventos: permite observar el listado de eventos en cada paciente sucedidos.
+\item Log Eventos: permite observar el listado de eventos que se hayan guardado en la base de datos.
 \item Calendario: permite observar o agregar tareas rutinarias asignadas a un paciente.
 \item Estadísticas: permite observar el numero de intervenciones de un enfermero, la distribucion de especialidades dentro del grupo de enfermeros y la distribución de tratamientos requeridos por los pacientes. Con esta información el administrador puede notificar sobre necesidades de mayor capacitación en un tema para los enfermeros.
 \end{itemize}
 
 
 \subsection{Estructura y organización del software}
+
+El software web generado contiene dos versiones: una para un entorno de desarrollo y otra para un entorno productivo. En este desarrollo, las características del entorno se encuentran en una carpeta \textit{''/src/environments''}. 
+
+Para ejecutar la aplicación en la máquina local se debe ejecutar el comando:  \textit{'' ionic lab ''}, mientras que para compilar la página productiva se debe ejecutar \textit{'' ionic build prod ''}. El resultado de la construcción se encuentra dentro de la carpeta \textit{''/www''}.
+
+Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app''} y se presenta una captura en la figura \ref{fig:Carpetas página web}.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.60]{./Figures/codigoFront.png}
+	\caption{Estructura de carpetas página web.}
+	\label{fig:Carpetas página web}
+\end{figure}
+
+Dentro de la carpeta \textit{models} se encuentran las distintas clases que se utilizan para la comunicación con el backend. Las características se presentan a continuación:
+
+\begin{itemize}
+\item bed-status: gestiona información del estado de las camas(''ocupada'', ''llamando'',...) y del tratamiento que utiliza el paciente.
+\item bed: gestiona información de las camas.
+\item calendarEvent: se utiliza para gestionar información de tareas programas.
+\item logEvent: se utiliza para gestionar información de eventos realizados.
+\item medicalTable: relaciona un usuario con una tabla de médicos.
+\item message-model: modelo de mensaje que se transmite a través de MQTT.
+\item message: modelo de mensaje almacenado en base de datos(no utilizado).
+\item note: modelo de nota para un paciente(no utilizado en la aplicación web).
+\item nurseSpec: clase que se utiliza para observar las especialidades de los distintos enfermeros. Propiedades: numero, numero de especialidad y nombre de especialidad.
+\item patient: clase que contiene información del paciente (id, nombre, apellido, cama, indice en la tabla de notas, indice en la tabla de médicos)
+\item patientTreat: clase que relaciona un paciente con un tratamiento. Propiedades: indice, número de paciente, número de tratamiento y nombre de tratamiento.
+\item qr: relaciona un indice con un texto (se utiliza para guardar / recuperar indices de qr)
+\item spec: clase que contiene una especialidad/tratamiento. Contiene un indice y un texto con el nombre.
+\item user-status: clase que permite obtener desde el sistema el estado de los usuarios (identificación de usuario y estado "logueado"- "no logeado").
+\item user: contiene información del usuario (nombre, apellido, ocupación, contraseña, nombre de usuario).
+ 
+\end{itemize}
+
+
+Dentro de la carpeta \textit{pages} se encuentran las distintas secciones de acción de la página (se presentan en el área de presentación/trabajo).
+
+Dentro de la carpeta \textit{services} se organizan los distintos servicios.
+
+Dentro de la carpeta \textit{folder} se encuentra el layout principal de la página.
+
+
+
+
 \subsection{Acceso de usuario}
+
+Un usuario no puede acceder a las distintas utilidades de la página si no se encuentra logeado o si no es administrador. Todas las consultas al backend necesitan poseer el \textit(token) de autenticación en su encabezado. Esto se logra mediante el servicio interceptor:
+
+
+\begin{lstlisting}[caption=  Inserción de token]
+export class AuthInterceptorService implements HttpInterceptor {
+
+  constructor(private _router:Router) { }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.includes("/authenticate")){
+      return next.handle(req);
+    }
+    const token: string = localStorage.getItem('token');
+    let request = req;
+	if (token) {
+      request = this.addToken(request, token);
+      return next.handle(request)
+      .pipe(catchError((error: HttpErrorResponse) => {
+        let errorMsg = '';
+        if (error.error instanceof ErrorEvent) {
+          console.log('Client Error');
+          errorMsg = `Error: ${error.error.message}`;
+        }
+        else {
+          console.log('Server Error');
+          errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
+        }
+        console.log(errorMsg);
+        return throwError(errorMsg);
+      })
+      );
+    }else{
+      return next.handle(request)
+      //if i have no token navigate to login
+      this._router.navigate(['/login']);
+    }    
+  }
+
+  private addToken(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+}
+
+\end{lstlisting}
+
 \subsection{Monitoreo del sistema}
-Para poder acceder a las funcionalidades es necesario logearse con las credenciales de un administrador. Si se quiere monitorear al sistema en tiempo real, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas}.
+Si se quiere monitorear al sistema en tiempo real, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas}.
 
 \begin{figure}[ht]
 	\centering
@@ -609,9 +705,26 @@ Para poder acceder a las funcionalidades es necesario logearse con las credencia
 	\caption{Monitoreo de camas.}
 	\label{fig:Monitoreo de camas}
 \end{figure} 
- 
+
 \subsection{Gestión de tareas programadas}
+
+Si se desea generar un nuevo evento programado, se completa el formulario y se presiona enviar.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.40]{./Figures/tarea-programada.png}
+	\caption{Tareas programadas.}
+	\label{fig:Tareas programadas}
+\end{figure} 
+
+El backend guarda en la base de datos la nueva tarea y genera la acción correspondiente.
+
 \subsection{Estadísticas del sistema}
+
+En esta función se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. 
+
+
+
 \section{Aplicación Móvil}
 \subsection{Estructura y organización del software}
 \subsection{Configuración del broker y acceso de usuario}

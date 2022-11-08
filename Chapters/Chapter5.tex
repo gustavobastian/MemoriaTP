@@ -25,11 +25,165 @@
 %\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
 %\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
 %\end{itemize}
+\subsection{Cumplimiento de requerimientos}
+
+\begin{enumerate}
+\item Requerimientos del servidor: 
+
+1.1 debe tener instalado el broker mosquitto.
+
+Verificación: Se muesta el funcionamiento del servidor utilizando la aplicación MQTT explorer.
+
+\item Requerimientos de la base de datos: 
+
+2.1 Debe poseer una base de datos relacional. 
+
+2.2 Debe poseer las siguientes tablas: eventos, pacientes, médicos, enfermeras. 
+
+2.2 La base de datos debe poseer datos cargados por default.
+
+Verificación: Se muesta el contendio de la base de datos con la aplicación phpMyAdmin.
+
+\item Requerimientos de la página web 
+
+3.1 Debe ser cliente del broker MQTT. 
+
+Verificación: Se presenta la configuración del broker. Se presenta el monitoreo de las habitaciones y los usuarios conectandose al broker.
+
+3.2 La página debe poseer funciones de consulta o modificación de la base de datos.
+
+Verificación: Se muestra como la página web permite cambiar contraseñas de usuarios y otros parámetros.
+
+3.3 La página debe permitir observar estadística de pacientes y enfermeras.
+
+Verificación: Se muestra como la página web permite observar distintas gráficas.
+
+3.4 La página debe contener acceso con usuario y contraseña para cada persona.
 
 
+Verificación: Se muestra como la página web permite loguear los distintos usuarios.
+(*) Cumplimiento parcial: solo permite loguear al usuario administrador.
+
+\item Requerimientos de la aplicación móvil
+
+4.1 y 4.2 La aplicación debe poseer tres modos de uso: médico, enfermera y sistema. 
+
+Verificación: Se ingresa a la aplicación en los distintos modos.
+
+4.3 La aplicación en modo enfermera debe permitir leer código QR.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se obtiene el código QR.
+
+4.4 La aplicación en modo enfermera debe descargar información relevante del paciente.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
+
+4.5 La aplicación en modo sistema debe mostrar las habitaciones sin atención, según una tabla de prioridades y en caso de igualdad de prioridades mostrar según un orden de llamada.
+
+(*)Cumplimiento parcial: se muestra las habitaciones con una tabla de prioridades pero no según el orden de llamadas.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
+
+
+4.6 El modo de usuario médico y el modo usuario enfermera deben poder enviar mensajes de texto o sonido.
+
+Verificación: Se transmiten distintos audios entre participantes.
+
+\item Requerimientos de la documentación
+
+5.1 Documento con información relativa a la base de datos: detalles de la misma y API para acceder.
+
+Verificación: Se observa la presencia de la información en el repositorio de GitHub.
+
+5.2 Memoria del proyecto con diagramas de aplicación móvil y página web.
+
+Verificación: se verifica con este documento.
+
+\item Requerimientos de la integración del sistema
+
+6.1 El sistema debe integrar el funcionamiento del servidor con la base de datos, aplicación web y aplicaciones móviles.
+
+Verificación: se verifico el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
+
+(*)Cumplimiento parcial:
+Validación: No se pudo validar el sistema en un nosocomio.
+
+\item Requerimientos de la entrega del producto:
+
+7.1 El Código fuente del servidor debe ser subido a dockerhub y compartido con la comunidad.
+
+(*)Cumplimiento parcial:
+Validación: Se subió el código fuente del servidor a Github.
+
+7.2 El Código fuente de la aplicación debe ser subido a GitHub y compartido con la comunidad.
+
+Validación: Se subió el código fuente del servidor a Github.
+
+\end{enumerate}
+
+\subsection{Cumplimiento de planificación original}
+
+No se pudo seguir con la planificación original ya que se presentaron situaciones no contempladas en la misma. Se enumeran a continuación:
+
+\begin{itemize}
+
+\item Configuración de la aplicación para ejecutar en un dispositivos móviles: no se contempló el estudio de los permisos y los distintos pasos para poder descargar la aplicación en el dispositivo. Por motivos económicos no se pudo obtener equipos con IOS  por lo que se realizaron los ensayos y pruebas con dispositivos Android. Todo ese tiempo no fue contemplado en la planificación.
+\item Configuración del broker Mosquitto en aplicación móvil: se debió generar una página extra de configuración que permita setear la dirección ip y el puerto del broker Mosquitto de manera de poder utilizar cualquier broker. Además, la información cargada debía almacenarse de alguna manera en el dispositivo por lo que investigó como realizarlo. Todo este tiempo no fue contemplado en la planificación.
+
+\end{itemize}
+
+\subsection{Gestión de riesgos}
+
+\begin{itemize}
+\item Riesgo 1: No contar con dispositivo necesario para el testeo de la aplicación. 
+
+Resultado: efectivamente, ocurrió este problema y no se pudo mitigar ya que la situación económica/política del país no permitió la compra de los dispositivos necesarios. Queda como trabajo a futuro la validación de la aplicación en una de las plataformas.
+\item Riesgo 2: Disminución del tiempo disponible para realizar el plan trazado.
+Efectivamente se presentó el problema (surgieron contratiempos laborales a mitad del proyecto). De todos modos, hubo una influencia mayor de otros problemas como los presentados en la sección inmediatamente anterior que afectaron de mayor manera.
+\item Riesgo 3: Daño de equipamiento.
+No se presento este problema.
+\item Riesgo 4: No contar con colaboradores para la realización de la validación.
+Se presentó el problema. Se plantea como trabajo a futuro la validación del sistema en un entorno real.
+\item Riesgo 5: Surgimiento de alternativas de diseño de mejores prestaciones a las propuestas en el trabajo.
+Efectivamente se presentó el riesgo. Casos de ejemplo:
+\begin{enumerate}
+\item Se utilizó arreglos para mantener información del estado de los usuarios cuando se recomienda utilizar una base de datos REDIS
+\item La base de datos utilizada fue MySQL (debido a ser la única conocida al comienzo del proyecto), pero hubiese sido conveniente utilizar MongoDb, que permite gestionar grandes volumenes de datos de manera más simple.
+\end{enumerate}
+\end{itemize}
+
+
+\subsection{Evaluación de las técnicas presentadas durante la carrera}
+
+Las herramientas presentadas durante el trayecto de la carrera más utilizadas en este proyecto fueron :
+
+\begin{itemize}
+\item: Contenedores: muy importante el concepto. Utilizado desde el comienzo del desarrollo.
+\item: Ionic/Angular: framework muy fácil de aprender. Mucha información y ejemplos para practicar.
+\item: Express/Node.js: utilizado en todo el backend. 
+\item: Protocolo MQTT: base de este proyecto. Herramienta muy práctica para implementar Internet de las Cosas.
+\item: \textit{Tokens} JWT : forma de implementar seguridad en el acceso a APIs.
+\item: Base de datos relacionales: aunque no las utilizaría en otro proyecto similar (según lo expresado en el item anterior), resultaron una herramienta útil para gestionar los datos.
+\item: PostMan: herramienta fundamental para testeo de la API REST del backend.
+\item: MQTT Explorer: herramienta fundamental para testeo de la API MQTT del backend y para la simulación de los llamadores.
+\item: ESP32: plataforma versatil que permitió desarrollar un simulador de llamadores básico.
+\item: Latex: perfecto para generar documentación.
+\item: AWS: Se utilizó al final del proyecto para poder simular el sistema con mayor cantidad de usuario.
+\item: Github: todo el desarrollo se guardo versionado en GitHub.
+\end{itemize}
+
+Las herramientas no utilizadas (que hubiesen facilitado el desarrollo de haberlas conocido con anterioridad) :
+\begin{itemize}
+\item Base de datos documentales.
+\item Base de datos clave-valor.
+\item Desarrollo TDD o BDD.
+\item Python(con Django o Flask).
+\item Modelos de aplicaciones seguras.
+\end{itemize}
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 \section{Trabajo futuro}
 
 %Acá se indica cómo se podría continuar el trabajo más adelante.
+
