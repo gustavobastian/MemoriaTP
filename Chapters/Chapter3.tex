@@ -156,7 +156,7 @@ En esta sección se describiran las distintas tablas que se almacenan en la base
 	\label{fig:Tabla Camas (base de datos)}
 \end{figure}
 
-\item Tabla Paciente (\textit{Patient}): tabla que contiene la información de los pacientes. En esta tabla el id no se incrementa automáticamente (ya que puede ser asignado manualmente por el administrador). Ademas, los campos \textbf{bedId}, \textbf{notesTableId} y \textbf{userTableId} contienen claves foraneas que identifican un elemento de la tabla \textit{Bed} (cama), \textit{notesTable} (tablas de notas) y \textit{userTable} (tablas de médicos relacionados al paciente).
+\item Tabla Paciente (\textit{Patient}): tabla que contiene la información de los pacientes. En esta tabla el id no se incrementa automáticamente (ya que puede ser asignado manualmente por el administrador). Ademas, los campos \textit{bedId}, \textit{notesTableId} y \textit{userTableId} contienen claves foraneas que identifican un elemento de la tabla \textit{Bed} (cama), \textit{notesTable} (tablas de notas) y \textit{userTable} (tablas de médicos relacionados al paciente).
 
 
 \begin{figure}[ht]
@@ -191,7 +191,7 @@ En esta sección se describiran las distintas tablas que se almacenan en la base
 
 \pagebreak
 
-\item Tabla de eventos programados: En esta tabla se cargan las tareas programadas para un paciente. El identificador se incrementa al generarse, el nro de paciente es enviado por el cliente, el campo tipo de evento puede ser \textbf{diario},\textbf{mensual} o \textbf{diario} y el campo datetime a la hora que se requiere que se realice. El campo nota es donde se coloca la tarea a realizar (Por ejemplo, suministrar X gramos de medicamento Y).
+\item Tabla de eventos programados: En esta tabla se cargan las tareas programadas para un paciente. El identificador se incrementa al generarse, el nro de paciente es enviado por el cliente, el campo tipo de evento puede ser \textit{diario},\textit{mensual} o \textit{anual} y el campo datetime a la hora que se requiere que se realice. El campo nota es donde se coloca la tarea a realizar (Por ejemplo, suministrar X gramos de medicamento Y).
 
 
 \begin{figure}[ht]
@@ -202,7 +202,7 @@ En esta sección se describiran las distintas tablas que se almacenan en la base
 \end{figure}
 
 
-\item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. El id se asigna al guardarse el evento. El tipo puede ser \textbf{tarea programada} o \textbf{llamada paciente}. El id del paciente, el id de usuario y la nota se cargan por el usuario que finalizó la accion.
+\item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. El id se asigna al guardarse el evento. El tipo puede ser \textit{tarea programada} o \textit{llamada paciente}. El id del paciente, el id de usuario y la nota se cargan por el usuario que finalizó la accion.
 
 
 \begin{figure}[ht]
@@ -262,7 +262,7 @@ Las siguientes son clases que se utilizan para reportar mediante MQTT los estado
 
 \begin{itemize}
 
-\item \textbf{ Monitoreo de camas:}\\
+\item \textit{ Monitoreo de camas:}\\
 Una  clase llamada \textit{Bedslist} la cual contiente una lista de elementos json con información de cada cama (se instancia al iniciar el backend).
 
 \begin{lstlisting}[caption=  Clase Bedlist]
@@ -289,7 +289,7 @@ Los componentes de cada elemento son
 \item spec: número de tratamiento del paciente en la cama (es utilizado por los clientes enfermeros para filtrar si pueden o no atenderlo).
 \end{enumerate}
 
-\item \textbf{ Monitoreo de usuarios:}\\
+\item \textit{ Monitoreo de usuarios:}\\
 Una clase \textit{UserList} la cual contiente una lista de elementos json con información de cada usuario (se instancia al iniciar el backend):
 
 \begin{lstlisting}[caption=  Clase Userlist]
@@ -313,7 +313,7 @@ Los componentes de cada elemento son
 
 
 
-\item \textbf{ Monitoreo de eventos programados:}\\
+\item \textit{ Monitoreo de eventos programados:}\\
 Esta clase se utiliza para presentar a los clientes las notas de tareas programadas que se lanzan. Es una lista que se vacía cuando la tarea finaliza (sirve para mantener ordenadas las tareas programadas).
 
 \begin{lstlisting}[caption=  Clase CalendarList]
@@ -335,7 +335,7 @@ Los componentes de cada elemento son
 
 
 
-\item \textbf{ Monitoreo de paciente-usuario-tipo de evento:}\\
+\item \textit{ Monitoreo de paciente-usuario-tipo de evento:}\\
 Esta clase se utiliza para en todo momento saber quien está atendiendo a un paciente.
 
 \begin{lstlisting}[caption=  Clase BedsUserList]
@@ -388,7 +388,7 @@ client.on('connect', function () {
 })
 \end{lstlisting}
 
-Como se puede observar en el código anterior, el sistema recibe mensajería por medio de tres tópicos principales User, Pacient y Beds. Por otra parte, se utilizan variables de entorno como ser \textbf{MQTT\textunderscore CONNECTION}  , que contiene informacion de la IP del broker y el puerto del mismo.
+Como se puede observar en el código anterior, el sistema recibe mensajería por medio de tres tópicos principales User, Pacient y Beds. Por otra parte, se utilizan variables de entorno como ser \textit{MQTT\textunderscore CONNECTION}  , que contiene informacion de la IP del broker y el puerto del mismo.
 
 Por último, se llama a 2 funciones publishBedStates y publishUserStates que publican los listados de los estados de camas y usuarios cada cierto tiempo respectivamente.
 
@@ -473,7 +473,7 @@ Las excepciones al formato general de los mensajes vienen dadas por:
 
 La API del trabajo utiliza Express junto con Cookie-parser. 
  
-En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Por definición la página web de configuración solo puede ser accedida por los usuarios administradores, para lograr autenticación el \textit{backend} utiliza las librería \textbf{jsonwebtoken} \citep{WEBSITE:32} y \textbf{bcrypt} \citep{WEBSITE:31}. 
+En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Por definición la página web de configuración solo puede ser accedida por los usuarios administradores, para lograr autenticación el \textit{backend} utiliza las librería \textit{jsonwebtoken} \citep{WEBSITE:32} y \textit{bcrypt} \citep{WEBSITE:31}. 
 
 Se denomina ruteo a la forma que un \textit{endpoint} (punto de acceso, en español) de una aplicación responde a las peticiones de los clientes. En las aplicaciones express, el objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema.
 
@@ -644,6 +644,7 @@ Dentro de la carpeta \textit{services} se organizan los distintos servicios.
 
 Dentro de la carpeta \textit{folder} se encuentra el layout principal de la página.
 
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. 
 
 
 
@@ -734,21 +735,85 @@ En esta función se puede observar la cantidad de atenciones por enfermero guard
 
 \pagebreak
 \section{Aplicación Móvil}
+\label{Aplicación Móvil}
 En esta sección se presenta la funcionalidad de la aplicación móvil y algunos detalles de la implementación.
-
+\label{Estructura y organización del software}
 \subsection{Estructura y organización del software}
 La estructura de archivos del proyecto es la presentada en la figura \ref{fig: Estructura de código fuente de la aplicación móvil.}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.70]{./Figures/app/estructura-app.png}
+	\includegraphics[scale=.60]{./Figures/app/estructura-app.png}
 	\caption{ Estructura de código fuente de la aplicación móvil.}
 	\label{fig: Estructura de código fuente de la aplicación móvil.}
 \end{figure} 
 
-El código de las distintas páginas por las que navega el usuario se encuentra dentro de \textit{''./src/app/pages''}. Los modelos (''clases'') utilizados se encuentra en la carpeta \textit{''./src/app/pages''} y los servicios en la carpeta \textit{''./src/app/services''}. La carpeta \textit{''./src/app/chat''} contiene la primera versión la intercomunicación entre enfermeros-médicos que simulaba una sala de reunión (similar a la ofrecida por el producto en el mercado). Luego se migró a la definitiva, que cumple estrictamente con lo solicitado en un principio, pero por solicitud del cliente, no se eliminó la carpeta.
+El código de las distintas páginas por las que navega el usuario se encuentra dentro de \textit{''./src/app/pages''}. Los modelos (''clases'') utilizados se encuentra en la carpeta \textit{''./src/app/models''} y los servicios en la carpeta \textit{''./src/app/services''}. La carpeta \textit{''./src/app/chat''} contiene la primera versión la intercomunicación entre enfermeros-médicos que simulaba una sala de reunión (similar a la ofrecida por el producto en el mercado). Luego se migró a la definitiva, que cumple estrictamente con lo solicitado en un principio, pero por solicitud del cliente, no se eliminó la carpeta.
 
-Como se mencionó en secciones anteriores, la aplicación móvil interactua con el backend solo utilizando websockets MQTT. 
+Como se mencionó en secciones anteriores, la aplicación móvil interactua con el backend solo utilizando websockets MQTT.
+
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. 
+
+\begin{lstlisting}[caption=  Rutas de la aplicación móvil]
+const routes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'mqtt-config',
+    loadChildren: () => import('./pages/mqtt-config/mqtt-config.module').then( m => m.MqttConfigPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },{
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'waiting-event',
+    loadChildren: () => import('./pages/mode-nurse/waiting-event/waiting-event.module').then( m => m.WaitingEventPageModule)
+  },
+  {
+    path: 'doctor-main/:id',
+    loadChildren: () => import('./pages/mode-doctor/doctor-main/doctor-main.module').then( m => m.DoctorMainPageModule)
+  },
+  {
+    path: 'nurse-main/:id',
+    loadChildren: () => import('./pages/mode-nurse/nurse-main/nurse-main.module').then( m => m.NurseMainPageModule)
+  },
+  {
+    path: 'doctor-patients/:id',
+    loadChildren: () => import('./pages/mode-doctor/doctor-patients/doctor-pacients.module').then( m => m.DoctorPacientsPageModule)
+  },
+  {
+    path: 'doctor-messages/:id',
+    loadChildren: () => import('./pages/mode-doctor/doctor-messages/doctor-messages.module').then( m => m.DoctorMessagesPageModule)
+  },
+  {
+    path: 'nurse-bed/:id',
+    loadChildren: () => import('./pages/mode-nurse/nurse-bed/nurse-bed.module').then( m => m.NurseBedPageModule)
+  },
+  {
+    path: 'nurse-qr/:id',
+    loadChildren: () => import('./pages/mode-nurse/nurse-qr/nurse-qr.module').then( m => m.NurseQRPageModule)
+  },
+  {
+    path: 'admin-main/:id',
+    loadChildren: () => import('./pages/mode-admin/admin-main/admin-main.module').then( m => m.AdminMainPageModule)
+  },  
+
+];
+
+\end{lstlisting}
+
+  
 
 \pagebreak
 
@@ -764,6 +829,7 @@ Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno
 
 En la página de configuración se ingresa la ip del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
 
+
 \begin{lstlisting}[caption=  Funciones del servicio que guardan en el localStorage]
   /**
    * Saving port values to localStorage
@@ -775,6 +841,8 @@ En la página de configuración se ingresa la ip del broker del sistema y el pue
 \end{lstlisting}
 
 En la página de logueo se ingresan el nombre de usuario, y su contraseña.
+
+La aplicación, publica la información en el tópico ''/User/username'' con el formato de mensaje correspondiente y recibe en ''/Session/nrodesesión'' el número de usuario y el modo de uso. De esta manera la aplicación se configura.
 
 
 \subsection{Modo administrador}
@@ -793,10 +861,80 @@ El orden en que se presentan las camas tienen que ver con la prioridad que se le
 
 \pagebreak
 \subsection{Modo médico}
+Al ingresar en modo médico, la aplicación queda en modo espera hasta que el usuario decida que hacer. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.60]{./Figures/app/modo-medico.png}
+	\caption{ Diagrama de estados en modo médico.}
+	\label{fig: Diagrama de estados en modo médico.}
+\end{figure} 
+
+Las acciones que puede realizar un médico son:
+\begin{itemize}
+\item Actualizar una nota de un paciente: para la gestión de estos mensajes se utiliza el tópico ''/Pacient/id'' donde id es el número de paciente. Cuando el médico solicita información del paciente (nombre, apellido y número ) se responde  en ''/Pacient/id/info''. Cuando se consulta las notas se responde en ''/Pacient/id/notes'' y cuando se quiere ingresar una nueva nota se publica en ''/Pacient/id/newNote''
+\item Responder a una consulta de una enfermera.
+\item Monitorear las camas con los pacientes que le fueron encargados: simplemente filtra por sus pacientes el listado publicado en ''/Beds/status''
+
+\end{itemize}
 \pagebreak
 \subsection{Modo enfermera}
+
+Es el modo más complejo por la cantidad de opciones que se pueden presentar.
+
+Al ingresar en modo enfermera, se consulta por la especialización del enfermero corresponidente y la respuesta se obtiene de escuchar en el tópico ''/User/userId/Specs''donde userId se recibió al loguearse.
+
+Para el usuario, la aplicación queda en modo espera hasta que se reciba una notificación de necesidad de atención. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo enfermera.}.
+
+ 
+
+La aplicación se encuentra escuchando al tópico MQTT ''/Beds/status'', y filtra los estados (solo acepta estados con llamadas , llamadas programadas o ayuda) y por especialidad del enfermero. De esta manera, cuando un enfermero acepta una tarea, automáticamente se actualiza el backend y ningún otro enfermero puede aceptarla.
+
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.60]{./Figures/app/estados-enf.png}
+	\caption{ Diagrama de estados en modo enfermera.}
+	\label{fig: Diagrama de estados en modo enfermera.}
+\end{figure} 
+
+
+Cuando arriba la notificación, se presenta una tarjeta con dos botones: información de la cama y aceptación. En caso que la enfermera desee consultar donde se encuentra (piso y habitación) debe presionar el boton información. En caso que decida ir a la habitación, debe presionar aceptar.
+Al presionar aceptar automáticamente el estado de la cama cambia a desplazandose a la habitación (la información proviene del sistema que recibió la aceptación y cambió el estado de la habitación).
+
+
+\begin{figure}[!htpb]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/enfermera-peticion.png}
+         \caption{Se recibe peticion.}
+         \label{fig:1de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{app/enfermera-cama.png}
+         \caption{Solicita información.}
+         \label{fig:2de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/yendo-enfermera.png}
+         \caption{Tarea aceptada.}
+         \label{fig:3de3}
+     \end{subfigure}
+        \caption{Recepción de tarea}
+        \label{fig:three graphs}
+\end{figure}
+
+Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código qr con el celular.
+
 \pagebreak
 \subsection{Interacción médico-enfermera}
+
 \pagebreak
 \section{Contraste con los requerimientos}
 

@@ -393,9 +393,21 @@ Desde los origenes de la programación, existió una necesidad de abstraer la ap
 
 Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
 
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.5]{./Figures/docker.png}
+	\caption{Estructura general de Docker.\protect\footnotemark.}
+	\label{fig:Contenedores Docker. }
+
+\end{figure}
+\footnotetext{Imagen tomada de \citep{WEBSITE:8}}
+
+
 Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema \citep{WEBSITE:8}.
 
-Resumo brevemente las partes del ecosistema Docker, para información más detallada consultar\citep{WEBSITE:8} o bien \citep{WEBSITE:9}.
+Las partes que componen del ecosistema Docker pueden resumirse de la siguiente manera \citep{WEBSITE:8}\citep{WEBSITE:9}:
 
 \begin{itemize}
 \item \textit{Images}: son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
@@ -442,7 +454,7 @@ En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases
 Existen tres formas de interactuar con una base de datos MySQL: utilizando la consola, a través de una interfaz web como phpMyAdmin y mediante un lenguaje de programación.
 
 En la figura \ref{fig:Página phpMyAdmin} se puede observar la interfaz:
-\pagebreak
+
  
 \begin{figure}[ht]
 	\centering
@@ -468,7 +480,7 @@ Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones S
 		DELETE  & Borrar una fila de una tabla\\
 		DESCRIBE  & Describir columnas de una tabla\\
 		DROP  & Eliminar una base de datos o una tabla\\
-		Exit & Salir.\\
+		EXIT & Salir.\\
 		GRANT & Cambiar permisos de un usuario\\
 		INSERT INTO..VALUES & Insertar datos\\
 		RENAME & Cambiar nombre de una tabla\\
@@ -498,7 +510,7 @@ Ejemplo de uso, suponiendo 2 tablas:
 	\end{tabular}
 	\label{tab:Ejemplo 1}
 \end{table}
-\pagebreak
+
 \begin{table}[h]
 	\centering
 	\caption[Tabla 2 Ejemplo SQL]{TABLA2 para el ejemplo 1.}
@@ -537,10 +549,9 @@ Una de las múltiples ventajas que poseen los motores de bases de datos relacion
 \end{lstlisting}
 
 
-\pagebreak
 \section{Frameworks/librerías para desarrollo web/móvil}
 
-
+En esta sección se presentan las librerías y frameworks que se utilizaron para el desarrollo.
 
 \subsection{Librerías Node.js, Express y JWT}
 \label{subsec: Node}

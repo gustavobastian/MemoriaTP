@@ -129,6 +129,11 @@ No se pudo seguir con la planificación original ya que se presentaron situacion
 
 \item Configuración de la aplicación para ejecutar en un dispositivos móviles: no se contempló el estudio de los permisos y los distintos pasos para poder descargar la aplicación en el dispositivo. Por motivos económicos no se pudo obtener equipos con IOS  por lo que se realizaron los ensayos y pruebas con dispositivos Android. Todo ese tiempo no fue contemplado en la planificación.
 \item Configuración del broker Mosquitto en aplicación móvil: se debió generar una página extra de configuración que permita setear la dirección ip y el puerto del broker Mosquitto de manera de poder utilizar cualquier broker. Además, la información cargada debía almacenarse de alguna manera en el dispositivo por lo que investigó como realizarlo. Todo este tiempo no fue contemplado en la planificación.
+\item Diseño de la página de lectura de códigos QR: se retrasó debido una mala implementación (No se observaba la imagen de la camara pero si se capturaba el valor)
+\item Diseño de la etapa de envío de audio: en un primer momento se diseño un módulo que guardaba localmente en el dispositivo un archivo de audio y luego se lo enviaba. Innecesario.
+\item Diseño de la base de datos: luego de un primer diseño, se debió incorporar nuevas tablas en estados avanzados del proyecto ya que la base de datos original no contemplaba la totalidad de requerimientos (retraso el diseño ya que se necesito modificar la página web ).
+\item Cuando se empezó a validar las tareas de calendario: había graves problemas para realizarlo todo en el laboratorio (cuestiones de recursos, computadora con poca memoria ram, procesador lento, etc). Se alivió cuando se migro el servidor de prueba a una instancia en AWS. De todos modos, sumó tiempo al desarrollo.
+
 
 \end{itemize}
 
