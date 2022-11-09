@@ -10,9 +10,11 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 
 \section{Descripción de tecnologías web para IoT}
 \label{sec:Descripción de tecnologías web para IoT}
-*********
-En la ingeniería de software existe una arquitectura llamada cliente/servidor, en el cual la tarea a desarrollar se  distribuye entre los proveedores de servicios o recursos y quienes los consultan llamados clientes o demandantes. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .
-*********
+
+
+Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .  
+
+\subsection{ Breve introduccion a tecnologías de backend}
 El \textit{backend}  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el \textit{backend} se comunica con los clientes utilizando 2 protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
 
 El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
@@ -21,9 +23,9 @@ MQTT es un protocolo open source simple, liviano y orientado a dispositivos con 
 
 En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP(\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
 
-En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node}, \ref{subsec: Paho} se explicará el funcionamiento del backend.
-
-El \textit{frontend} es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación. El equipo que desarrolla el \textit{frontend} consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario ) y diseñadores gráficos. Las más conocidas tecnologías que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo: \citep{WEBSITE:13}).  
+En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node} se explicará el funcionamiento del backend.
+\subsection{Breve introduccion a tecnologías frontend}
+El \textit{frontend} es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el \textit{frontend} consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las más conocidas tecnologías que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo: \citep{WEBSITE:13}).  
 
 En los últimos años, se busca facilitar el diseño de  \textit{frontend} mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como ser Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16}, Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
 
@@ -121,7 +123,8 @@ Por otro lado, el protocolo posee tres niveles de calidad de servicio ("QoS", de
 \item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo mas rápido de entrega.
 \item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo ''DUP'' establecido hasta que se reciba acuse de recibo.
 \item Calidad 2: el mensaje se entrega exactamente una sola vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. El emisor recibe un mensaje acuse de recibo. Si el emisor no recibe un acuse de recibo, el mensaje se envía de nuevo con el distintivo DUP establecido hasta que se reciba un acuse de recibo.
-En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje, ''PUBREL''. Si el remitente no recibe un acuse de recibo del ''PUBREL'' mensaje, el ''PUBREL'' se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al“PUBREL”mensaje
+En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje, ''PUBREL''. Si el remitente no recibe un acuse de recibo del mensaje ''PUBREL'', el ''PUBREL'' se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al mensaje “PUBREL” .
+
 El receptor puede procesar el mensaje proporcionado en la primera o segunda fase, no tiene que volver a procesarlo. Si el receptor es un intermediario, publica el mensaje a los suscriptores. Si el receptor es un cliente, el mensaje se entrega a la aplicación de suscriptor. El receptor devuelve un mensaje de finalización al emisor para comunicarle que ha terminado de procesar el mensaje.
 
 \end{itemize}
@@ -434,9 +437,9 @@ Con esta herramienta se facilita el paso de parámetros al contenedor y posibili
 
 \section{Introducción a las bases de datos}
 \label{sec: Introducción a las bases de datos}
-********
-Que es un dato? Es un elemento o característica que permite hacer la descripción de un objeto \citep{WEBSITE:12}.
-*********
+
+Se define un dato como un elemento o característica que permite hacer la descripción de un objeto \citep{WEBSITE:12}. En el contexto de los sistemas de Internet de las Cosas, es la mínima expresión de información que se puede gestionar.
+
 Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada \citep{WEBSITE:11}.
 
 Durante los años 80 se popularizó el tipo de base de dato relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.

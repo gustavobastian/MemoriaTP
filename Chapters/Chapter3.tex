@@ -91,11 +91,11 @@ En este capítulo se explica como se utilizaron las herramientas mencionadas en 
 %	}
 %}
 %\end{lstlisting}
+
+
 \section{Broker Mosquitto}
 
 El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos. El único requisito es que se encuentre instalado en la misma red que los clientes (en un dispositivo que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
-
-
 
 
 \begin{lstlisting}[caption=  Instalación/lanzamiento del broker Mosquitto]
@@ -103,7 +103,7 @@ El broker Mosquitto es una parte central del sistema ya que se encarga de distri
 		sudo systemctl enable mosquitto.service
 \end{lstlisting}
 
-Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf":
+Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf", donde se especifícó los puertos que se utilizó, en este caso, el puerto 9001 con el protocolo Websockets. Se permitió la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log":
 
 \begin{lstlisting}[caption=  Contenido archivo mosquitto.conf]
 log_dest file /var/log/mosquitto/mosquitto.log
@@ -115,21 +115,22 @@ allow_anonymous true
 
 \end{lstlisting}
 
-En este archivo, se especifíca los puertos que se utilizará, en este caso, el puerto 9001 con el protocolo Websockets. Se permite la interconexión de cualquier cliente y el archivo donde se guardará un log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log".
+
 
 \pagebreak
 \section{Sistema Docker}
 
+Para iniciar el contenedor \textit{Docker} se ejecuta el comando : ''\textit{Docker-compose up}''.  Este comando busca en el archivo docker-compose.yml la información de los distintos servicios que debe inicializar y su configuración.
+
 El archivo docker-compose.yml contiene los siguientes servicios instalados:
 
 \begin{itemize}
-\item servidor mysql:
-
-
-
-
+\item servidor mysql: se utiliza la imagen: 5.7. Utiliza el puerto 3036 para las comunicaciones. 
+\item servidor mysql-admin: se utiliza la imagen: phpmyadmin/phpmyadmin. Se configura el puerto 8001:80 para servir la aplicación.
+\item backend node: se utiliza la imagen abassi/nodejs-server:10.0-dev.
 \end{itemize}
 
+Por otra parte, se configura una red interna NurseSystem-net que hace de \textit{bridge} (puente) con la red del sistema host.
 
 
 
@@ -752,9 +753,9 @@ El código de las distintas páginas por las que navega el usuario se encuentra 
 
 Como se mencionó en secciones anteriores, la aplicación móvil interactua con el backend solo utilizando websockets MQTT.
 
-La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. 
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. En el código \ref{Rutas de la aplicación móvil}
 
-\begin{lstlisting}[caption=  Rutas de la aplicación móvil]
+\begin{lstlisting}[caption=  Fragmento de las rutas de la aplicación móvil]
 const routes: Routes = [
   {
     path: 'home',
@@ -772,48 +773,10 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },{
-    path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   },
-  {
-    path: 'waiting-event',
-    loadChildren: () => import('./pages/mode-nurse/waiting-event/waiting-event.module').then( m => m.WaitingEventPageModule)
-  },
-  {
-    path: 'doctor-main/:id',
-    loadChildren: () => import('./pages/mode-doctor/doctor-main/doctor-main.module').then( m => m.DoctorMainPageModule)
-  },
-  {
-    path: 'nurse-main/:id',
-    loadChildren: () => import('./pages/mode-nurse/nurse-main/nurse-main.module').then( m => m.NurseMainPageModule)
-  },
-  {
-    path: 'doctor-patients/:id',
-    loadChildren: () => import('./pages/mode-doctor/doctor-patients/doctor-pacients.module').then( m => m.DoctorPacientsPageModule)
-  },
-  {
-    path: 'doctor-messages/:id',
-    loadChildren: () => import('./pages/mode-doctor/doctor-messages/doctor-messages.module').then( m => m.DoctorMessagesPageModule)
-  },
-  {
-    path: 'nurse-bed/:id',
-    loadChildren: () => import('./pages/mode-nurse/nurse-bed/nurse-bed.module').then( m => m.NurseBedPageModule)
-  },
-  {
-    path: 'nurse-qr/:id',
-    loadChildren: () => import('./pages/mode-nurse/nurse-qr/nurse-qr.module').then( m => m.NurseQRPageModule)
-  },
-  {
-    path: 'admin-main/:id',
-    loadChildren: () => import('./pages/mode-admin/admin-main/admin-main.module').then( m => m.AdminMainPageModule)
-  },  
+  ...
 
-];
-
-\end{lstlisting}
-
-  
+\end{lstlisting} 
 
 \pagebreak
 
