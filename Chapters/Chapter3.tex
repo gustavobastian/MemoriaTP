@@ -122,7 +122,7 @@ allow_anonymous true
 
 Para iniciar el contenedor \textit{Docker} se ejecuta el comando : ''\textit{Docker-compose up}''.  Este comando busca en el archivo docker-compose.yml la información de los distintos servicios que debe inicializar y su configuración.
 
-El archivo docker-compose.yml contiene los siguientes servicios instalados:
+Los siguientes servicios son instalados :
 
 \begin{itemize}
 \item servidor mysql: se utiliza la imagen: 5.7. Utiliza el puerto 3036 para las comunicaciones. 
@@ -135,7 +135,7 @@ Por otra parte, se configura una red interna NurseSystem-net que hace de \textit
 
 
 \section{Base de datos del sistema}
-En esta sección se describiran las distintas tablas que se almacenan en la base de datos y son útiles para el sistema. Estas tablas pueden ser observadas y editadas con el frontend phpMyAdmin (pero no es recomendable). 
+En esta sección se describen las distintas tablas que se almacenan en la base de datos y son útiles para el sistema. Estas tablas pueden ser observadas y editadas con el frontend phpMyAdmin (pero no es recomendable). 
 
 \begin{enumerate}
 
@@ -251,10 +251,10 @@ En la figura \ref{fig:Estructura de directorio(backend)} se presenta la estructu
 La descripción de los contenidos de cada carpeta es:
 \begin{itemize}
 \item middleware: contiene el programa que filtra el acceso a la api desde el la página web.
-\item Monitoring: contiene clases con información del estado del sistema que se actualiza en tiempo real. Cada una de estas clases contiene una lista de todos los elementos y se presenta a los tópicos correspondientes.
-\item mqtt: contiene clases que se encargan de procesar y responder los mensajes que se reciben por medio del protocolo mqtt.
-\item mysql: contiene la clase con el \textit{pool} (''grupo'') de conexiones a la base de datos.
-\item routes: contiene las rutas de express para acceder a la base de datos desde http.
+\item Monitoring: contiene clases con información del estado del sistema que se actualiza cada cierto tiempo. Cada una de estas clases contiene una lista de todos los elementos y se presenta a los tópicos correspondientes.
+\item mqtt: contiene clases que se encargan de procesar y responder los mensajes que se reciben por medio del protocolo MQTT.
+\item mysql: contiene la clase con el \textit{pool} (''grupo'') de conexiones a la base de datos. El objetivo es poder reutilizar conexiones por distintos usuarios.
+\item routes: contiene las rutas de express para acceder a la base de datos desde las peticiones por HTTP.
 \end{itemize}
 
 \subsection{Descripción de las clases para monitoreo del sistema}
@@ -290,6 +290,7 @@ Los componentes de cada elemento son
 \item spec: número de tratamiento del paciente en la cama (es utilizado por los clientes enfermeros para filtrar si pueden o no atenderlo).
 \end{enumerate}
 
+\pagebreak
 \item \textit{ Monitoreo de usuarios:}\\
 Una clase \textit{UserList} la cual contiente una lista de elementos json con información de cada usuario (se instancia al iniciar el backend):
 
@@ -361,6 +362,7 @@ Los componentes de cada elemento son
 El archivo principal es mqtt.js (dentro de la carpeta mqtt) y contiene la inicialización de la conexión inicial al broker, el lanzamiento de las tareas de monitoreo (publicación de las listas antes definidas en los tópicos específicos) y la escucha de los mensajes. Una vez recibido un mensaje, dependiendo del tipo del mismo se deriva los mismo a la clase correspondiente que realiza el tratamiento.
 
 
+
 \begin{lstlisting}[caption=  Tareas ejecutadas por mqtt.js]
 var client = mqtt.connect(process.env.MQTT_CONNECTION)
 //listening to  messages
@@ -389,9 +391,9 @@ client.on('connect', function () {
 })
 \end{lstlisting}
 
-Como se puede observar en el código anterior, el sistema recibe mensajería por medio de tres tópicos principales User, Pacient y Beds. Por otra parte, se utilizan variables de entorno como ser \textit{MQTT\textunderscore CONNECTION}  , que contiene informacion de la IP del broker y el puerto del mismo.
+El sistema recibe mensajería por medio de tres tópicos principales: \textit{User}, \textit{Pacient} y \textit{Beds}. Por otra parte, se utilizan variables de entorno como ser \textit{MQTT\textunderscore CONNECTION}  , que contiene informacion de la IP del broker y el puerto del mismo.
 
-Por último, se llama a 2 funciones publishBedStates y publishUserStates que publican los listados de los estados de camas y usuarios cada cierto tiempo respectivamente.
+Por último, dentro de esta función se setean dos temporizadores para ejecutar las funciones publishBedStates y publishUserStates que publican los listados de los estados de camas y usuarios cada cierto tiempo.
 
 
 
@@ -459,7 +461,7 @@ Las distintas clases que se utilizan son:
 
 Todas estas clases responden en un tópico correspondiente a los clientes que consultan.
 
-\pagebreak
+
 Las excepciones al formato general de los mensajes vienen dadas por:
 \begin{itemize}
 \item Mensaje de último testamento: informa que un usuario se desconectó. En su \textit{payload} contiene información del nombre de usuario y se publica en el tópico $"/User/Disconnect"$.
@@ -617,6 +619,7 @@ Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app'
 	\label{fig:Carpetas página web.}
 \end{figure}
 
+
 Dentro de la carpeta \textit{models} se encuentran las distintas clases que se utilizan para la comunicación con el backend. Las características se presentan a continuación:
 
 \begin{itemize}
@@ -645,7 +648,7 @@ Dentro de la carpeta \textit{services} se organizan los distintos servicios.
 
 Dentro de la carpeta \textit{folder} se encuentra el layout principal de la página.
 
-La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. 
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada y se presenta dentro del campo de visualización / edición de la pantalla principal. 
 
 
 
