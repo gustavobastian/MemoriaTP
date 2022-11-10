@@ -94,6 +94,7 @@ En este capítulo se explica como se utilizaron las herramientas mencionadas en 
 
 
 \section{Broker Mosquitto}
+\label{Broker Mosquitto}
 
 El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos. El único requisito es que se encuentre instalado en la misma red que los clientes (en un dispositivo que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
 
@@ -105,7 +106,7 @@ El broker Mosquitto es una parte central del sistema ya que se encarga de distri
 
 Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf", donde se especifícó los puertos que se utilizó, en este caso, el puerto 9001 con el protocolo Websockets. Se permitió la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log":
 
-\begin{lstlisting}[caption=  Contenido archivo mosquitto.conf]
+\begin{lstlisting}[label=cod:mosquitto.conf,caption=  Contenido archivo mosquitto.conf]
 log_dest file /var/log/mosquitto/mosquitto.log
 
 include_dir /etc/mosquitto/conf.d
@@ -173,9 +174,9 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/tabla-medicos-pacientes.png}
+	\includegraphics[scale=.40]{./Figures/tabla-medicos-pacientes.png}
 	\caption{Relación médicos-pacientes.}
-	\label{fig:Relación médicos-pacientes (base de datos)}
+	\label{fig:Relación médicos-pacientes}
 \end{figure}
 
 
@@ -263,10 +264,10 @@ Las siguientes son clases que se utilizan para reportar mediante MQTT los estado
 
 \begin{itemize}
 
-\item \textit{ Monitoreo de camas:}\\
+\item \textit{ Monitoreo de camas} \ref{cod:bedlist}:\\
 Una  clase llamada \textit{Bedslist} la cual contiente una lista de elementos json con información de cada cama (se instancia al iniciar el backend).
 
-\begin{lstlisting}[caption=  Clase Bedlist]
+\begin{lstlisting}[label=cod:bedlist,caption=  Clase Bedlist]
 class  BedsList  {    
     constructor() {
          this.bedlist=[{id:0,st:0,spec:0}];                        
@@ -843,6 +844,34 @@ Las acciones que puede realizar un médico son:
 \item Monitorear las camas con los pacientes que le fueron encargados: simplemente filtra por sus pacientes el listado publicado en ''/Beds/status''
 
 \end{itemize}
+
+
+\begin{figure}[!htpb]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/doctor-patient-1.png}
+         \caption{Monitoreo de pacientes.}
+         \label{fig_1:1de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{app/doctor-notes5.png}
+         \caption{Gestión de notas.}
+         \label{fig_1:2de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/doctor-message-audio.png}
+         \caption{Mensajes.}
+         \label{fig_1:3de3}
+     \end{subfigure}
+        \caption{Modo médico}
+        \label{fig:three graphs}
+\end{figure}
+
 \pagebreak
 \subsection{Modo enfermera}
 
@@ -876,27 +905,77 @@ Al presionar aceptar automáticamente el estado de la cama cambia a desplazandos
          \centering
          \includegraphics[width=.95\textwidth]{./Figures/app/enfermera-peticion.png}
          \caption{Se recibe peticion.}
-         \label{fig:1de3}
+         \label{fig_2:1de3}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.3\textwidth}
          \centering
          \includegraphics[width=.95\textwidth]{app/enfermera-cama.png}
          \caption{Solicita información.}
-         \label{fig:2de3}
+         \label{fig_2:2de3}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.3\textwidth}
          \centering
          \includegraphics[width=.95\textwidth]{./Figures/app/yendo-enfermera.png}
          \caption{Tarea aceptada.}
-         \label{fig:3de3}
+         \label{fig_2:3de3}
      \end{subfigure}
         \caption{Recepción de tarea}
-        \label{fig:three graphs}
+        \label{fig_2:three graphs}
+\end{figure}
+\pagebreak
+Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código qr con el celular.
+
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.10]{./Figures/app/capturaQR.jpg}
+	\caption{ Captura de QR en la aplicación}
+	\label{fig: Captura de QR en la aplicación.}
+\end{figure} 
+
+
+Una vez que se aceptó desde el sistema el código de la cama, en la aplicación se presenta una pantalla con distintos botones que permiten realizar las siguientes acciones:
+
+\begin{figure}[!htpb]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/enfermera-trabajando.png}
+         \caption{Menu dentro de habitación.}
+         \label{fig_3:1de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{app/enfermera-consultaNotas.png}
+         \caption{Solicita información y notas.}
+         \label{fig_3:2de3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=.95\textwidth]{./Figures/app/enfermera-msg.png}
+         \caption{Abriendo menú de mensajes.}
+         \label{fig_3:3de3}
+     \end{subfigure}
+        \caption{Ejecución de tarea}
+        \label{fig_3:three graphs}
 \end{figure}
 
-Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código qr con el celular.
+\begin{enumerate}
+\item Cancelar: envía al sistema automáticamente la solicitud de cancelar la tarea. El sistema vuelve a colocar a la cama en situación de llamada.
+\item Listo: envía al sistema automáticamente la solicitud de finalizar la tarea. El sistema coloca a la cama en situación de ocupada.
+\item Notas: consulta al sistema las notas referidas al paciente. 
+\item Mensajes: permite enviar audio o texto a un médico. 
+\item Ayuda: solicita al sistema que marque a la cama como con solicitud de ayuda para que otros enfermeros puedan socorrer al usuario. 
+\item Memoria: Permite incorporar un texto que se almacena junto con la tarea al presionar Listo.
+\end{enumerate}
+
+
+
 
 \pagebreak
 \subsection{Interacción médico-enfermera}
@@ -904,3 +983,99 @@ Cuando el usuario se encuentra frente al paciente, puede ingresar el código cor
 \pagebreak
 \section{Contraste con los requerimientos}
 
+\subsection{Cumplimiento de requerimientos}
+
+En esta subsección se detalla el grado de cumplimiento de los requerimientos relevados en el plan de proyecto.
+\begin{enumerate}
+\item Requerimientos del servidor: 
+
+1.1 debe tener instalado el broker mosquitto.
+
+Verificación: Se muesta el funcionamiento del servidor utilizando la aplicación MQTT explorer.
+
+\item Requerimientos de la base de datos: 
+
+2.1 Debe poseer una base de datos relacional. 
+
+2.2 Debe poseer las siguientes tablas: eventos, pacientes, médicos, enfermeras. 
+
+2.2 La base de datos debe poseer datos cargados por default.
+
+Verificación: Se muesta el contendio de la base de datos con la aplicación phpMyAdmin.
+
+\item Requerimientos de la página web 
+
+3.1 Debe ser cliente del broker MQTT. 
+
+Verificación: Se presenta la configuración del broker. Se presenta el monitoreo de las habitaciones y los usuarios conectandose al broker.
+
+3.2 La página debe poseer funciones de consulta o modificación de la base de datos.
+
+Verificación: Se muestra como la página web permite cambiar contraseñas de usuarios y otros parámetros.
+
+3.3 La página debe permitir observar estadística de pacientes y enfermeras.
+
+Verificación: Se muestra como la página web permite observar distintas gráficas.
+
+3.4 La página debe contener acceso con usuario y contraseña para cada persona.
+
+
+Verificación: Se muestra como la página web permite loguear los distintos usuarios.
+(*) Cumplimiento parcial: solo permite loguear al usuario administrador.
+
+\item Requerimientos de la aplicación móvil
+
+4.1 y 4.2 La aplicación debe poseer tres modos de uso: médico, enfermera y sistema. 
+
+Verificación: Se ingresa a la aplicación en los distintos modos.
+
+4.3 La aplicación en modo enfermera debe permitir leer código QR.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se obtiene el código QR.
+
+4.4 La aplicación en modo enfermera debe descargar información relevante del paciente.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
+
+4.5 La aplicación en modo sistema debe mostrar las habitaciones sin atención, según una tabla de prioridades y en caso de igualdad de prioridades mostrar según un orden de llamada.
+
+(*)Cumplimiento parcial: se muestra las habitaciones con una tabla de prioridades pero no según el orden de llamadas.
+
+Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
+
+
+4.6 El modo de usuario médico y el modo usuario enfermera deben poder enviar mensajes de texto o sonido.
+
+Verificación: Se transmiten distintos audios entre participantes.
+
+\item Requerimientos de la documentación
+
+5.1 Documento con información relativa a la base de datos: detalles de la misma y API para acceder.
+
+Verificación: Se observa la presencia de la información en el repositorio de GitHub.
+
+5.2 Memoria del proyecto con diagramas de aplicación móvil y página web.
+
+Verificación: se verifica con este documento.
+
+\item Requerimientos de la integración del sistema
+
+6.1 El sistema debe integrar el funcionamiento del servidor con la base de datos, aplicación web y aplicaciones móviles.
+
+Verificación: se verifico el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
+
+(*)Cumplimiento parcial:
+Validación: No se pudo validar el sistema en un nosocomio.
+
+\item Requerimientos de la entrega del producto:
+
+7.1 El Código fuente del servidor debe ser subido a dockerhub y compartido con la comunidad.
+
+(*)Cumplimiento parcial:
+Validación: Se subió el código fuente del servidor a Github.
+
+7.2 El Código fuente de la aplicación debe ser subido a GitHub y compartido con la comunidad.
+
+Validación: Se subió el código fuente del servidor a Github.
+
+\end{enumerate}

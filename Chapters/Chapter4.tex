@@ -52,9 +52,92 @@ Durante el desarrollo, se deshabilitó la opción de logueo para facilitar las p
 \subsection{Instalación del sistema en una instancia de AWS}
 Con el objetivo de no incorporar costos en las pruebas, se generó una instancia Free Tier en Amazon Web Services, en la cual se instaló Ubuntu, el broker Mosquitto, el backend, la página Web y un servidor NGINX para que funcione como proxy inverso. Tambien se contrató el servicio route 53 que permite customizar las politicas de ruteo.
 De esta manera, se puede acceder al sistema desde cualquier dispositivo móvil conectado a una red.
+Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu consisten en:
 
-\subsection{Generación/instalación de la aplicación móvil}
+\begin{itemize}
+\item Logearse en la instancia con ssh.
+\item Instalar el Git:
 
+	''sudo apt-get install git''
+\item Instalar el broker Mosquitto:
+	
+	''sudo apt-get install mosquitto''
+\item Configurar según \ref{Broker Mosquitto}.
+\item Instalar Docker y Docker-compose
+\item Descargar el backend desde GitHub
+\item Copiar en la instancia la base de datos comprimida y descomprimir dentro de la carpeta /db
+\item Ejecutar Docker-compose up
+\end{itemize}
+
+Los pasos para configurar la página web:
+\begin{itemize}
+\item Compilar la página web: dentro de el proyecto ejecutar:
+
+''ionic build''
+\item Comprimir la carpeta www
+\item Logearse con ssh en la instancia EC2
+
+\end{itemize}
+\subsection{Generación/instalación de la aplicación móvil en ANDROID}
+
+Para poder descargar el archivo ejecutable a un dispositivo ANDROID se debe generar el archivo .apk correspondiente. Para ello seguir los siguientes pasos:
+
+\begin{itemize}
+\item Generar código con ionic capacitor:
+
+''ionic cap build android''
+\item Abrir Android estudio, modificar el AndroidManifest.xml
+\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación.
+\end{itemize}
+\pagebreak
+
+
+\begin{lstlisting}[label=cod:AndroidMan,caption=Modificaciones al Android Manifest.]  % Start your code-block
+package="com.gabiot.Enfermera">
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Enfermera"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true">
+        <!-- Mqtt Service -->
+        <service
+            android:enabled="true"
+            android:name="org.eclipse.paho.android.service.MqttService"
+            android:exported="false"
+        />
+...
+
+\end{lstlisting}
+\pagebreak
 \subsection{Equipo simulador de llamadores}
 
+Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.35]{./Figures/simulador.png}
+	\caption{Simulador de llamadores.}
+	\label{fig:Simulador de llamadores}
+\end{figure}
+
 \subsection{Resultados de utilizar el sistema}
+
+El sistema permaneció funcionando de manera normal durante una semana completa, generando los eventos programados y permitiendo la interacción de dispositivos.
