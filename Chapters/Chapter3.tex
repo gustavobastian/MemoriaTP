@@ -46,8 +46,10 @@ En este capítulo se explica como se utilizaron las herramientas mencionadas en 
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 \section{Generación del entorno base para el desarrollo del sistema de backend}
+\label{Generación del entorno base para el desarrollo del sistema de backend}
  En esta sección se presentan las distintas partes que componen el sistema.
- Es necesario aclarar que es un sistema distribuido, por lo que la página web de configuración, el \textit{backend}, el \textit{broker} y las aplicaciones móviles pueden estar en distintos dispositivos fisicamente. La única condicion necesaria es que se encuentren en una red que permite la conexión entre ellos. La red puede ser una red local (implementada con router ) o bien internet.
+La solución fue concebida como un sistema distribuido, por lo que la página web de configuración, el backend, el \textit{broker} y las aplicaciones móviles pueden estar en distintos dispositivos físicamente. La única condicion necesaria es que se encuentren en una red que permite la conexión entre ellos. La red puede ser una red local (implementada con router ) o bien internet.
+La aplicación web utiliza HTTP para interactuar con el backend y las aplicaciones móviles utilizan MQTT.
 %La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones que se hayan tomado.
 
 %Se puede agregar código o pseudocódigo dentro de un entorno lstlisting con el siguiente código:
@@ -104,7 +106,7 @@ El broker Mosquitto es una parte central del sistema ya que se encarga de distri
 		sudo systemctl enable mosquitto.service
 \end{lstlisting}
 
-Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf", donde se especifícó los puertos que se utilizó, en este caso, el puerto 9001 con el protocolo Websockets. Se permitió la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log":
+Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf", donde se especifica el puerto que se utiliza, en este caso, el puerto 9001 con el protocolo Websockets. Se permite la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log".
 
 \begin{lstlisting}[label=cod:mosquitto.conf,caption=  Contenido archivo mosquitto.conf]
 log_dest file /var/log/mosquitto/mosquitto.log
@@ -123,7 +125,7 @@ allow_anonymous true
 
 Para iniciar el contenedor \textit{Docker} se ejecuta el comando : ''\textit{Docker-compose up}''.  Este comando busca en el archivo docker-compose.yml la información de los distintos servicios que debe inicializar y su configuración.
 
-Los siguientes servicios son instalados :
+Los siguientes servicios son instalados:
 
 \begin{itemize}
 \item servidor mysql: se utiliza la imagen: 5.7. Utiliza el puerto 3036 para las comunicaciones. 
@@ -136,40 +138,41 @@ Por otra parte, se configura una red interna NurseSystem-net que hace de \textit
 
 
 \section{Base de datos del sistema}
-En esta sección se describen las distintas tablas que se almacenan en la base de datos y son útiles para el sistema. Estas tablas pueden ser observadas y editadas con el frontend phpMyAdmin (pero no es recomendable). 
+En esta sección se describen las distintas tablas que se almacenan en la base de datos y son útiles para el sistema.  
 
 \begin{enumerate}
 
-\item Tabla usuarios (\textit{User}): tabla que contiene la información de los usuarios del sistema. El campo id se incrementa automáticamente, es decir, al incorporar un nuevo usuario al sistema la base de datos asigna el id (se utiliza este campo como llave primaria).En el campo contraseña se almacena el hash de la misma(generado con Bcrypt \citep{WEBSITE:31}). En el campo ocupación se almacena uno de valores: "Enfermero","Médico" o "Administrador". El campo estado (\textit{State}) se utiliza en versiones posteriores del sistema.
+\item Tabla usuarios (\textit{User}): tabla que contiene la información de los usuarios del sistema. El campo id se incrementa automáticamente, es decir, al incorporar un nuevo usuario al sistema la base de datos asigna el id (se utiliza este campo como llave primaria). En el campo contraseña se almacena el hash de la misma (generado con Bcrypt \citep{WEBSITE:31}). El el campo ocupación representa la actividad a la que se dedica el usuario en el establecimiento y puede tomar uno de los siguientes valores: ''Enfermero'',''Médico'' o ''Administrador''. El campo estado (\textit{State}) se utiliza en versiones posteriores del sistema. La estructura de la tabla se presenta en la figura \ref{fig:Tabla Usuarios (base de datos)}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.6]{./Figures/dB(user).png}
+	\includegraphics[scale=.65]{./Figures/dB(user).png}
 	\caption{Tabla Usuarios.}
 	\label{fig:Tabla Usuarios (base de datos)}
 \end{figure}
 
-\item Tabla Camas(\textit{Bed}): tabla que contiene la información de las camas como ser su identificación (como en el item anterior se incrementa automáticamente y es clave primaria), ubicación(piso y cuarto) y el número de dispositivo llamador. 
+\item Tabla Camas (\textit{Bed}): tabla que contiene la siguiente información de las camas: su identificación (como en el item anterior se incrementa automáticamente y es clave primaria), ubicación (piso y cuarto) y el número de dispositivo llamador. La estructura de la tabla se presenta en la figura \ref{fig:Tabla Camas (base de datos)}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.6]{./Figures/dB(bed).png}
+	\includegraphics[scale=.65]{./Figures/dB(bed).png}
 	\caption{Tabla Camas.}
 	\label{fig:Tabla Camas (base de datos)}
 \end{figure}
-
-\item Tabla Paciente (\textit{Patient}): tabla que contiene la información de los pacientes. En esta tabla el id no se incrementa automáticamente (ya que puede ser asignado manualmente por el administrador). Ademas, los campos \textit{bedId}, \textit{notesTableId} y \textit{userTableId} contienen claves foraneas que identifican un elemento de la tabla \textit{Bed} (cama), \textit{notesTable} (tablas de notas) y \textit{userTable} (tablas de médicos relacionados al paciente).
+\pagebreak
+\item Tabla Paciente (\textit{Patient}): tabla que contiene la información de los pacientes. En esta tabla el id no se incrementa automáticamente (ya es asignado manualmente por el administrador). Ademas, los campos \textit{bedId}, \textit{notesTableId} y \textit{userTableId} contienen claves foraneas que identifican un elemento de la tabla
+\textit{Bed} (cama), \textit{notesTable} (tablas de notas) y \textit{userTable} (tablas de médicos relacionados al paciente). La estructura de la tabla se presenta en la figura \ref{fig:Tabla pacientes (base de datos)}.
 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.6]{./Figures/dB(patient).png}
+	\includegraphics[scale=.65]{./Figures/dB(patient).png}
 	\caption{Tabla pacientes.}
 	\label{fig:Tabla pacientes (base de datos)}
 \end{figure}
 
 
-\item Relación médicos-pacientes : para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos tratándolo. Además, un paciente puede utilizar a los mísmos médicos de otro paciente... es una de las ventajas de las bases de datos relacionales.
+\item Relación médicos-pacientes : para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos asignados. Además, un paciente puede utilizar a los mísmos médicos de otro paciente. Se presenta la relación en la figura \ref{fig:Relación médicos-pacientes}.
 
 
 \begin{figure}[ht]
@@ -181,7 +184,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 
 
-\item Relación tabla de notas- pacientes: como en el caso anterior, se utiliza una tabla de notas generales con una tabla intermedia que los indexa. En este caso y como es particular de cada paciente no se puede repetir.
+\item Relación tabla de notas-pacientes: como en el caso anterior, se utiliza una tabla de notas generales con una tabla intermedia que los indexa. En este caso, y como es particular de cada paciente, no se puede repetir.
 
 
 \begin{figure}[ht]
@@ -191,38 +194,55 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 	\label{fig:Relación notas-pacientes (base de datos)}
 \end{figure}
 
-\pagebreak
 
-\item Tabla de eventos programados: En esta tabla se cargan las tareas programadas para un paciente. El identificador se incrementa al generarse, el nro de paciente es enviado por el cliente, el campo tipo de evento puede ser \textit{diario},\textit{mensual} o \textit{anual} y el campo datetime a la hora que se requiere que se realice. El campo nota es donde se coloca la tarea a realizar (Por ejemplo, suministrar X gramos de medicamento Y).
+
+\item Tabla de eventos programados: En esta tabla se cargan las tareas programadas para un paciente. Se representa en la figura \ref{fig:Tabla de eventos programados (base de datos)} y sus campos son los siguientes:
+\begin{itemize}
+\item eventId: identificador de evento, se auto incrementa.
+\item patientId: número de paciente, es asignado por el cliente y hace referencia a la identificación del paciente
+\item type: tipo de evento, puede ser \textit{diario}, \textit{mensual} o \textit{anual} 
+\item Datetime: momento que se requiere que se realice la acción.
+\item Nota: es donde se coloca la tarea a realizar (Por ejemplo, suministrar X gramos de medicamento Y).
+\end{itemize}
+
 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/Events.png}
+	\includegraphics[scale=.65]{./Figures/Events.png}
 	\caption{Tabla de eventos programados.}
 	\label{fig:Tabla de eventos programados (base de datos)}
 \end{figure}
 
 
-\item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. El id se asigna al guardarse el evento. El tipo puede ser \textit{tarea programada} o \textit{llamada paciente}. El id del paciente, el id de usuario y la nota se cargan por el usuario que finalizó la accion.
+\item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. Su estructura se muestra en \ref{fig:Tabla de registro de eventos (base de datos)} y sus componentes son:
+\begin{itemize}
+\item logEventId: se asigna al guardarse el evento.
+\item type: el tipo puede ser \textit{tarea programada} o \textit{llamada paciente}. 
+\item pacientId: identificador del paciente. 
+\item userId: identificador del usuario que finalizó la tarea. 
+\item Nota: en el caso de tarea programada, se guarda la nota de la tarea.
+\item Nota2: se cargan por el usuario que finalizó la acción al escribir la memoria de lo realizado.
+\end{itemize}
+
 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/logEvents.png}
+	\includegraphics[scale=.65]{./Figures/logEvents.png}
 	\caption{Tabla de registro de eventos.}
 	\label{fig:Tabla de registro de eventos (base de datos)}
 \end{figure}
 
-\item Tabla de especialidades (\textit{SpecTable}): En esta tabla se las distintas especialidades que poseen todos los enfermeros. 
+\item Tabla de especialidades (\textit{SpecTable}): En esta tabla se presentan las distintas especialidades que poseen los enfermeros. Cada especialidad es un tratamiento que puede ser asignado a un paciente.
 
 \item Tabla de especialidades de enfermeros (\textit{NurseSpecTable}): En esta tabla se relacionan a los enfermeros con su Id y las distintas especialidades que pueden realizar. Un enfermero puede poseer más de una especialidad.
 
-\item Tabla de tratamientos de pacientes(\textit{PatientSpecTable}): En esta tabla se relacionan a los pacientes con su Id y una tratamiento(se obtiene de la SpecTable). 
+\item Tabla de tratamientos de pacientes (\textit{PatientSpecTable}): En esta tabla se relacionan a los pacientes con su Id y un tratamiento (se obtiene de la SpecTable). 
 
-\item Tabla de códigos QR (\textit{QRbed}): En esta tabla se almacenan en texto los códigos QR correspondientes a las camas para su reconocimiento.
+\item Tabla de códigos QR (\textit{QRbed}): En esta tabla se almacenan, en formato texto, los códigos QR correspondientes a las camas para su reconocimiento.
 
-\item Tabla de prioridades (\textit{PriorityTable}): En esta tabla el administrador puede asignar prioridades a las distintas camas del sistema, las prioridades son de 5 niveles, siendo 5 la más alta prioridad.
+\item Tabla de prioridades (\textit{PriorityTable}): En esta tabla el administrador puede asignar prioridades a las distintas camas del sistema.  Las prioridades son de 5 niveles, siendo 5 la más alta prioridad.
 
 
 
@@ -232,40 +252,41 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \section{Sistema de gestión}
 
-Se diseñó el sistema backend fragmentándolo en tres partes:
+El backend se diseñó fragmentándolo en tres partes:
 
 \begin{itemize}
-\item Monitoreo: clases que ayudan a publicar a todos los clientes MQTT los estados del sistema (usuario logeados y estados de habitaciones/pacientes) 
-\item Respuestas al cliente página web: expone una API para que los administradores del sistema puedan incorporar usuarios,pacientes,camas ... observar estadísticas, etc.
-\item Respuestas al cliente MQTT: se subscribe a los tópicos correspondientes para responder consultas.
+\item Módulo de monitoreo: clases que ayudan a publicar a todos los clientes MQTT los estados del sistema (usuario logeados y estados de habitaciones/pacientes). 
+\item Módulo de respuestas al cliente página web: expone una API para que los administradores del sistema puedan incorporar usuarios, pacientes, camas, observar estadísticas, etc.
+\item Módulo de respuestas al cliente MQTT: se subscribe a los tópicos correspondientes para responder consultas.
 \end{itemize}
 
-En la figura \ref{fig:Estructura de directorio(backend)} se presenta la estructura de directorios del backend.
+En la figura \ref{fig:Estructura de directorio (backend)} se presenta la estructura de directorios del backend.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.45]{./Figures/projectStructure.png}
 	\caption{Estructura de directorio (backend).}
-	\label{fig:Estructura de directorio(backend)}
+	\label{fig:Estructura de directorio (backend)}
 \end{figure}
 
 La descripción de los contenidos de cada carpeta es:
 \begin{itemize}
-\item middleware: contiene el programa que filtra el acceso a la api desde el la página web.
+\item middleware: contiene el programa que filtra el acceso a la API desde  la página web.
 \item Monitoring: contiene clases con información del estado del sistema que se actualiza cada cierto tiempo. Cada una de estas clases contiene una lista de todos los elementos y se presenta a los tópicos correspondientes.
 \item mqtt: contiene clases que se encargan de procesar y responder los mensajes que se reciben por medio del protocolo MQTT.
 \item mysql: contiene la clase con el \textit{pool} (''grupo'') de conexiones a la base de datos. El objetivo es poder reutilizar conexiones por distintos usuarios.
 \item routes: contiene las rutas de express para acceder a la base de datos desde las peticiones por HTTP.
 \end{itemize}
 
+\pagebreak
 \subsection{Descripción de las clases para monitoreo del sistema}
 
-Las siguientes son clases que se utilizan para reportar mediante MQTT los estados del sistema. Para resumir se presentan los elementos principales, pero no las funciones que las componen.
+Las siguientes son las clases que se utilizan para reportar mediante MQTT los estados del sistema. Para resumir se presentan los elementos principales, pero no las funciones que las componen.
 
 \begin{itemize}
 
-\item \textit{ Monitoreo de camas} \ref{cod:bedlist}:\\
-Una  clase llamada \textit{Bedslist} la cual contiente una lista de elementos json con información de cada cama (se instancia al iniciar el backend).
+\item \textit{ Monitoreo de camas} (código \ref{cod:bedlist}):\\
+La clase \textit{Bedslist} contiente una lista de elementos json con información de cada cama (se instancia al iniciar el backend).
 
 \begin{lstlisting}[label=cod:bedlist,caption=  Clase Bedlist]
 class  BedsList  {    
@@ -278,7 +299,7 @@ class  BedsList  {
 Los componentes de cada elemento son 
 \begin{enumerate}
 \item id: identificador de cama.
-\item st: estado de la cama. Puede poseer los siguientes estados: 
+\item st: estado de la cama. Los valores que puede poseer este campo son: 
 \begin{itemize}
 \item 0: no ocupada.
 \item 1: ocupada.
@@ -291,11 +312,12 @@ Los componentes de cada elemento son
 \item spec: número de tratamiento del paciente en la cama (es utilizado por los clientes enfermeros para filtrar si pueden o no atenderlo).
 \end{enumerate}
 
-\pagebreak
-\item \textit{ Monitoreo de usuarios:}\\
-Una clase \textit{UserList} la cual contiente una lista de elementos json con información de cada usuario (se instancia al iniciar el backend):
 
-\begin{lstlisting}[caption=  Clase Userlist]
+\item \textit{ Monitoreo de usuarios} (código \ref{cod:Userlist}):\\
+La clase\textit{UserList} contiente una lista de elementos JSON con información de cada usuario (se instancia al iniciar el backend):
+
+\begin{lstlisting}[label=cod:Userlist,caption=  Clase Userlist]
+class  UserList  {   
 constructor() {
          this.UserList=[{id:0,st:0}];                
         
@@ -316,10 +338,11 @@ Los componentes de cada elemento son
 
 
 
-\item \textit{ Monitoreo de eventos programados:}\\
-Esta clase se utiliza para presentar a los clientes las notas de tareas programadas que se lanzan. Es una lista que se vacía cuando la tarea finaliza (sirve para mantener ordenadas las tareas programadas).
+\item \textit{ Monitoreo de eventos programados} (código \ref{cod:Calendarlist}):\\
+La clase se utiliza para presentar a los clientes las notas de las tareas programadas que se lanzan. Es una lista que se vacía cuando la tarea finaliza (sirve para mantener ordenadas las tareas programadas).
 
-\begin{lstlisting}[caption=  Clase CalendarList]
+\begin{lstlisting}[label=cod:Calendarlist,caption=  Clase CalendarList]
+class  Calendarlist  {   
 constructor() {
          this.CalendarList=[{calendarId:0,bedId:0,note:null}];                
         
@@ -331,17 +354,18 @@ Los componentes de cada elemento son
 	\begin{enumerate}
 		\item calendarId: identificador de evento.
 		\item bedId: número de cama.
-		\item note: Nota de la tarea(obtenida de la base de datos).		
+		\item note: Nota de la tarea (obtenida de la base de datos).		
 
 	\end{enumerate}
 
 
 
 
-\item \textit{ Monitoreo de paciente-usuario-tipo de evento:}\\
-Esta clase se utiliza para en todo momento saber quien está atendiendo a un paciente.
+\item \textit{ Monitoreo de paciente-usuario-tipo de evento} (código \ref{cod:BedUserlist}):\\
+La clase BedUserlist se utiliza para saber quien está atendiendo, en todo momento, a un paciente.
 
-\begin{lstlisting}[caption=  Clase BedsUserList]
+\begin{lstlisting}[label=cod:BedUserlist,caption=  Clase BedsUserList]
+class  BedUserlist  { 
  constructor() {
          this.beduserlist=[{bedId:0,userId:0,type:0}];                        
     }
@@ -352,7 +376,11 @@ Los componentes de cada elemento son
 	\begin{enumerate}
 		\item bedId: número de cama.
 		\item userId: número de usuario.
-		\item type: tipo de evento: 1 llamador, 2 calendario.		
+		\item type: tipo de evento: 
+		\begin{itemize}
+			\item provocado por un paciente
+			\item visita programada		
+		\end{itemize}		 	
 
 	\end{enumerate}
 
@@ -360,11 +388,14 @@ Los componentes de cada elemento son
 \end{itemize}
 \subsection{Descripción de API MQTT para la mensajería de la aplicación móvil}
 
-El archivo principal es mqtt.js (dentro de la carpeta mqtt) y contiene la inicialización de la conexión inicial al broker, el lanzamiento de las tareas de monitoreo (publicación de las listas antes definidas en los tópicos específicos) y la escucha de los mensajes. Una vez recibido un mensaje, dependiendo del tipo del mismo se deriva los mismo a la clase correspondiente que realiza el tratamiento.
+En esta sección se describe los módulos que permiten la interacción del sistema con los clientes utilizando el protocolo MQTT.
+
+
+El módulo principal es mqtt.js (dentro de la carpeta mqtt) y contiene la inicialización de la conexión inicial al broker, el lanzamiento de las tareas de monitoreo (publicación de las listas antes definidas en los tópicos específicos) y la escucha de los mensajes. Una vez recibido un mensaje, dependiendo del tipo, se deriva a la clase correspondiente que realiza el tratamiento acorde a la petición. En el fragmento de código  \ref{cod:Tareas MQTT} se presentan las tareas de inicialización del módulo.
 
 
 
-\begin{lstlisting}[caption=  Tareas ejecutadas por mqtt.js]
+\begin{lstlisting}[label=cod:Tareas MQTT,caption=  Tareas ejecutadas por mqtt.js]
 var client = mqtt.connect(process.env.MQTT_CONNECTION)
 //listening to  messages
 client.on('connect', function () {
@@ -392,16 +423,16 @@ client.on('connect', function () {
 })
 \end{lstlisting}
 
-El sistema recibe mensajería por medio de tres tópicos principales: \textit{User}, \textit{Pacient} y \textit{Beds}. Por otra parte, se utilizan variables de entorno como ser \textit{MQTT\textunderscore CONNECTION}  , que contiene informacion de la IP del broker y el puerto del mismo.
+El sistema recibe mensajería por medio de tres tópicos principales: \textit{User}, \textit{Pacient} y \textit{Beds}, según se observa en las lineas 4, 10 y 15 de \ref{cod:Tareas MQTT}. Por otra parte, se utilizan variables de entorno como ser \textit{MQTT\textunderscore CONNECTION}, que contiene informacion de la IP del broker y el puerto.
 
 Por último, dentro de esta función se setean dos temporizadores para ejecutar las funciones publishBedStates y publishUserStates que publican los listados de los estados de camas y usuarios cada cierto tiempo.
 
 
 
 
-En general, contenido útil de los mensajes MQTT tiene la siguiente forma:
+El contenido útil (\textit{payload}) de los mensajes MQTT tiene la siguiente forma:
 
-\begin{lstlisting}[caption=  Formato mensaje MQTT]
+\begin{lstlisting}[label=cod:Mensaje MQTT,caption=  Formato mensaje MQTT]
 
 payload={_username: "xxxx",_content: "xxx", _bedId: xx, _type: x}
 
@@ -409,13 +440,13 @@ payload={_username: "xxxx",_content: "xxx", _bedId: xx, _type: x}
 
 La descripción de los campos es la siguiente:
 \begin{itemize}
-\item \textunderscore username: nombre del usuario que envió el comando
-\item \textunderscore content: contenido
-\item \textunderscore bedId: numero de cama a la que se hace referencia
-\item \textunderscore type: tipo de mensaje
+\item \textunderscore username: nombre del usuario que envió el comando.
+\item \textunderscore content: contenido.
+\item \textunderscore bedId: numero de cama a la que se hace referencia.
+\item \textunderscore type: tipo de mensaje.
 \end{itemize}
 
-El tipo de mensaje permite al sistema derivar a las clases correspondientes las tareas a realizar. 
+El tipo de mensaje permite al sistema derivar las tareas a realizar a las clases correspondientes. En la tabla \ref{tab:Tipos de Mensajes MQTT} se presentan la asignación numérica de cada tipo de mensaje:
 
 %\begin{verbatim}
 \begin{table}[h]
@@ -447,7 +478,7 @@ El tipo de mensaje permite al sistema derivar a las clases correspondientes las 
 		\bottomrule
 		\hline
 	\end{tabular}
-	\label{tab:Modelo}
+	\label{tab:Tipos de Mensajes MQTT}
 \end{table}
 %\end{verbatim}
 
@@ -462,7 +493,6 @@ Las distintas clases que se utilizan son:
 
 Todas estas clases responden en un tópico correspondiente a los clientes que consultan.
 
-
 Las excepciones al formato general de los mensajes vienen dadas por:
 \begin{itemize}
 \item Mensaje de último testamento: informa que un usuario se desconectó. En su \textit{payload} contiene información del nombre de usuario y se publica en el tópico $"/User/Disconnect"$.
@@ -473,15 +503,16 @@ Las excepciones al formato general de los mensajes vienen dadas por:
 
 \pagebreak
 
-\subsection{Descripción de API REST para aplicación Web}
+\subsection{Descripción de API Rest para aplicación Web}
 
-La API del trabajo utiliza Express junto con Cookie-parser. 
+La API desarrollada utiliza Express junto con Cookie-parser. 
  
-En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Por definición la página web de configuración solo puede ser accedida por los usuarios administradores, para lograr autenticación el \textit{backend} utiliza las librería \textit{jsonwebtoken} \citep{WEBSITE:32} y \textit{bcrypt} \citep{WEBSITE:31}. 
+En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Para lograr autenticación el backend utiliza las librería \textit{jsonwebtoken} \citep{WEBSITE:32} y \textit{bcrypt} \citep{WEBSITE:31}. En una primera versión, solo se habilita el uso de la página de administración a usuarios administradores.
 
-Se denomina ruteo a la forma que un \textit{endpoint} (punto de acceso, en español) de una aplicación responde a las peticiones de los clientes. En las aplicaciones express, el objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema.
+Se denomina ruteo a la forma que una aplicación express direcciona a las peticiones del cliente a los respectivos módulos que se encargan de su tratamiento.%un \textit{endpoint} de una aplicación responde a las peticiones de los clientes. 
+El objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema, el fragmento de código con las rutas express se observa en el código \ref{cod: Rutas Express}:
 
-\begin{lstlisting}[caption=  Rutas express]
+\begin{lstlisting}[label=cod:Rutas Express,caption=  Rutas express]
 app.use('/api/patient',auth.isAuthenticated,routerPatient);
 app.use('/api/user',auth.isAuthenticated,routerUser);
 app.use('/api/messages',auth.isAuthenticated,routerMessages);
@@ -499,10 +530,38 @@ app.use('/api/nurseSpecTable',auth.isAuthenticated,routerNurseSpecTable);
 app.use('/api/treatment',auth.isAuthenticated,routerPatientSpecTable);
 \end{lstlisting}
 
+Brevemente a continuación se presenta la funcionalidad de cada endpoint:
+\begin{itemize}
+\item /api/patient : endpoint que permite la gestion de pacientes (alta, baja, modificación)
+\item /api/user : endpoint que permite la gestion de usuarios (alta, baja, modificación)
+\item /api/messages : permite obtener un listado de los mensajes entre usuarios (en esta versión de código y debido las limitaciones de almacenamiento del servidor prototipo, se encuentra comentada toda esta funcionalidad)
+\item /api/notes : endpoint que permite la gestion de las notas de los pacientes (alta, baja, modificación). 
+\item /api/beds : endpoint que permite la gestion de las camas (alta, baja y modificación). 
+\item /api/usersTable: endpoint que permite la gestion de las camas de lastablas de usuarios. Son las agrupaciones de los médicos que pueden atender a un paciente. 
+\item /api/medicalTable: endpoint que permite la gestion de las tablas de tablas de usuarios.
+\item /api/QR: enpoint que permite la gestión de los códigos QR(alta, baja y modificación).
+\item /api/events: endpoint que permite ingresar una tarea programada al calendario.
+\item /api/logEvents: endpoint que permite obtener el listado de eventos.
+\item /api/Statistics: endpoint que permite información de la base de datos. Por ejemplo:
+\begin{enumerate}
+\item número total de visitas de cada enfermero, en formato JSON.
+\item número total de llamados de cada paciente, en formato JSON.
+\item número de pacientes con igual tratamiento, en formato JSON.
+\item número de enfermeras con una especialización, en formato JSON.
+\end{enumerate}
 
-La ruta authentication se utiliza para entregar un \textit{token} al cliente, en dicha función se verifica que el usuario sea administrador.
+Un ejemplo de uso de esta información puede ser, al observarse un incremento de pacientes con cierto tratamiento se puede solicitar capacitar a nuevas enfermeras en esa especialización. Por el contrario si disminuye un tratamiento se recapacita al personal o bien se lo reduce.
 
-\begin{lstlisting}[caption=  Logueo web]
+\item /api/authentication: enpoint que permite logearse al sistema. Se explica con más detalle por su importancia.
+\item /api/specTable: endpoint que permite modificar la tabla de especialidades de enfermeros (tratamientos para los pacientes). Se permite agregar o quitar especialidades.
+\item /api/nurseSpecTable: endpoint que permite asignarle o quitarle especialidades a una enfermera. Por ejemplo, una enfermera recibió una capacitación y desde ese momento queda habilitada para atender pacientes con una cierta necesidad.
+\item /api/treatment : endpoint que permite asignar a  un paciente un tratamiento o bien modificar el tratamiento.
+
+\end{itemize}
+
+La ruta authentication se utiliza para entregar un \textit{token} al cliente. En dicha función se verifica que el usuario sea administrador.
+
+\begin{lstlisting}[label=cod:Logueo Web,caption=  Logueo web]
 routerAuthenticate.post('/', async function(req, res) {
     if (req.body) {
         var user = req.body;
@@ -545,12 +604,12 @@ routerAuthenticate.post('/', async function(req, res) {
 
     })
 
-
 \end{lstlisting}
-
+**************************************************************************
+explicar
 
 Luego, la función \textit{auth.isAuthenticated(request,response,next)}, dentro del archivo \textit{./middleware/authentication} filtra el acceso solo a la página web con un usuario administrador logueado.
-\begin{lstlisting}[caption=  Control de token]
+\begin{lstlisting}[label=cod: Autorización,caption=  Control de token]
 exports.isAuthenticated = async(req, res,next)=> {
     let authHeader = (req.headers.authorization || '');
     if (authHeader.startsWith("Bearer ")) {
@@ -574,14 +633,14 @@ exports.isAuthenticated = async(req, res,next)=> {
 }
 \end{lstlisting}
 
-Cada recurso posee su ruta correspondiente. Esta forma de organizar el código permite que se incorporen funcionalidades al \textit{backend} de forma sencilla.
+Cada recurso posee su ruta correspondiente. Esta forma de organizar el código permite que se incorporen funcionalidades al backend de forma sencilla.
 
 \pagebreak
 
 \section{Página Web}
 
 La página web de administración consiste en un \textit{dashboard} (tablero de control) que permite al usuario administrador gestionar el sistema.
-Es implementada utilizando el framework Ionic/Angular, con el lenguaje de programación Typescript y las principales áreas de la visualización se observa en la figura \ref{fig:Página web}.
+Fue implementada utilizando el framework Ionic/Angular, con el lenguaje de programación Typescript y las principales secciones de la visualización se observan en la figura \ref{fig:Página web}.
 
 \begin{figure}[ht]
 	\centering
@@ -592,12 +651,12 @@ Es implementada utilizando el framework Ionic/Angular, con el lenguaje de progra
 
 En el área menú se presentan las distintas utilidades de la página:
 \begin{itemize}
-\item Login: acceso al sistema. El visitante ingresa su nombre de usuario y contraseña y se le otorga los permisos correspondientes (la conexión recibe el \textit{token} del \textit{backend}).
+\item Login: acceso al sistema. El visitante ingresa su nombre de usuario y contraseña y se le otorga los permisos correspondientes (la conexión recibe el \textit{token} del backend).
 \item MQTT: permite editar o probar la conexión al broker MQTT del sistema. Es necesario si se desea monitorear el estado de los usuarios o camas en tiempo real.
 \item Monitoreo: se visualiza el estado de las camas o de los usuarios en tiempo real.
 \item Camas: permite editar información de las camas como ser código QR, numero de llamador, cuarto y piso.
-\item Usuarios: permite agregar,editar o dar de baja usuarios.
-\item Pacientes: permite agregar,editar o dar de baja pacientes.
+\item Usuarios: permite agregar, editar o dar de baja usuarios.
+\item Pacientes: permite agregar, editar o dar de baja pacientes.
 \item Log Eventos: permite observar el listado de eventos que se hayan guardado en la base de datos.
 \item Calendario: permite observar o agregar tareas rutinarias asignadas a un paciente.
 \item Estadísticas: permite observar el numero de intervenciones de un enfermero, la distribucion de especialidades dentro del grupo de enfermeros y la distribución de tratamientos requeridos por los pacientes. Con esta información el administrador puede notificar sobre necesidades de mayor capacitación en un tema para los enfermeros.
@@ -616,49 +675,48 @@ Todo el código de la aplicación se encuentra en la carpeta \textit{''/src/app'
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.60]{./Figures/codigoFront.png}
-	\caption{Estructura de carpetas página web.}
+	\caption{Estructura de carpetas de la aplicación web.}
 	\label{fig:Carpetas página web.}
 \end{figure}
 
 
-Dentro de la carpeta \textit{models} se encuentran las distintas clases que se utilizan para la comunicación con el backend. Las características se presentan a continuación:
+Dentro de la carpeta \textit{models} se encuentran las distintas clases que se utilizan para la comunicación con el backend. El listado de clases con una pequeña mención de su utilidad se presenta a continuación:
 
 \begin{itemize}
-\item bed-status: gestiona información del estado de las camas(''ocupada'', ''llamando'',...) y del tratamiento que utiliza el paciente.
+\item bed-status: gestiona información del estado de las camas  (''ocupada'', ''llamando'',...) y del tratamiento que utiliza el paciente.
 \item bed: gestiona información de las camas.
 \item calendarEvent: se utiliza para gestionar información de tareas programas.
 \item logEvent: se utiliza para gestionar información de eventos realizados.
 \item medicalTable: relaciona un usuario con una tabla de médicos.
 \item message-model: modelo de mensaje que se transmite a través de MQTT.
-\item message: modelo de mensaje almacenado en base de datos(no utilizado).
-\item note: modelo de nota para un paciente(no utilizado en la aplicación web).
-\item nurseSpec: clase que se utiliza para observar las especialidades de los distintos enfermeros. Propiedades: numero, numero de especialidad y nombre de especialidad.
+\item note: modelo de nota para un paciente (no utilizado en la aplicación web).
+\item nurseSpec: clase que se utiliza para observar las especialidades de los distintos enfermeros (número, número de especialidad y nombre de especialidad).
 \item patient: clase que contiene información del paciente (id, nombre, apellido, cama, índice en la tabla de notas, índice en la tabla de médicos)
-\item patientTreat: clase que relaciona un paciente con un tratamiento. Propiedades: índice, número de paciente, número de tratamiento y nombre de tratamiento.
-\item qr: relaciona un índice con un texto (se utiliza para guardar / recuperar índices de qr)
-\item spec: clase que contiene una especialidad/tratamiento. Contiene un índice y un texto con el nombre.
-\item user-status: clase que permite obtener desde el sistema el estado de los usuarios (identificación de usuario y estado "logueado"- "no logeado").
+\item patientTreat: clase que relaciona un paciente con un tratamiento ( índice, número de paciente, número de tratamiento y nombre de tratamiento).
+\item qr: relaciona un índice con un texto (se utiliza para guardar o recuperar índices de qr)
+\item spec: clase que contiene una especialidad o tratamiento. Contiene un índice y un texto con el nombre.
+\item user-status: clase que permite obtener desde el sistema el estado de los usuarios (identificación de usuario y estado "logueado" o "no logeado").
 \item user: contiene información del usuario (nombre, apellido, ocupación, contraseña, nombre de usuario).
  
 \end{itemize}
 
 
-Dentro de la carpeta \textit{pages} se encuentran las distintas secciones de acción de la página (se presentan en el área de presentación/trabajo).
+Dentro de la carpeta \textit{pages} se encuentran las distintas secciones de acción de la página (se presentan en el área de visualización).
 
 Dentro de la carpeta \textit{services} se organizan los distintos servicios.
 
 Dentro de la carpeta \textit{folder} se encuentra el layout principal de la página.
 
-La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada y se presenta dentro del campo de visualización / edición de la pantalla principal. 
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada y se presenta dentro del campo de visualización de la pantalla principal. 
 
 
 
 \subsection{Acceso de usuario}
 
-Un usuario no puede acceder a las distintas utilidades de la página si no se encuentra logeado o si no es administrador. Todas las consultas al backend necesitan poseer el \textit(token) de autenticación en su encabezado. Esto se logra mediante el servicio interceptor:
+Un usuario no puede acceder a las distintas utilidades de la página si no se encuentra logeado o si no es administrador. Todas las consultas al backend necesitan poseer un \textit{token} de autenticación en su encabezado. Esto se logra mediante el servicio interceptor:
 
 
-\begin{lstlisting}[caption=  Inserción de token]
+\begin{lstlisting}[label=cod:Inserción Token,caption=  Inserción de token]
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private _router:Router) { }
@@ -706,7 +764,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
 \subsection{Monitoreo del sistema}
 Si se quiere monitorear al sistema, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas.}. El sistema reporta el estado de las camas cada un segundo (o cuando hay un cambio abrupto) y el estado de los usuarios cada un segundo y quinientos milisegundos.
-
+*******************************************************************
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.40]{./Figures/monitoreo-camas.png}
@@ -716,7 +774,12 @@ Si se quiere monitorear al sistema, es necesario configurar la ubicación del \t
 
 \subsection{Gestión de tareas programadas}
 
-Si se desea generar un nuevo evento programado, se completa el formulario y se presiona enviar.
+Si se desea generar un nuevo evento programado, se selecciona del menú  calendario, se selecciona el número de paciente y luego se presiona agregar. En ese momento se presenta el formulario de la figura \ref{fig:Tareas programadas.}, se lo completa y se presiona enviar. Los datos a completar son:
+\begin{itemize}
+\item Nota: campo donde se presenta la tarea propiamente dicha.
+\item tipo: se selecciona si es diario, semanal o mensual.
+\item en el calendario se selecciona fecha y hora de inicio, desde ese momento se repite segun el tipo.
+\end{itemize}
 
 \begin{figure}[ht]
 	\centering
@@ -729,7 +792,7 @@ El backend guarda en la base de datos la nueva tarea y genera la acción corresp
 
 \subsection{Estadísticas del sistema}
 
-En esta función se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. Para generar las graficas se utiliza HighCharts \citep{WEBSITE:33}. 
+En esta sección se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. En la figura \ref{fig:Relación paciente tratamiento.} se muestra una de las subsecciones que se pueden seleccionar. Para generar las graficas se utiliza HighCharts \citep{WEBSITE:33}. 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.40]{./Figures/web/pacientes-Tratamiento.png}
@@ -744,7 +807,7 @@ En esta función se puede observar la cantidad de atenciones por enfermero guard
 En esta sección se presenta la funcionalidad de la aplicación móvil y algunos detalles de la implementación.
 \label{Estructura y organización del software}
 \subsection{Estructura y organización del software}
-La estructura de archivos del proyecto es la presentada en la figura \ref{fig: Estructura de código fuente de la aplicación móvil.}.
+La estructura de directorios del proyecto es la presentada en la figura \ref{fig: Estructura de código fuente de la aplicación móvil.}.
 
 \begin{figure}[ht]
 	\centering
@@ -753,13 +816,13 @@ La estructura de archivos del proyecto es la presentada en la figura \ref{fig: E
 	\label{fig: Estructura de código fuente de la aplicación móvil.}
 \end{figure} 
 
-El código de las distintas páginas por las que navega el usuario se encuentra dentro de \textit{''./src/app/pages''}. Los modelos (''clases'') utilizados se encuentra en la carpeta \textit{''./src/app/models''} y los servicios en la carpeta \textit{''./src/app/services''}. La carpeta \textit{''./src/app/chat''} contiene la primera versión la intercomunicación entre enfermeros-médicos que simulaba una sala de reunión (similar a la ofrecida por el producto en el mercado). Luego se migró a la definitiva, que cumple estrictamente con lo solicitado en un principio, pero por solicitud del cliente, no se eliminó la carpeta.
+El código de las distintas páginas por las que navega el usuario se encuentra dentro de \textit{''./src/app/pages''}. Los modelos (''clases'') utilizados se encuentra en la carpeta \textit{''./src/app/models''} y los servicios en la carpeta \textit{''./src/app/services''}. La carpeta \textit{''./src/app/chat''} contiene la primera versión la intercomunicación entre enfermeros-médicos que simulaba una sala de reunión  (similar a la ofrecida por el producto en el mercado). Luego se migró a la definitiva, que cumple estrictamente con lo solicitado en un principio, pero por solicitud del cliente, no se eliminó la carpeta.
 
-Como se mencionó en secciones anteriores, la aplicación móvil interactua con el backend solo utilizando websockets MQTT.
+Como se mencionó en la seccion \ref{Generación del entorno base para el desarrollo del sistema de backend}, la aplicación móvil interactua con el backend solo utilizando websockets MQTT.
 
-La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. En el código \ref{Rutas de la aplicación móvil}
+La aplicación posee un módulo principal llamado ''app.module''. Utilizando el angular-router, se redirecciona desde cualquier página a una deseada. En el código \ref{cod:Rutas aplicación Móvil.} se presenta, con un fragmento de código, como se redireccionan las páginas en Ionic:
 
-\begin{lstlisting}[caption=  Fragmento de las rutas de la aplicación móvil]
+\begin{lstlisting}[label=cod:Rutas aplicación Móvil.,caption=  Fragmento de las rutas de la aplicación móvil]
 const routes: Routes = [
   {
     path: 'home',
@@ -794,10 +857,9 @@ Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno
 	\label{fig: Pantalla inicial, configuración y acceso de la aplicación.}
 \end{figure} 
 
-En la página de configuración se ingresa la ip del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
+En la página de configuración se ingresa la IP del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
 
-
-\begin{lstlisting}[caption=  Funciones del servicio que guardan en el localStorage]
+\begin{lstlisting}[label=cod:LocalStorage,caption=  Funciones del servicio que guardan en el localStorage]
   /**
    * Saving port values to localStorage
    */
@@ -809,11 +871,12 @@ En la página de configuración se ingresa la ip del broker del sistema y el pue
 
 En la página de logueo se ingresan el nombre de usuario, y su contraseña.
 
-La aplicación, publica la información en el tópico ''/User/username'' con el formato de mensaje correspondiente y recibe en ''/Session/nrodesesión'' el número de usuario y el modo de uso. De esta manera la aplicación se configura.
+La aplicación publica la información en el tópico ''/User/username'' con el formato de mensaje correspondiente y recibe en ''/Session/nrodesesión'' el número de usuario y el modo de uso. De esta manera la aplicación se setea en el modo correspondiente.
+
 
 
 \subsection{Modo administrador}
-En el modo administrador se puede monitorear el estado de los usuarios y las camas. Para seleccionar, se presiona el botón correspondiente.
+En el modo administrador se puede monitorear el estado de los usuarios y las camas. Para seleccionar lo que se desea monitorear, se presiona el botón correspondiente.
 
 \begin{figure}[ht]
 	\centering
@@ -828,11 +891,11 @@ El orden en que se presentan las camas tienen que ver con la prioridad que se le
 
 \pagebreak
 \subsection{Modo médico}
-Al ingresar en modo médico, la aplicación queda en modo espera hasta que el usuario decida que hacer. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
+Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el usuario decida que hacer. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.60]{./Figures/app/modo-medico.png}
+	\includegraphics[scale=.50]{./Figures/app/modo-medico.png}
 	\caption{ Diagrama de estados en modo médico.}
 	\label{fig: Diagrama de estados en modo médico.}
 \end{figure} 
@@ -925,7 +988,7 @@ Al presionar aceptar automáticamente el estado de la cama cambia a desplazandos
         \label{fig_2:three graphs}
 \end{figure}
 \pagebreak
-Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código qr con el celular.
+Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código QR con el celular.
 
 
 
@@ -978,12 +1041,7 @@ Una vez que se aceptó desde el sistema el código de la cama, en la aplicación
 
 
 \pagebreak
-\subsection{Interacción médico-enfermera}
-
-\pagebreak
 \section{Contraste con los requerimientos}
-
-\subsection{Cumplimiento de requerimientos}
 
 En esta subsección se detalla el grado de cumplimiento de los requerimientos relevados en el plan de proyecto.
 \begin{enumerate}

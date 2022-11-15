@@ -2,7 +2,7 @@
 
 \chapter{Ensayos y resultados} % Main chapter title
 
-En este capítulo se menciona los ensayos realizados asi como 
+En este capítulo se menciona los ensayos realizados, se comentan las herramientas que se utilizaron y se presentan los resultados.
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
@@ -27,9 +27,11 @@ Para simular mensajes y observar el comportamiento de cada una de las partes del
 
 Esta herramienta fue no solo muy útil para realizar ensayos sino tambien para realizar el desarrollo de las funcionalidades propiamente dichas.
 
+\pagebreak
+
 \subsection{Pruebas unitarias de la API Rest}
 
-Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30} y la consola de administrador de phpMyAdmin mencionada en \ref{Chapter2}. En la \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
+Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{Chapter2}. En la \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
 
 \begin{figure}[ht]
 	\centering
@@ -45,8 +47,46 @@ Para simular el logeo y la consulta a la base de datos se utilizó la herramient
 	\label{fig:Rechazo Logueo en el sistema con Postman}
 \end{figure}
 
+Postman permite automatizar los test utilizando colecciones (que son secuencias de consultas a la API). Las colecciones se pueden exportar a un formato JSON de modo de poder ser utilizadas por otras herramientas.
 
-Durante el desarrollo, se deshabilitó la opción de logueo para facilitar las pruebas. 
+Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la linea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}).
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.25]{./Figures/Postman.png}
+	\caption{Colección logueo de test.}
+	\label{fig:Colección logueo usuario en Postman}
+\end{figure}
+
+Para reportar con Newman existen varias opciones, en este trabajo se utiliza cli y htmlextra, ejecutando en la consola:
+
+
+
+\begin{lstlisting}[label=cod:Newman,caption=  Ejecución de Newman en consola]
+>>newman run ./logueo_usuario.postman_collection.json -r cli,htmlextra
+\end{lstlisting}
+\pagebreak
+
+
+En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola y en \ref{fig:reporte html Newman} el reporte en html.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.40]{./Figures/newman-1.png}
+	\caption{Reporte en consola de Newman.}
+	\label{fig:reporte cli Newman}
+\end{figure}
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.40]{./Figures/newman-2.png}
+	\caption{Reporte html de Newman.}
+	\label{fig:reporte html Newman}
+\end{figure}
+
+\pagebreak
 
 \section{Integración del sistema}
 \subsection{Instalación del sistema en una instancia de AWS}
@@ -76,6 +116,7 @@ Los pasos para configurar la página web:
 ''ionic build''
 \item Comprimir la carpeta www
 \item Logearse con ssh en la instancia EC2
+\item configurar nginx para redirigira la página (***** falta completar esta explicación... puedo llegar a colocarlo en un anexo)
 
 \end{itemize}
 \subsection{Generación/instalación de la aplicación móvil en ANDROID}
@@ -87,12 +128,13 @@ Para poder descargar el archivo ejecutable a un dispositivo ANDROID se debe gene
 
 ''ionic cap build android''
 \item Abrir Android estudio, modificar el AndroidManifest.xml
-\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación.
+\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación (****** como en la sección anterior  falta completar los pasos, puedo colocarlo en un anexo).
 \end{itemize}
 \pagebreak
 
 
 \begin{lstlisting}[label=cod:AndroidMan,caption=Modificaciones al Android Manifest.]  % Start your code-block
+
 package="com.gabiot.Enfermera">
     <!-- Permissions -->
 
@@ -129,7 +171,7 @@ package="com.gabiot.Enfermera">
 \pagebreak
 \subsection{Equipo simulador de llamadores}
 
-Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} 
+Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33}. 
 
 \begin{figure}[ht]
 	\centering
@@ -140,4 +182,4 @@ Se desarrollo un dispositivo que simula los llamadores con un microcontrolador E
 
 \subsection{Resultados de utilizar el sistema}
 
-El sistema permaneció funcionando de manera normal durante una semana completa, generando los eventos programados y permitiendo la interacción de dispositivos.
+El sistema permaneció funcionando de manera adecuada durante una semana completa, generando los eventos programados y permitiendo la interacción de dispositivos.

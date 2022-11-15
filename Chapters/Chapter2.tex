@@ -12,41 +12,41 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 \label{sec:Descripción de tecnologías web para IoT}
 
 
-Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en 2 partes: \textit{ backend} y \textit{frontend} .  
+Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend .  
 
 \subsection{ Breve introduccion a tecnologías de backend}
-El \textit{backend}  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el \textit{backend} se comunica con los clientes utilizando 2 protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
+El backen  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el backend se comunica con los clientes utilizando dos protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
 
 El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
 
-MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP(del ingles \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet ), se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar accesorios rápidamente con bajo costo de software, hardware e implementación \citep{ARTICLE:2}.
+MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP (del ingles \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet ), se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar dispositivos rápidamente con bajo costo de software, hardware e implementación \citep{ARTICLE:2}.
 
-En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP(\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
+En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP  (\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
 
 En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node} se explicará el funcionamiento del backend.
 \subsection{Breve introduccion a tecnologías frontend}
-El \textit{frontend} es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el \textit{frontend} consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las más conocidas tecnologías que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo: \citep{WEBSITE:13}).  
+El frontend es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el frontend consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las tecnologías más conocidas que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo \citep{WEBSITE:13}).  
 
-En los últimos años, se busca facilitar el diseño de  \textit{frontend} mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como ser Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16}, Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
+En los últimos años, se busca facilitar el diseño del frontend mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16} e Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
 
 \section{Componentes del sistema}
 \label{sec:Sistema General}
 
-Al sistema desarrollado se lo puede descomponer en seis partes definidas:
+Al sistema desarrollado está compuesto por seis partes:
 
 \begin{itemize}
 \item  Broker MQTT: servidor encargado de gestionar los mensajes.
 \item  Base de datos: almacena información relevante de los pacientes, usuarios y sistema.
-\item  Servidor de base de datos: proporciona una API (\textit{Application Programming Interface}, interfaz de programación de aplicaciones) del tipo REST (\textit{representational state transfer}, transferencia de estado representacional) que permite la modificación/consulta de la base de datos desde un dispositivo web. La API provee \textit{endpoints}(puntos de acceso en español) que permiten realizar distintas operaciones como ser carga, consulta, alteración o eliminación de información.
-\item  Servidor web/ página web: entrega información a un browser para que pueda mostrar una página web de administración del sistema y de carga de la base de datos.
-\item  Sistema: recibe los mensajes MQTT y responde/actúa acorde a las peticiones.
+\item  Servidor de base de datos: proporciona una API (\textit{Application Programming Interface}, interfaz de programación de aplicaciones) del tipo REST (\textit{representational state transfer}, transferencia de estado representacional) que permite la modificación/consulta de la base de datos desde un dispositivo web. La API provee \textit{endpoints} (puntos de acceso en español) que permiten realizar distintas operaciones como ser carga, consulta, alteración o eliminación de información.
+\item  Servidor web: entrega información a un browser para que pueda mostrar una página web de administración del sistema y de carga de la base de datos.
+\item  Backend: recibe los mensajes MQTT y responde/actúa acorde a las peticiones.
 \item Cliente browser: muestra en la pantalla de una computadora o dispositivo la página web de administración.
 \item Cliente teléfono: permite a médicos y enfermeras interactuar con el sistema.
 \end{itemize}
 
-Como se puede observar, se trata de un sistema distribuido y sus partes pueden estar ubicadas en distintas localidades.
+La solución es un sistema distribuido cuyas partes se pueden ubicar en distintas ubicaciones. 
 
-Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedores que permite correr tres de las 6 partes: la base de datos, el servidor de base de datos y el sistema propiamente dicho. Además  agrupó los subsistemas que modifican la base de datos en una sola aplicación que provee ambos servicios: el sistema y el servidor REST. En la figura  \ref{fig:División del sistema} se presenta un esquema general según esta división.
+Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedores que permite correr tres de las seis partes: la base de datos, el servidor de base de datos y el sistema propiamente dicho. Además, se  agrupó los subsistemas que modifican la base de datos en un solo módulo que provee ambos puntos de acceso, MQTT y API Rest. En la figura  \ref{fig:División del sistema} se presenta un esquema general según esta división.
 
 
 \begin{figure}[ht]
@@ -56,19 +56,17 @@ Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedore
 	\label{fig:División del sistema}
 \end{figure}
 
-
-
 \pagebreak
 
 \section{Descripción del protocolo MQTT}
 \label{sec:Descripción del protocolo MQTT}
 
-MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería por suscripción/publicación especialmente diseñado para la comunicación M2M(\textit{Machine to Machine}, Máquina a Máquina) en dispositivos con bajos recursos \citep{WEBSITE:5} .
+MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería por suscripción/publicación especialmente diseñado para la comunicación M2M (\textit{Machine to Machine}, Máquina a Máquina) en dispositivos con bajos recursos \citep{WEBSITE:5} .
 
 Para poder explicar el funcionamiento del protocolo es necesario incorporar conceptos definidos en la especificación \citep{WEBSITE:5}:
 
 \begin{itemize}
-\item Mensaje: datos transmitidos mediante el protocolo MQTT  a través de la red por la aplicación. Cuando un mensaje es transmitido, el mismo contiene datos útiles(\textit{"payload"}), un campo que identifica la Calidad de Servicio (\textit{Quality of Service}, QoS), ciertas propiedades y un nombre de tópico.
+\item Mensaje: datos transmitidos mediante el protocolo MQTT  a través de la red por la aplicación. Cuando un mensaje es transmitido, el mismo contiene datos útiles (\textit{"payload"}), un campo que identifica la Calidad de Servicio (\textit{Quality of Service}, QoS), ciertas propiedades y un nombre de tópico.
 \item Cliente: programa o dispositivo que utiliza MQTT.
 \item Servidor o Broker: programa o dispositivo que actúa como intermediario entre clientes que publican mensajes y clientes que han realizado suscripciones.
 \item Sesión: una interacción entre cliente y servidor con estados bien definidos.
@@ -97,6 +95,7 @@ La conexión MQTT siempre es entre cliente y broker, nunca entre clientes direct
 
 Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de dos \textit{bytes} y un dato útil (\textit{"payload"}) de hasta 256 MB \citep{ARTICLE:2} . 
 
+\pagebreak
 Ejemplos de tópicos:
 
 \begin{itemize}
@@ -117,13 +116,12 @@ En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes
 Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
 
 
-Por otro lado, el protocolo posee tres niveles de calidad de servicio ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
+Por otro lado, el protocolo posee tres niveles de calidad de servicio   ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
 
 \begin{itemize}
 \item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo mas rápido de entrega.
 \item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo ''DUP'' establecido hasta que se reciba acuse de recibo.
 \item Calidad 2: el mensaje se entrega exactamente una sola vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. El emisor recibe un mensaje acuse de recibo. Si el emisor no recibe un acuse de recibo, el mensaje se envía de nuevo con el distintivo DUP establecido hasta que se reciba un acuse de recibo.
-En el segundo par de transmisiones, el remitente indica al destinatario que puede completar el proceso del mensaje, ''PUBREL''. Si el remitente no recibe un acuse de recibo del mensaje ''PUBREL'', el ''PUBREL'' se envía de nuevo hasta que se recibe un acuse de recibo. El remitente suprime el mensaje que ha guardado cuando recibe el acuse de recibo al mensaje “PUBREL” .
 
 El receptor puede procesar el mensaje proporcionado en la primera o segunda fase, no tiene que volver a procesarlo. Si el receptor es un intermediario, publica el mensaje a los suscriptores. Si el receptor es un cliente, el mensaje se entrega a la aplicación de suscriptor. El receptor devuelve un mensaje de finalización al emisor para comunicarle que ha terminado de procesar el mensaje.
 
@@ -386,7 +384,7 @@ La secuencia de la comunicación entre el cliente y el servidor es la siguiente 
 \item Se cierra o reusa la conexión.
 \end{enumerate}
 
-En el encabezado del mensaje HTTP se puede introducir información de la sesión. Lo cual resulta muy importante en referencia a la seguridad. 
+En el encabezado del mensaje HTTP se puede introducir información de la sesión. Esto resulta muy importante en referencia a la seguridad. 
 
 
 \section{Sistemas de contenedores Docker}
@@ -394,10 +392,10 @@ En el encabezado del mensaje HTTP se puede introducir información de la sesión
 
 Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Múltiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
 
-Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}.
+Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}. Una estructura genera del sistema docker es presentado en la figura \ref{fig:Contenedores Docker. }.
 
 
-
+\pagebreak
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.5]{./Figures/docker.png}
@@ -405,6 +403,7 @@ Docker es un proyecto de código abierto que permite automatizar el despliegue d
 	\label{fig:Contenedores Docker. }
 
 \end{figure}
+
 \footnotetext{Imagen tomada de \citep{WEBSITE:8}}
 
 
@@ -466,6 +465,7 @@ En la figura \ref{fig:Página phpMyAdmin} se puede observar la interfaz:
 	\label{fig:Página phpMyAdmin}
 \end{figure}
 
+\pagebreak
 Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones SQL} \citep{BOOK:2}:
 
 %\begin{verbatim}
@@ -498,6 +498,7 @@ Los comandos más utilizados en SQL se observan en la tabla \ref{tab:Funciones S
 \end{table}
 \pagebreak
 Ejemplo de uso, suponiendo 2 tablas:
+\begin{frame}
 
 \begin{table}[h]
 	\centering
@@ -529,6 +530,8 @@ Ejemplo de uso, suponiendo 2 tablas:
 	\label{tab:Ejemplo 2}
 \end{table}
 
+\end{frame}
+
 Si se quiere obtener el nombre y apellido del paciente con pacienteId igual a 1, una forma de obternerlo es ejecutando el código:
 
 \begin{lstlisting}[label=código:SQL:vControl,caption=Ejecución de comando sql]  
@@ -552,22 +555,25 @@ Una de las múltiples ventajas que poseen los motores de bases de datos relacion
 \end{lstlisting}
 
 
+
+
+\pagebreak
 \section{Frameworks/librerías para desarrollo web/móvil}
 
 En esta sección se presentan las librerías y frameworks que se utilizaron para el desarrollo.
 
 \subsection{Librerías Node.js, Express y JWT}
 \label{subsec: Node}
-El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, que es un \textit{runtime environment}(entorno de ejecución) de Javascript. Node.js se encuentra orientado a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
+El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, que es un \textit{runtime environment} (entorno de ejecución) de Javascript. Node.js se encuentra orientado a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
 
-Ademas de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
+Además de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
 
 Por ultimo, es importante mecionar que Node.js posee un gestor de paquetes/librerías llamado NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
 
 
 Para el ruteo de los endpoints con los que se comunica la página web se utiliza Express.js \citep{WEBSITE:21} que es una infraestructura web rápida, minimalista y flexible para Node.js. 
 
-Express.js facilita la creación de la API(\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como la incorporación de software \textit{Middleware}. 
+Express.js facilita la creación de la API (\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como la incorporación de software \textit{Middleware}. 
 
 Con respecto a la seguridad para el acceso de la página web, existen dos métodos: por medio de \textit{cookies} o por medio de web \textit{tokens}. Se seleccionó utilizar el segundo y para ello se utiliza JWT \citep{WEBSITE:22} que implementa el estandar RFC 7519. 
 
@@ -578,14 +584,14 @@ Con respecto a la seguridad para el acceso de la página web, existen dos métod
 
 Drifty.co introdujo Ionic en el año 2013 \citep{WEBSITE:24}. Nació originalmente para desarrollar aplicaciones móviles con Angular 1 pero hoy en día permite desarrollar para dispositivos celulares, páginas web progresivas y aplicaciones de escritorio junto con Electron \citep{WEBSITE:25}. Ionic permite trabajar con Vue, React y Angular en su última versión.
 
-Este framework posee muchos \textit{plugins}(o software de ayuda) que permiten acceder a los recursos de los dispositivos móviles como ser su micrófono, la cámara, la información de posicionamiento, entre otros. Junto con Ionic se utiliza Capacitor \citep{WEBSITE:26}, que es un runtime nativo para iOS, Android y aplicaciones web progresivas.
+Este framework posee muchos \textit{plugins} (o software de ayuda) que permiten acceder a los recursos de los dispositivos móviles como ser su micrófono, la cámara, la información de posicionamiento, entre otros. Junto con Ionic se utiliza Capacitor \citep{WEBSITE:26}, que es un runtime nativo para iOS, Android y aplicaciones web progresivas.
 
-El código que genera Ionic debe compilarse para generar el archivo ejecutable(ya sea .ipa para iOS o .apk para Android). Para ello, se utilizan los entornos de desarrollo Xcode para iOS, y Android Studio para Android.
+El código que genera Ionic debe compilarse para generar el archivo ejecutable (ya sea .ipa para iOS o .apk para Android). Para ello, se utilizan los entornos de desarrollo Xcode para iOS, y Android Studio para Android.
 
 Por ejemplo, el método de desarrollo para una aplicación que se ejecutará en un dispositivo Android es el siguiente:
 
 \begin{enumerate}
 \item Desarrollo: se genera el código fuente en una pc.
 \item Prueba virtual en el navegador:  se realiza debug localmente, utilizando los comandos ionic serve o ionic-lab
-\item Prueba en el disposito: se genera un \textit{build}(construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
+\item Prueba en el disposito: se genera un \textit{build} (construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
 \end{enumerate}
