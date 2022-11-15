@@ -891,11 +891,11 @@ El orden en que se presentan las camas tienen que ver con la prioridad que se le
 
 \pagebreak
 \subsection{Modo médico}
-Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el usuario decida que hacer. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
+Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el usuario decida que hacer. El diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.50]{./Figures/app/modo-medico.png}
+	\includegraphics[scale=.65]{./Figures/app/modo-medico.png}
 	\caption{ Diagrama de estados en modo médico.}
 	\label{fig: Diagrama de estados en modo médico.}
 \end{figure} 
@@ -1040,100 +1040,3 @@ Una vez que se aceptó desde el sistema el código de la cama, en la aplicación
 
 
 
-\pagebreak
-\section{Contraste con los requerimientos}
-
-En esta subsección se detalla el grado de cumplimiento de los requerimientos relevados en el plan de proyecto.
-\begin{enumerate}
-\item Requerimientos del servidor: 
-
-1.1 debe tener instalado el broker mosquitto.
-
-Verificación: Se muesta el funcionamiento del servidor utilizando la aplicación MQTT explorer.
-
-\item Requerimientos de la base de datos: 
-
-2.1 Debe poseer una base de datos relacional. 
-
-2.2 Debe poseer las siguientes tablas: eventos, pacientes, médicos, enfermeras. 
-
-2.2 La base de datos debe poseer datos cargados por default.
-
-Verificación: Se muesta el contendio de la base de datos con la aplicación phpMyAdmin.
-
-\item Requerimientos de la página web 
-
-3.1 Debe ser cliente del broker MQTT. 
-
-Verificación: Se presenta la configuración del broker. Se presenta el monitoreo de las habitaciones y los usuarios conectandose al broker.
-
-3.2 La página debe poseer funciones de consulta o modificación de la base de datos.
-
-Verificación: Se muestra como la página web permite cambiar contraseñas de usuarios y otros parámetros.
-
-3.3 La página debe permitir observar estadística de pacientes y enfermeras.
-
-Verificación: Se muestra como la página web permite observar distintas gráficas.
-
-3.4 La página debe contener acceso con usuario y contraseña para cada persona.
-
-
-Verificación: Se muestra como la página web permite loguear los distintos usuarios.
-(*) Cumplimiento parcial: solo permite loguear al usuario administrador.
-
-\item Requerimientos de la aplicación móvil
-
-4.1 y 4.2 La aplicación debe poseer tres modos de uso: médico, enfermera y sistema. 
-
-Verificación: Se ingresa a la aplicación en los distintos modos.
-
-4.3 La aplicación en modo enfermera debe permitir leer código QR.
-
-Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se obtiene el código QR.
-
-4.4 La aplicación en modo enfermera debe descargar información relevante del paciente.
-
-Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
-
-4.5 La aplicación en modo sistema debe mostrar las habitaciones sin atención, según una tabla de prioridades y en caso de igualdad de prioridades mostrar según un orden de llamada.
-
-(*)Cumplimiento parcial: se muestra las habitaciones con una tabla de prioridades pero no según el orden de llamadas.
-
-Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
-
-
-4.6 El modo de usuario médico y el modo usuario enfermera deben poder enviar mensajes de texto o sonido.
-
-Verificación: Se transmiten distintos audios entre participantes.
-
-\item Requerimientos de la documentación
-
-5.1 Documento con información relativa a la base de datos: detalles de la misma y API para acceder.
-
-Verificación: Se observa la presencia de la información en el repositorio de GitHub.
-
-5.2 Memoria del proyecto con diagramas de aplicación móvil y página web.
-
-Verificación: se verifica con este documento.
-
-\item Requerimientos de la integración del sistema
-
-6.1 El sistema debe integrar el funcionamiento del servidor con la base de datos, aplicación web y aplicaciones móviles.
-
-Verificación: se verifico el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
-
-(*)Cumplimiento parcial:
-Validación: No se pudo validar el sistema en un nosocomio.
-
-\item Requerimientos de la entrega del producto:
-
-7.1 El Código fuente del servidor debe ser subido a dockerhub y compartido con la comunidad.
-
-(*)Cumplimiento parcial:
-Validación: Se subió el código fuente del servidor a Github.
-
-7.2 El Código fuente de la aplicación debe ser subido a GitHub y compartido con la comunidad.
-
-Validación: Se subió el código fuente del servidor a Github.
-
-\end{enumerate}
