@@ -146,7 +146,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.65]{./Figures/dB(user).png}
+	\includegraphics[scale=.70]{./Figures/dB(user).png}
 	\caption{Tabla Usuarios.}
 	\label{fig:Tabla Usuarios (base de datos)}
 \end{figure}
@@ -155,7 +155,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.65]{./Figures/dB(bed).png}
+	\includegraphics[scale=.70]{./Figures/dB(bed).png}
 	\caption{Tabla Camas.}
 	\label{fig:Tabla Camas (base de datos)}
 \end{figure}
@@ -166,33 +166,30 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.65]{./Figures/dB(patient).png}
+	\includegraphics[scale=.70]{./Figures/dB(patient).png}
 	\caption{Tabla pacientes.}
 	\label{fig:Tabla pacientes (base de datos)}
 \end{figure}
 
 
 \item Relación médicos-pacientes : para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos asignados. Además, un paciente puede utilizar a los mísmos médicos de otro paciente. Se presenta la relación en la figura \ref{fig:Relación médicos-pacientes}.
-
-
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.40]{./Figures/tabla-medicos-pacientes.png}
+	\includegraphics[scale=.65]{./Figures/tabla-medicos-pacientes.png}
 	\caption{Relación médicos-pacientes.}
 	\label{fig:Relación médicos-pacientes}
 \end{figure}
-
-
-
-\item Relación tabla de notas-pacientes: como en el caso anterior, se utiliza una tabla de notas generales con una tabla intermedia que los indexa. En este caso, y como es particular de cada paciente, no se puede repetir.
-
-
+\item Relación tabla de notas-pacientes: como en el caso anterior, se utiliza una tabla de notas generales con una tabla intermedia que los indexa. En este caso, y como es particular de cada paciente, no se puede repetir.  Se presenta la relación en la figura \ref{fig:Relación notas-pacientes (base de datos)}.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/patient-notes.png}
+	\includegraphics[scale=.65]{./Figures/patient-notes.png}
 	\caption{Relación notas-pacientes.}
 	\label{fig:Relación notas-pacientes (base de datos)}
 \end{figure}
+
+
+\pagebreak
+
 
 
 
@@ -206,14 +203,12 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 \end{itemize}
 
 
-
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.65]{./Figures/Events.png}
+	\includegraphics[scale=.70]{./Figures/Events.png}
 	\caption{Tabla de eventos programados.}
 	\label{fig:Tabla de eventos programados (base de datos)}
 \end{figure}
-
 
 \item Tabla de log eventos: En esta tabla se guardan los eventos relacionados con un paciente. Su estructura se muestra en \ref{fig:Tabla de registro de eventos (base de datos)} y sus componentes son:
 \begin{itemize}
@@ -229,7 +224,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.65]{./Figures/logEvents.png}
+	\includegraphics[scale=.70]{./Figures/logEvents.png}
 	\caption{Tabla de registro de eventos.}
 	\label{fig:Tabla de registro de eventos (base de datos)}
 \end{figure}
@@ -510,9 +505,9 @@ La API desarrollada utiliza Express junto con Cookie-parser.
 En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Para lograr autenticación el backend utiliza las librería \textit{jsonwebtoken} \citep{WEBSITE:32} y \textit{bcrypt} \citep{WEBSITE:31}. En una primera versión, solo se habilita el uso de la página de administración a usuarios administradores.
 
 Se denomina ruteo a la forma que una aplicación express direcciona a las peticiones del cliente a los respectivos módulos que se encargan de su tratamiento.%un \textit{endpoint} de una aplicación responde a las peticiones de los clientes. 
-El objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema, el fragmento de código con las rutas express se observa en el código \ref{cod: Rutas Express}:
+El objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema, el fragmento de código con las rutas express se observa en el código \ref{cod:Rutas_Express}:
 
-\begin{lstlisting}[label=cod:Rutas Express,caption=  Rutas express]
+\begin{lstlisting}[label=cod:Rutas_Express,caption=  Rutas express]
 app.use('/api/patient',auth.isAuthenticated,routerPatient);
 app.use('/api/user',auth.isAuthenticated,routerUser);
 app.use('/api/messages',auth.isAuthenticated,routerMessages);
@@ -526,7 +521,7 @@ app.use('/api/logEvents',auth.isAuthenticated,routerLogEvents);
 app.use('/api/Statistics',auth.isAuthenticated,routerStatistics);
 app.use('/api/authentication',routerAuthenticate);
 app.use('/api/specTable',auth.isAuthenticated,routerSpecTable);
-app.use('/api/nurseSpecTable',auth.isAuthenticated,routerNurseSpecTable);
+app.use('/api/nurseSpecTable',auth.isAuthenticated,  routerNurseSpecTable);
 app.use('/api/treatment',auth.isAuthenticated,routerPatientSpecTable);
 \end{lstlisting}
 
@@ -644,7 +639,7 @@ Fue implementada utilizando el framework Ionic/Angular, con el lenguaje de progr
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.48]{./Figures/pagina-web.png}
+	\includegraphics[scale=.40]{./Figures/pagina-web.png}
 	\caption{Página web.}
 	\label{fig:Página web}
 \end{figure}
@@ -762,12 +757,14 @@ export class AuthInterceptorService implements HttpInterceptor {
 
 \end{lstlisting}
 
+\pagebreak
+
 \subsection{Monitoreo del sistema}
 Si se quiere monitorear al sistema, es necesario configurar la ubicación del \textit{broker} dentro de la solapa MQTT. El monitoreo de camas se observa en la figura \ref{fig:Monitoreo de camas.}. El sistema reporta el estado de las camas cada un segundo (o cuando hay un cambio abrupto) y el estado de los usuarios cada un segundo y quinientos milisegundos.
-*******************************************************************
+
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.40]{./Figures/monitoreo-camas.png}
+	\includegraphics[scale=.55]{./Figures/monitoreo-camas.png}
 	\caption{Monitoreo de camas.}
 	\label{fig:Monitoreo de camas.}
 \end{figure} 
@@ -790,6 +787,7 @@ Si se desea generar un nuevo evento programado, se selecciona del menú  calenda
 
 El backend guarda en la base de datos la nueva tarea y genera la acción correspondiente.
 
+\pagebreak
 \subsection{Estadísticas del sistema}
 
 En esta sección se puede observar la cantidad de atenciones por enfermero guardadas en la base de datos, la relación entre las distintas especialidades y la relación entre tratamientos y pacientes. En la figura \ref{fig:Relación paciente tratamiento.} se muestra una de las subsecciones que se pueden seleccionar. Para generar las graficas se utiliza HighCharts \citep{WEBSITE:33}. 

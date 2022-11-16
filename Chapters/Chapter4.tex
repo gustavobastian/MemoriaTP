@@ -94,7 +94,7 @@ En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola y en
 \section{Integración del sistema}
 \label{Integración del sistema}
 
-En esta sección se comenta como se instalo el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrollo un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayo el sistema durante una semana y se analiza los resultados de la simulación de uso.
+En esta sección se comenta como se instaló el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrollo un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayo el sistema durante una semana y se analiza los resultados de la simulación de uso.
 
 Se utilizó como máquina remota una instancia en Amazon Web Services y los dispositivos móviles en los cuales se instalo el dispositivos, fueron celulares con el sistema Android como sistema operativo.
 
@@ -127,7 +127,7 @@ Los pasos para configurar la página web:
 ''ionic build''
 \item Comprimir la carpeta www
 \item Logearse con ssh en la instancia EC2
-\item configurar nginx para redirigira la página (***** falta completar esta explicación... puedo llegar a colocarlo en un anexo)
+\item configurar nginx para redirigir a la página (ver apéndice \ref{AppendixB}).
 
 \end{itemize}
 \subsection{Generación/instalación de la aplicación móvil en Android}
@@ -141,7 +141,7 @@ Para poder descargar el archivo ejecutable a un dispositivo Android se debe gene
 
 ''ionic cap build android''
 \item Abrir Android estudio, modificar el AndroidManifest.xml
-\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación (****** como en la sección anterior  falta completar los pasos, puedo colocarlo en un anexo).
+\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación (ver apéndice \ref{AppendixA}).
 \end{itemize}
 \pagebreak
 
