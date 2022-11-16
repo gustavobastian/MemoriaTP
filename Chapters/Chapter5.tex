@@ -4,6 +4,7 @@
 
 \label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
+En este capítulo se presentan los resultados del desarrollo del trabajo,  las herramientas aprendidas durante el transcurso de la carrera que fueron fundamentales para la ejecución y las mejoras que se pueden realizar al sistema realizado.
 
 %----------------------------------------------------------------------------------------
 
@@ -11,7 +12,7 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Notas sobre el sistema desarrollado }
+\section{Resultados obtenidos}
 
 %La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
 
@@ -25,38 +26,44 @@
 %\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
 %\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
 %\end{itemize}
-En este capítulo se analiza el proyecto en su totalidad , el trabajo realizado y los pasos a seguir.
+En este capítulo se analiza el trabajo realizado y los pasos a seguir.
+
+El proyecto se pudo finalizar cumpliendo con los requerimientos en un porcentaje muy alto. La validación del mismo no se pudo realizar en su totalidad. El principal obstaculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional el software debe estar homologado en el país.  
+
+
+El principal aporte que presenta el fue el modelo que se propuso para el sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto , se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante fue el uso de MQTT para una aplicación de estas características con el modelo de subcripción a tópicos.
 
 
 
-El principal aporte que presenta el proyecto consiste en el modelo que se propuso para el sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto , se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante es el uso de MQTT para una aplicación de estas características con el modelo de subcripción a tópicos.
-
-Los objetivos funcionales del desarrollo se cumplieron en un porcentaje muy alto, no así los planteados para la validación del sistema. El principal obstaculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional solo se puede permite el uso de software debidamente homologado en el país.  
 
 \subsection{Cumplimiento de planificación original}
 
-No se pudo seguir con la planificación original ya que se presentaron situaciones no contempladas en la misma. Se enumeran a continuación:
+No se pudo seguir con la planificación original ya que se presentaron situaciones no contempladas que se enumeran:
 \begin{enumerate}
 \item Agregado de funcionalidades necesarias pero no contempladas en un inicio.
-\item Configuración de los dispositivos para la aplicación.
+\item Configuración de los dispositivos para la aplicación (fue hablado con el cliente y se llegó a concenso).
 
 \end{enumerate}
 
 
 \subsection{Gestión de riesgos}
 
-El principal riesgo que se previó era la imposibilidad de desarrollar la aplicación para dispositivos IOS debido a la ausencia de un equipo en el cual desarrollar y otro para testear. Efectivamente se cumplió y no se pudo llegar a satisfacer ese requerimiento.
+El principal riesgo que se previó era la imposibilidad de desarrollar la aplicación para celulares con sistema IOS debido a la ausencia de dispositivos que realizara el desarrollo y testeo. Efectivamente se cumplió y no se pudo llegar a satisfacer ese requerimiento.
+
+Los demás riesgos no se dieron por lo que no influyeron en el resultado.
 
 \subsection{Recursos aprendidos durante la carrera:}
 En el desarrollo del trabajo se utilizaron las siguientes herramientas presentadas durante el trayecto de la carrera:
 
+En esta sección se presentan las materias de la carrera que más influyeron en el desarrollo de este trabajo. Son enumeradas con su aporte al trabajo:
+
 \begin{itemize}
 \item Gestión de proyectos: se elaboró un plan de trabajo y el relevamiento de requerimientos.
-\item Protocolos de Internet, Protocolos de IoT y Diseño de aplicaciones para IOT: se utilizaron los conceptos aprendidos sobre MQTT en estas materias.
-\item Arquitectura de datos: se utilizó los conceptos sobre bases de datos enseñados en esta asignatura.
-\item Ciberseguridad en Internet de las Cosas: se utilizaron los conceptos sobre seguridad enseñados en esta materia, principalmente en la página web de configuración.
-\item Testing de sistemas de IoT: se utilizó la tecnica de testing del backend utilizando Postman enseñada en esta materia.
-\item Diseño de páginas Web, Diseño de aplicaciones multiplataformas y Diseño de aplicaciones para Iot: se utilizaron los frameworks, las técnicas y los lenguajes de programación enseñados en estas materias.
+\item Protocolos de Internet, Protocolos de IoT y Diseño de aplicaciones para IOT: se utilizaron los conceptos aprendidos sobre MQTT.
+\item Arquitectura de datos: se utilizó los conceptos sobre bases de datos.
+\item Ciberseguridad en Internet de las Cosas: se utilizaron los conceptos sobre seguridad, principalmente en la página web de configuración.
+\item Testing de sistemas de IoT: se utilizó la técnica de testing del backend utilizando Postman.
+\item Diseño de páginas Web, Diseño de aplicaciones multiplataformas y Diseño de aplicaciones para Iot: se utilizaron los frameworks, las técnicas y los lenguajes de programación.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -66,14 +73,14 @@ En el desarrollo del trabajo se utilizaron las siguientes herramientas presentad
 
 %Acá se indica cómo se podría continuar el trabajo más adelante.
 
-Este trabajo sirve de base para la implementación de un sistema de gestión hospitalaria general. Los items que se pueden mejorar son:
+Este trabajo sirve de base para la implementación de un sistema de gestión hospitalaria integral. Se plantea un conjunto de mejoras a realizar:
 
 \begin{itemize}
-\item Generar el código para que la aplicación corra en IOS.
-\item Utilizar una base de dato clave-valor para reemplazar la lista de usuarios en el monitoredo del backend.
+\item Generar el código para que la aplicación se ejecute en IOS.
+\item Utilizar una base de dato clave-valor para reemplazar la lista de usuarios en el monitoreo del backend.
 \item Mejorar la seguridad utilizando TLS en el broker Mosquitto (por una razón de tiempo no se pudo desarrollar).
-\item En el logeo de eventos se guardan números de referencia de usuario que realizó la acción y número de paciente. Se puede utilizar otra identificación suplementaria como ser nombre y apellido.
-\item La estadística que se consulta a la base de datos es mínima. Se puede analizar otras cosas como ser duración promedio, pacientes con mayor tiempo de atención, etc.
+\item Utilizar otra identificación suplementaria como ser nombre y apellido n el logeo de eventos (se guardan números de referencia de usuario que realizó la acción y número de paciente). 
+\item La estadística que se consulta a la base de datos es mínima. Se recomienda agregar otras consultas.
 \item Desarrollar un dispositivo llamador que se pueda utilizar en ámbitos hospitalarios.
 \item Certificar los paquetes de software (aplicación móvil, backend y página web) de modo que se pueda comercializar.
 
