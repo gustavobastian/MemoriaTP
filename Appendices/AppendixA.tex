@@ -4,4 +4,70 @@
 
 \label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Para la simulación solo se utilizaron 8 pulsadores de la placa keyboard.
+En este anexo se menciona el dispositivo utilizado en las pruebas de integración del sistema. Solo fue diseñado con el objetivo de facilitar las pruebas de integración. El funcionamiento es el siguiente: una tarea energiza un grupo de pines, que hacen de columnas en el teclado matricial y observa el estado de otros (las filas). Con los columna, fila publica el número de llamador correspondiente. 
+
+Para la simulación solo se utilizaron 8 pulsadores de la placa keyboard  \citep{WEBSITE:37} y la placa procesadora es ESP32-WROOM-32, un potente módulo genérico de Wi-Fi+Bluetooth+BLE MCU que está dirigido a una amplia variedad de aplicaciones, que van desde redes de sensores de bajo consumo hasta las tareas más exigentes, como la codificación de voz, la transmisión de música y la decodificación de MP3 \citep{WEBSITE:38}. 
+
+La direccíon IP del broker y el puerto se encuentran codificados en el firmware.
+
+Se utilizo FreeRtos \citep{WEBSITE:40} como sistema operativo en tiempo real.
+
+El fragmento de código que publica en el broker se presenta en el código \ref{cod: Publicación llamado}:
+
+\begin{lstlisting}[label=cod: Publicación llamado,caption=Tarea que publica en el broker la simulación de llamada]
+
+/**
+ * @brief simple task for keyboard polling
+ * 
+ * @param arg 
+ */
+
+static void keyb_task(void* arg)
+{   while(true){
+      int d = keyboardRefresh();
+      if(d!=0){
+        printf("sending event\n");
+        generateJsonKey(buff,d);
+        printf("%s\n",topicCallerEvent);
+        esp_mqtt_client_publish(client, topicCallerEvent, buff, 0, 0, 0);
+
+      }
+      vTaskDelay(200 / portTICK_RATE_MS);
+    }
+}
+\end{lstlisting}
+
+La función que genera el mensaje a publicar se presenta en el código \ref{cod: generación de mensaje}:
+
+\begin{lstlisting}[label=cod: generación de mensaje,caption= Función que genera el payload]
+
+void generateJsonKey(char *buffer,int key){
+cJSON *my_json;
+cJSON *keyId = NULL;
+char *string = NULL;    
+my_json = cJSON_CreateObject();
+if (my_json == NULL)
+    {
+        return;
+    }
+keyId = cJSON_CreateNumber(key);
+    if (keyId == NULL)
+    {
+        return;
+    }    
+//Populate my_json
+
+cJSON_AddItemToObject(my_json, "callerId",keyId);
+
+string = cJSON_Print(my_json);
+
+sprintf(buffer,string);
+
+//Free the memory
+cJSON_Delete(my_json);
+
+}
+
+\end{lstlisting}
+
+Para generar los mensajes se utiliza la librería cJason desarrollada por Dave Gamble.
