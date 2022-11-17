@@ -4,4 +4,42 @@
 
 \label{Compilación para aplicaciones Android} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Write your Appendix content here.
+En esta sección se presentará brevemente los pasos para regenerar el código utilizado. Para el desarrollo de aplicaciones se consultó el documento \citep{BOOK:3} donde se menciona la importancia de la seguridad, de todos modos.
+
+Para poder compilar nativamente la aplicación es necesario asignarle los permisos al software. Eso se logra incorporando componentes al android manifest, se observa en el código \ref{cod:AndroidMan}.
+
+\begin{lstlisting}[label=cod:AndroidMan,caption=Modificaciones al Android Manifest.]  % Start your code-block
+
+package="com.gabiot.Enfermera">
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Enfermera"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true">
+        <!-- Mqtt Service -->
+        <service
+            android:enabled="true"
+            android:name="org.eclipse.paho.android.service.MqttService"
+            android:exported="false"
+        />
+...
+
+\end{lstlisting}

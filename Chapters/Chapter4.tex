@@ -30,7 +30,7 @@ Para simular mensajes y observar el comportamiento de cada una de las partes del
 
 Esta herramienta fue importante no solo para realizar ensayos sino tambien para el desarrollo de las funcionalidades propiamente dichas.
 
-\pagebreak
+
 
 \subsection{Pruebas unitarias de la API Rest}
 
@@ -57,12 +57,12 @@ Para utilizar Newman, que es el cliente de consola, se deben exportar las colecc
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.25]{./Figures/Postman.png}
+	\includegraphics[scale=.45]{./Figures/Postman.png}
 	\caption{Colección logueo de test.}
 	\label{fig:Colección logueo usuario en Postman}
 \end{figure}
 
-Para reportar con Newman existen varias opciones, en este trabajo se utiliza cli y htmlextra, ejecutando en la consola:
+Para reportar con Newman existen varias opciones, en este trabajo ses utiliza cli y htmlextra, ejecutando en la consola:
 
 
 
@@ -88,6 +88,8 @@ En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola y en
 	\caption{Reporte html de Newman.}
 	\label{fig:reporte html Newman}
 \end{figure}
+
+
 
 \pagebreak
 
@@ -116,7 +118,7 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \item Configurar el brocker Mosquitto según sección \ref{Broker Mosquitto}.
 \item Instalar Docker y Docker-compose
 \item Descargar el backend desde GitHub
-\item Copiar en la instancia la base de datos comprimida y descomprimir dentro de la carpeta /db
+\item Copiar en la instancia la base de datos (utilizar scp) comprimida y descomprimir dentro de la carpeta /db
 \item Ejecutar Docker-compose up
 \end{enumerate}
 
@@ -124,10 +126,12 @@ Los pasos para configurar la página web:
 \begin{itemize}
 \item Compilar la página web: dentro del proyecto ejecutar:
 
-''ionic build''
-\item Comprimir la carpeta www
-\item Logearse con ssh en la instancia EC2
-\item configurar nginx para redirigir a la página (ver apéndice \ref{AppendixB}).
+''ionic build --prod''
+\item Comprimir la carpeta www.
+\item Logearse con ssh en la instancia EC2.
+\item Copiar el archivo comprimido en la instancia y descomprimirlo en ''/var/www/hmtl''.
+\item Configurar nginx para redirigir a la página (ver apéndice \ref{AppendixB}).
+\item Reiniciar Nginx.
 
 \end{itemize}
 \subsection{Generación/instalación de la aplicación móvil en Android}
@@ -145,42 +149,6 @@ Para poder descargar el archivo ejecutable a un dispositivo Android se debe gene
 \end{itemize}
 \pagebreak
 
-
-\begin{lstlisting}[label=cod:AndroidMan,caption=Modificaciones al Android Manifest.]  % Start your code-block
-
-package="com.gabiot.Enfermera">
-    <!-- Permissions -->
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Enfermera"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true">
-        <!-- Mqtt Service -->
-        <service
-            android:enabled="true"
-            android:name="org.eclipse.paho.android.service.MqttService"
-            android:exported="false"
-        />
-...
-
-\end{lstlisting}
 \pagebreak
 \subsection{Equipo simulador de llamadores}
 

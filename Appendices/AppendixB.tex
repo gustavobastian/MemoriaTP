@@ -4,5 +4,56 @@
 
 \label{AppendixB} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Nginx \citep{WEBSITE:36} es un servidor web liviano y de alta performance diseñado para soportar gran tráfico. Un de sus casos de uso es ser un servidor proxy inverso.
+Nginx \citep{WEBSITE:36} es un servidor web liviano y de alta performance diseñado para soportar gran tráfico. Uno de sus casos de uso es ser un servidor proxy inverso.
+
+Un proxy inverso es un servidor que acepta todo el tráfico y lo reenvía al recurso específico, como ser el frontend.
+
+Nginx trabaja enfocado a eventos. Como consecuencia, puede procesar solicitudes de forma asíncrona, ahorrando memoria y espacio. Es soportado por Linux.
+
+Para instalar Nginx en una instancia AWS ejecutando Ubuntu (o en cualquier sistema linux), se utiliza el comando ''apt install nginx'' ( como usuario root en la consola).
+
+Para la configuración de Nginx en el servidor se utilizan los siguientes archivos y directorios:
+\begin{itemize}
+\item /etc/nginx : directorio de configuración.
+\item /etc/nginx/nginx.conf : archivo de configuración principal.
+\item /etc/nginx/sites-available : directorio donde se pueden guardar bloques de servidor por sitio. Nginx no utilizará los archivos de configuración de este directorios a menos que esten vinculados a sites-enabled. La configuración se realiza en este directorio y luego se habilita estableciendo un vinculo con el otro directorio.
+\item /etc/nginx/sites-enabled : directorio donde se guardan los bloques de servidor habilitados por sitios. 
+\item /etc/nginx/snippets : directorio donde se pueden guardar fragmentos de configuración.
+\end{itemize}
+
+Los dominios utilizados en las pruebas de este trabajo son:
+
+\begin{itemize}
+\item Frontend: http://www.gabiot.com.ar:8024
+\item Backend (generado por docker): http://www.gabiot.com.ar:8000
+\item phpMyAdmin (generado por docker): http://www.gabiot.com.ar:8001
+\item Broker MQTT (utilizando websockets): http://www.gabiot.com.ar:9001
+\end{itemize}
+
+\pagebreak
+Dentro de la carpeta sites-available se guarda un archivo de nombre ''Nurse.com.conf'' con el contenido presentado en el código \ref{cod:archivo nurse}:
+
+\begin{lstlisting}[label=cod:archivo nurse,caption=Archivo /etc/nginx/sites-available/Nurse.com.conf.]
+server {
+	listen 8024 default_server;
+	root /var/www/html;
+	index index.html;
+}
+\end{lstlisting}
+
+En la carpeta sites-enabled se genera el enlace dinámico a archivo anterior:
+\begin{itemize}
+\item ''sudo ln -s /etc/nginx/sites-available/Nurse.com.conf /etc/nginx/sites-enabled/Nurse.com.conf ''
+\end{itemize}
+
+El archivo de la página se debe descomprimir dentro de ''/var/www/html'' y luego de ello reiniciar el servidor Nginx con los comandos:
+\begin{itemize}
+\item ''sudo systemctl stop nginx'' 
+\item ''sudo systemctl start nginx''
+\end{itemize}
+
+
+
+
+
 

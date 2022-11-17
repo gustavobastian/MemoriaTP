@@ -255,13 +255,13 @@ El backend se diseñó fragmentándolo en tres partes:
 \item Módulo de respuestas al cliente MQTT: se subscribe a los tópicos correspondientes para responder consultas.
 \end{itemize}
 
-En la figura \ref{fig:Estructura de directorio (backend)} se presenta la estructura de directorios del backend.
+En la figura \ref{fig:Estructura de carpetas (backend)} se presenta la estructura de directorios del backend.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.45]{./Figures/projectStructure.png}
-	\caption{Estructura de directorio (backend).}
-	\label{fig:Estructura de directorio (backend)}
+	\caption{Estructura de carpetas (backend).}
+	\label{fig:Estructura de carpetas (backend)}
 \end{figure}
 
 La descripción de los contenidos de cada carpeta es:
@@ -810,7 +810,7 @@ La estructura de directorios del proyecto es la presentada en la figura \ref{fig
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.60]{./Figures/app/estructura-app.png}
-	\caption{ Estructura de código fuente de la aplicación móvil.}
+	\caption{ Estructura de carpetas de la aplicación móvil.}
 	\label{fig: Estructura de código fuente de la aplicación móvil.}
 \end{figure} 
 
@@ -848,12 +848,40 @@ const routes: Routes = [
 \subsection{Configuración del broker y acceso de usuario}
 
 Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno redirige a la página de configuración del broker MQTT y otro a la página de ingreso.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.80]{./Figures/app/inicioApp.png}
-	\caption{ Pantalla inicial, configuración y acceso de la aplicación.}
-	\label{fig: Pantalla inicial, configuración y acceso de la aplicación.}
-\end{figure} 
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[scale=.80]{./Figures/app/inicioApp.png}
+%	\caption{ Pantalla inicial, configuración y acceso de la aplicación.}
+%	\label{fig: Pantalla inicial, configuración y acceso de la aplicación.}
+%\end{figure} 
+
+
+
+\begin{figure}[!htpb]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=1.1\textwidth]{./Figures/app/main-page.png}
+         \caption{Pantalla Inicial.}
+         \label{fig_0:1_de_3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=1.1\textwidth]{app/login-page.png}
+         \caption{Pantalla login.}
+         \label{fig_0:2_de_3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=1.1\textwidth]{./Figures/app/system-config.png}
+         \caption{Configuración.}
+         \label{fig_0:3_de_3}
+     \end{subfigure}
+        \caption{Inicio de sistema}
+        \label{fig:Pantalla inicial, configuración y acceso de la aplicación.}
+\end{figure}
 
 En la página de configuración se ingresa la IP del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
 
@@ -930,7 +958,7 @@ Las acciones que puede realizar un médico son:
          \label{fig_1:3de3}
      \end{subfigure}
         \caption{Modo médico}
-        \label{fig:three graphs}
+        \label{fig:Modo médico}
 \end{figure}
 
 \pagebreak
@@ -938,9 +966,9 @@ Las acciones que puede realizar un médico son:
 
 Es el modo más complejo por la cantidad de opciones que se pueden presentar.
 
-Al ingresar en modo enfermera, se consulta por la especialización del enfermero corresponidente y la respuesta se obtiene de escuchar en el tópico ''/User/userId/Specs''donde userId se recibió al loguearse.
+Al ingresar en modo enfermera, la aplicación consulta al backend por la especialización del enfermero corresponidente y la respuesta se obtiene de escuchar en el tópico ''/User/userId/Specs''donde userId se recibió al loguearse.
 
-Para el usuario, la aplicación queda en modo espera hasta que se reciba una notificación de necesidad de atención. Un diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo enfermera.}.
+Para el usuario, la aplicación queda en modo espera hasta que se reciba una notificación de necesidad de atención. El diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo enfermera.}.
 
  
 
@@ -955,9 +983,9 @@ La aplicación se encuentra escuchando al tópico MQTT ''/Beds/status'', y filtr
 	\label{fig: Diagrama de estados en modo enfermera.}
 \end{figure} 
 
-
+\pagebreak
 Cuando arriba la notificación, se presenta una tarjeta con dos botones: información de la cama y aceptación. En caso que la enfermera desee consultar donde se encuentra (piso y habitación) debe presionar el boton información. En caso que decida ir a la habitación, debe presionar aceptar.
-Al presionar aceptar automáticamente el estado de la cama cambia a desplazandose a la habitación (la información proviene del sistema que recibió la aceptación y cambió el estado de la habitación).
+Al presionar aceptar automáticamente el estado de la cama cambia a desplazandose a la habitación (la información proviene del sistema que recibió la aceptación y cambió el estado de la habitación). Se presentan estas capturas en la figura \ref{fig_2:Recepción de tarea}.
 
 
 \begin{figure}[!htpb]
@@ -983,22 +1011,23 @@ Al presionar aceptar automáticamente el estado de la cama cambia a desplazandos
          \label{fig_2:3de3}
      \end{subfigure}
         \caption{Recepción de tarea}
-        \label{fig_2:three graphs}
+        \label{fig_2:Recepción de tarea}
 \end{figure}
 \pagebreak
-Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código QR con el celular.
+
+Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código QR con el celular, como se observa en la figura \ref{fig: Captura de QR en la aplicación.}.
 
 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.10]{./Figures/app/capturaQR.jpg}
+	\includegraphics[scale=.09]{./Figures/app/capturaQR.jpg}
 	\caption{ Captura de QR en la aplicación}
 	\label{fig: Captura de QR en la aplicación.}
 \end{figure} 
 
 
-Una vez que se aceptó desde el sistema el código de la cama, en la aplicación se presenta una pantalla con distintos botones que permiten realizar las siguientes acciones:
+Una vez que se aceptó desde el sistema el código de la cama, en la aplicación se presenta una pantalla con distintos botones (ver figuras \ref{fig_3:Ejecución de tarea}). Las acciones que se permiten realizar son:
 
 \begin{figure}[!htpb]
      \centering
@@ -1023,7 +1052,7 @@ Una vez que se aceptó desde el sistema el código de la cama, en la aplicación
          \label{fig_3:3de3}
      \end{subfigure}
         \caption{Ejecución de tarea}
-        \label{fig_3:three graphs}
+        \label{fig_3:Ejecución de tarea}
 \end{figure}
 
 \begin{enumerate}
