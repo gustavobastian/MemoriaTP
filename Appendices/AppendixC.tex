@@ -2,11 +2,11 @@
 
 \chapter{Compilación para aplicaciones Android} % Main appendix title
 
-\label{Compilación para aplicaciones Android} % For referencing this appendix elsewhere, use \ref{AppendixA}
+\label{AppendixC} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
 En esta sección se presentará brevemente los pasos para regenerar el código utilizado. Para el desarrollo de aplicaciones se consultó el documento \citep{BOOK:3} donde se menciona la importancia de la seguridad en las aplicaciones y en el resguardo de los datos.
 
-Para poder compilar nativamente la aplicación es necesario poseer instalado Android Studio \citep{WEBSITE:41} y asignarle los permisos al software. Eso se logra incorporando componentes al android manifest, se observa en el código \ref{cod:AndroidMan}. Además es necesario incorporar algunas librerías al archivo variables.gradle y setear parametros en build.gradle. Para una descripción detallada de todo el proceso de generación de código ejecutable se puede recurrir a la documentación oficial : \citep{WEBSITE:42};
+Para poder compilar nativamente la aplicación es necesario poseer instalado Android Studio \citep{WEBSITE:41} y asignarle los permisos al software. Eso se logra incorporando componentes al android manifest, se observa en el código \ref{cod:AndroidMan}. Además es necesario incorporar algunas librerías al archivo variables.gradle y setear parametros en build.gradle. Para una descripción detallada de todo el proceso de generación de código ejecutable se puede recurrir a la documentación oficial \citep{WEBSITE:42};
 
 La API utilizada es Android API:33.
 
@@ -152,5 +152,5 @@ try {
 \end{lstlisting}
 
 
-En Android estudio se puede realizar un debug de la aplicación.
+En Android Studio se puede realizar un debug de la aplicación.
 Cuando se ejecuta la aplicación consulta por los permisos correspondientes.

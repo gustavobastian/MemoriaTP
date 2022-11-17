@@ -30,13 +30,13 @@ Para simular mensajes y observar el comportamiento de cada una de las partes del
 
 Esta herramienta fue importante no solo para realizar ensayos sino tambien para el desarrollo de las funcionalidades propiamente dichas.
 
-
+\pagebreak
 
 \subsection{Pruebas unitarias de la API Rest}
 
 Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{subsec: Bases de datos relacionales}. En la figura \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
 
-\pagebreak
+
 En esta secuencia, el cliente (en este caso Postman), envía en el body el nombre de usuario (''username'') y la contraseña (''password'') en formato JSON. Según lo explicado en la sección  \ref{Descripción de API Rest para aplicación Web} el backend realiza ciertas verificaciones y devuelve un token de sesión en el body.
 
 \begin{figure}[ht]
@@ -57,39 +57,27 @@ Postman permite automatizar los test utilizando colecciones (que son secuencias 
 
 En un entorno de integración continua y entrega continua, una herramienta de testeo automático permite, una vez definidas las colecciones de test, volver a ejecutarlas luego de haber realizado una modificación,  asegurar que no se modificó lo que ya funcionaba y que las mejoras pasan los nuevos test. La ventaja de utilizar newman radica en que al tener un cliente de consola se puede generar un script autómatico.
 
-Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la linea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}). 
-
+Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la linea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}). Existen varias opciones de reportes de resultados, en este trabajo se utiliza cli y htmlextra, ejecutando en la consola el código \ref{cod:Newman}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/Postman.png}
+	\includegraphics[scale=.35]{./Figures/Postman.png}
 	\caption{Colección test de logueo.}
 	\label{fig:Colección logueo usuario en Postman}
 \end{figure}
-
-Para ejecutar la collección con Newman existen varias opciones, en este trabajo ses utiliza cli y htmlextra, ejecutando en la consola:
-\pagebreak
 
 \begin{lstlisting}[label=cod:Newman,caption=  Ejecución de Newman en consola]
 >>newman run ./logueo_usuario.postman_collection.json -r cli,htmlextra
 \end{lstlisting}
 
-En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola y en \ref{fig:reporte html Newman} el reporte en html.
-
+En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.35]{./Figures/newman-1.png}
+	\includegraphics[scale=.32]{./Figures/newman-1.png}
 	\caption{Reporte en consola de Newman.}
 	\label{fig:reporte cli Newman}
 \end{figure}
 
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.35]{./Figures/newman-2.png}
-	\caption{Reporte html de Newman.}
-	\label{fig:reporte html Newman}
-\end{figure}
 
 
 
@@ -106,20 +94,20 @@ Se utilizó como máquina remota una instancia en Amazon Web Services y los disp
 Con el objetivo de no incorporar costos en las pruebas, se generó una instancia Free Tier en Amazon Web Services, en la cual se instaló Ubuntu, el broker Mosquitto, el backend, la página Web y un servidor NGINX para que funcione como proxy reverso. Tambien se contrató el servicio route 53 que permite personalizar las politicas de ruteo.
 De esta manera, se puede acceder al sistema desde cualquier dispositivo móvil conectado a una red.
 Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
+\pagebreak
 
 \begin{enumerate}
 
 
 \item Logearse en la instancia con ssh.
-\item Setear la base temporal como en Buenos Aires Argentina (importante ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente):\\
-\begin{itemize}
+\item Setear la base temporal como en Buenos Aires Argentina ( importante \\ ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente), ver código \ref{cod:Set DateTime}\\
 
+\begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración zona horaria]
+	sudo echo "America/Argentina/Buenos_Aires" | sudo tee /etc/timezone
+	sudo dpkg-reconfigure --frontend noninteractive tzdata
+	sudo reboot
+\end{lstlisting}
 
- 	\text{sudo echo ''America/Argentina/Buenos\_ Aires''} \\
-	\mid \text{sudo tee /etc/timezone} \\
-	\text{sudo dpkg-reconfigure --frontend noninteractive tzdata} \\
-	\text{sudo reboot}
-\end{itemize}	
 \item Instalar Git:
 
 	sudo apt-get install git
@@ -141,14 +129,14 @@ TAG="v1.0.1"
 
 ##SECURITY
 #secret pass
-JWT_SECRET = '[palabra secreta para las contraseñas]'
+JWT_SECRET = <palabra secreta para las contrasenas>
 #token expiration time
 JWT_EXP_TIM = 120s
 
 
 ##MQTT CONFIGURATION
 ##setting por for using websockets
-MQTT_CONNECTION = 'ws://[IP de broker]:[puerto de broker]'
+MQTT_CONNECTION = 'ws://<IP de broker>:<puerto de broker>'
 
 ##server
 PORT_LOCAL    = 3000
@@ -189,7 +177,7 @@ Para poder descargar el archivo ejecutable a un dispositivo Android se debe gene
 \end{enumerate}
 \pagebreak
 
-\pagebreak
+
 \subsection{Equipo simulador de llamadores}
 
 Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} y se presentan algunos detalles del código en el anexo \ref{AppendixA}. Es importante mencionar que el dispositivo desarrollado posee la funcionalidad mínima, pero permite simular multiples habitaciónes (no fue pensado para un uso real).
@@ -204,6 +192,7 @@ Se desarrollo un dispositivo que simula los llamadores con un microcontrolador E
 \subsection{Resultados de utilizar el sistema}
 \label{Resultados de utilizar el sistema}
 El sistema permaneció funcionando de manera adecuada durante una semana completa, generando los eventos programados y permitiendo la interacción de dispositivos.
+
 \pagebreak
 \section{Contraste con los requerimientos}
 \label{Contraste con los requerimientos}
@@ -244,6 +233,7 @@ Verificación: Se muestra como la página web permite observar distintas gráfic
 
 
 Verificación: Se muestra como la página web permite loguear los distintos usuarios.
+ 
 (*) Cumplimiento parcial: solo permite loguear al usuario administrador.
 
 \item Requerimientos de la aplicación móvil
@@ -262,7 +252,7 @@ Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pas
 
 4.5 La aplicación en modo sistema debe mostrar las habitaciones sin atención, según una tabla de prioridades y en caso de igualdad de prioridades mostrar según un orden de llamada.
 
-(*)Cumplimiento parcial: se muestra las habitaciones con una tabla de prioridades pero no según el orden de llamadas.
+(*) Cumplimiento parcial: se muestra las habitaciones con una tabla de prioridades pero no según el orden de llamadas.
 
 Verificación: Se ingresa a la aplicación en modo enfermera y siguiendo los pasos se descarga las notas del paciente.
 
@@ -287,15 +277,15 @@ Verificación: se verifica con este documento.
 
 Verificación: se verifico el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
 
-(*)Cumplimiento parcial:
+(*) Cumplimiento parcial:
 Validación: No se pudo validar el sistema en un nosocomio.
 
 \item Requerimientos de la entrega del producto:
 
 7.1 El Código fuente del servidor debe ser subido a dockerhub y compartido con la comunidad.
 
-(*)Cumplimiento parcial:
-Validación: Se subió el código fuente del servidor a Github.
+(*) Cumplimiento parcial:
+Validación: Se subió el código fuente del servidor a GitHub.
 
 7.2 El Código fuente de la aplicación debe ser subido a GitHub y compartido con la comunidad.
 

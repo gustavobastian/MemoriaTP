@@ -355,7 +355,7 @@ Los componentes de cada elemento son
 
 
 
-
+\pagebreak
 \item \textit{ Monitoreo de paciente-usuario-tipo de evento} (código \ref{cod:BedUserlist}):\\
 La clase BedUserlist se utiliza para saber quien está atendiendo, en todo momento, a un paciente.
 
@@ -410,6 +410,12 @@ client.on('connect', function () {
       console.log("error:"+err);
     }
   })
+
+
+
+
+
+
 
   //task that will publish beds state each second
   setInterval(publishBedStates, 10000);
@@ -495,8 +501,6 @@ Las excepciones al formato general de los mensajes vienen dadas por:
 
 \end{itemize}
 
-
-\pagebreak
 
 \subsection{Descripción de API Rest para aplicación Web}
 \label{Descripción de API Rest para aplicación Web}
@@ -609,7 +613,7 @@ En el código \ref{cod:Logueo Web} se presenta la función que se encarga de aut
 \item Verificación que el usuario es administrador : linea 21
 \end{enumerate}
 
-Luego de eso genera un \textit{token} que espira luego de un cierto tiempo dado por una variable de entorno (JWT_EXP_TIM) y se responde al front end.
+Luego de eso genera un token que espira luego de un cierto tiempo dado por una variable de entorno y se responde al front end.
 
 Una vez logueado, la función \textit{auth.isAuthenticated(request,response,next)}, dentro del archivo \textit{./middleware/authentication} comprueba que el usuario que solicita el recurso posea el token correspondiente.
 \begin{lstlisting}[label=cod: Autorización,caption=  Control de token]
@@ -991,10 +995,10 @@ La aplicación se encuentra escuchando al tópico MQTT ''/Beds/status'', y filtr
 	\label{fig: Diagrama de estados en modo enfermera.}
 \end{figure} 
 
-\pagebreak
+
+
 Cuando arriba la notificación, se presenta una tarjeta con dos botones: información de la cama y aceptación. En caso que la enfermera desee consultar donde se encuentra (piso y habitación) debe presionar el boton información. En caso que decida ir a la habitación, debe presionar aceptar.
 Al presionar aceptar automáticamente el estado de la cama cambia a desplazandose a la habitación (la información proviene del sistema que recibió la aceptación y cambió el estado de la habitación). Se presentan estas capturas en la figura \ref{fig_2:Recepción de tarea}.
-
 
 \begin{figure}[!htpb]
      \centering
@@ -1021,21 +1025,28 @@ Al presionar aceptar automáticamente el estado de la cama cambia a desplazandos
         \caption{Recepción de tarea}
         \label{fig_2:Recepción de tarea}
 \end{figure}
-\pagebreak
 
 Cuando el usuario se encuentra frente al paciente, puede ingresar el código correspondiente a la cama manualmente o bien leer el código QR con el celular, como se observa en la figura \ref{fig: Captura de QR en la aplicación.}.
 
-
-
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.09]{./Figures/app/capturaQR.jpg}
+	\includegraphics[scale=.05]{./Figures/app/capturaQR.jpg}
 	\caption{ Captura de QR en la aplicación}
 	\label{fig: Captura de QR en la aplicación.}
 \end{figure} 
 
 
 Una vez que se aceptó desde el sistema el código de la cama, en la aplicación se presenta una pantalla con distintos botones (ver figuras \ref{fig_3:Ejecución de tarea}). Las acciones que se permiten realizar son:
+
+
+\begin{enumerate}
+\item Cancelar: envía al sistema automáticamente la solicitud de cancelar la tarea. El sistema vuelve a colocar a la cama en situación de llamada.
+\item Listo: envía al sistema automáticamente la solicitud de finalizar la tarea. El sistema coloca a la cama en situación de ocupada.
+\item Notas: consulta al sistema las notas referidas al paciente. 
+\item Mensajes: permite enviar audio o texto a un médico. 
+\item Ayuda: solicita al sistema que marque a la cama como con solicitud de ayuda para que otros enfermeros puedan socorrer al usuario. 
+\item Memoria: Permite incorporar un texto que se almacena junto con la tarea al presionar Listo.
+\end{enumerate}
 
 \begin{figure}[!htpb]
      \centering
@@ -1062,16 +1073,3 @@ Una vez que se aceptó desde el sistema el código de la cama, en la aplicación
         \caption{Ejecución de tarea}
         \label{fig_3:Ejecución de tarea}
 \end{figure}
-
-\begin{enumerate}
-\item Cancelar: envía al sistema automáticamente la solicitud de cancelar la tarea. El sistema vuelve a colocar a la cama en situación de llamada.
-\item Listo: envía al sistema automáticamente la solicitud de finalizar la tarea. El sistema coloca a la cama en situación de ocupada.
-\item Notas: consulta al sistema las notas referidas al paciente. 
-\item Mensajes: permite enviar audio o texto a un médico. 
-\item Ayuda: solicita al sistema que marque a la cama como con solicitud de ayuda para que otros enfermeros puedan socorrer al usuario. 
-\item Memoria: Permite incorporar un texto que se almacena junto con la tarea al presionar Listo.
-\end{enumerate}
-
-
-
-
