@@ -109,16 +109,54 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 
 
 \item Logearse en la instancia con ssh.
+\item Setear la base temporal como en Buenos Aires Argentina (importante ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente):\\
+\begin{itemize}
+
+
+ 	\text{sudo echo ''America/Argentina/Buenos\_ Aires''} \\
+	\mid \text{sudo tee /etc/timezone} \\
+	\text{sudo dpkg-reconfigure --frontend noninteractive tzdata} \\
+	\text{sudo reboot}
+\end{itemize}	
 \item Instalar Git:
 
-	''sudo apt-get install git''
+	sudo apt-get install git
 \item Instalar el broker Mosquitto:
 	
-	''sudo apt-get install mosquitto''
+	sudo apt-get install mosquitto
 \item Configurar el brocker Mosquitto según sección \ref{Broker Mosquitto}.
-\item Instalar Docker y Docker-compose
-\item Descargar el backend desde GitHub
+\item Instalar Docker y Docker-compose segun el sitio\citep{WEBSITE:8}
+\item Descargar el backend desde GitHub:
+
+	git clone  https://github.com/gustavobastian/ServerNurse
 \item Copiar en la instancia la base de datos (utilizar scp) comprimida y descomprimir dentro de la carpeta /db
+\pagebreak
+\item Crear el archivo de entorno(.env) según el código \ref{cod:Entorno_backend}:
+
+
+\begin{lstlisting}[label=cod:Entorno_backend,caption=  Entorno del backend]
+TAG="v1.0.1"
+
+##SECURITY
+#secret pass
+JWT_SECRET = '[palabra secreta para las contraseñas]'
+#token expiration time
+JWT_EXP_TIM = 120s
+
+
+##MQTT CONFIGURATION
+##setting por for using websockets
+MQTT_CONNECTION = 'ws://[IP de broker]:[puerto de broker]'
+
+##server
+PORT_LOCAL    = 3000
+
+##timezone
+
+TZ = America/Argentina/Buenos_Aires 
+\end{lstlisting}
+
+
 \item Ejecutar Docker-compose up
 \end{enumerate}
 
@@ -131,7 +169,6 @@ Los pasos para configurar la página web:
 \item Logearse con ssh en la instancia EC2.
 \item Copiar el archivo comprimido en la instancia y descomprimirlo en ''/var/www/hmtl''.
 \item Configurar nginx para redirigir a la página (ver apéndice \ref{AppendixB}).
-\item Reiniciar Nginx.
 
 \end{itemize}
 \subsection{Generación/instalación de la aplicación móvil en Android}
