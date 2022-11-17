@@ -19,11 +19,11 @@ En esta sección se explica cómo se hicieron los ensayos, qué resultados se ob
 En esta sección se presentan las herramientas que se utilizaron para ensayar las distintas partes del sistema en forma separada.
 
 \subsection{Pruebas del servidor Mosquitto}
-Para simular mensajes y observar el comportamiento de cada una de las partes del sistema se utilizó la herramienta MQTT explorer   \citep{WEBSITE:29}.
+Para simular mensajes y observar el comportamiento de cada una de las partes del sistema se utilizó la herramienta MQTT explorer   \citep{WEBSITE:29} que se presenta en la figura \ref{fig:MQTT Explorer}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.25]{./Figures/mqtt-explorer.png}
+	\includegraphics[scale=.30]{./Figures/mqtt-explorer.png}
 	\caption{Imagen de MQTT Explorer.}
 	\label{fig:MQTT Explorer}
 \end{figure}
@@ -35,6 +35,9 @@ Esta herramienta fue importante no solo para realizar ensayos sino tambien para 
 \subsection{Pruebas unitarias de la API Rest}
 
 Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{subsec: Bases de datos relacionales}. En la figura \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
+
+\pagebreak
+En esta secuencia, el cliente (en este caso Postman), envía en el body el nombre de usuario (''username'') y la contraseña (''password'') en formato JSON. Según lo explicado en la sección  \ref{Descripción de API Rest para aplicación Web} el backend realiza ciertas verificaciones y devuelve un token de sesión en el body.
 
 \begin{figure}[ht]
 	\centering
@@ -50,7 +53,9 @@ Para simular el logeo y la consulta a la base de datos se utilizó la herramient
 	\label{fig:Rechazo Logueo en el sistema con Postman}
 \end{figure}
 
-Postman permite automatizar los test utilizando colecciones (que son secuencias de consultas a la API). Las colecciones se pueden exportar a un formato JSON de modo de poder ser utilizadas por otras herramientas. En un entorno de integración continua y entrega continua, una herramienta de testeo automático permite, una vez definidos las colecciones de test, volver a ejecutarlos luego de haber realizado una modificación y obtener un resultado de los mismos, asegurando que no se modificó lo que ya funcionaba y que las mejoras pasen los nuevos test. 
+Postman permite automatizar los test utilizando colecciones (que son secuencias de consultas a la API). Las colecciones se pueden exportar a un formato JSON de modo de poder ser utilizadas por otras herramientas. 
+
+En un entorno de integración continua y entrega continua, una herramienta de testeo automático permite, una vez definidas las colecciones de test, volver a ejecutarlas luego de haber realizado una modificación,  asegurar que no se modificó lo que ya funcionaba y que las mejoras pasan los nuevos test. La ventaja de utilizar newman radica en que al tener un cliente de consola se puede generar un script autómatico.
 
 Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la linea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}). 
 
@@ -58,19 +63,16 @@ Para utilizar Newman, que es el cliente de consola, se deben exportar las colecc
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.45]{./Figures/Postman.png}
-	\caption{Colección logueo de test.}
+	\caption{Colección test de logueo.}
 	\label{fig:Colección logueo usuario en Postman}
 \end{figure}
 
-Para reportar con Newman existen varias opciones, en este trabajo ses utiliza cli y htmlextra, ejecutando en la consola:
-
-
+Para ejecutar la collección con Newman existen varias opciones, en este trabajo ses utiliza cli y htmlextra, ejecutando en la consola:
+\pagebreak
 
 \begin{lstlisting}[label=cod:Newman,caption=  Ejecución de Newman en consola]
 >>newman run ./logueo_usuario.postman_collection.json -r cli,htmlextra
 \end{lstlisting}
-
-
 
 En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola y en \ref{fig:reporte html Newman} el reporte en html.
 
@@ -174,23 +176,23 @@ Los pasos para configurar la página web:
 
 \subsection{Generación/instalación de la aplicación móvil en Android}
 
-Para que la aplicación pueda utilizarse en un dispositivo móvil, la misma debe ser compilada para ejecutarse en código nativo. Con esto se genera el código instalable .apk para Android y .ipa para IOS. La distribución segura de las aplicaciones se realiza a través de los  
+Para que la aplicación pueda utilizarse en un dispositivo móvil, la misma debe ser compilada para ejecutarse en código nativo. Con esto se genera el código instalable .apk para Android y .ipa para IOS. 
 
-Para poder descargar el archivo ejecutable a un dispositivo Android se debe generar el archivo .apk correspondiente. Para ello seguir los siguientes pasos:
+Para poder descargar el archivo ejecutable a un dispositivo Android se debe generar el archivo .apk correspondiente. Para ello se deben ejecutar los siguientes pasos:
 
-\begin{itemize}
-\item Generar código con ionic capacitor:
+\begin{enumerate}
 
+\item Generar el código con ionic capacitor:
 ''ionic cap build android''
-\item Abrir Android estudio, modificar el AndroidManifest.xml
-\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación (ver apéndice \ref{AppendixA}).
-\end{itemize}
+\item Abrir Android estudio(ver apéndice \ref{AppendixC}).
+\item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación. 
+\end{enumerate}
 \pagebreak
 
 \pagebreak
 \subsection{Equipo simulador de llamadores}
 
-Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33}. 
+Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} y se presentan algunos detalles del código en el anexo \ref{AppendixA}. Es importante mencionar que el dispositivo desarrollado posee la funcionalidad mínima, pero permite simular multiples habitaciónes (no fue pensado para un uso real).
 
 \begin{figure}[ht]
 	\centering

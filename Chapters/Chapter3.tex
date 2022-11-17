@@ -499,6 +499,7 @@ Las excepciones al formato general de los mensajes vienen dadas por:
 \pagebreak
 
 \subsection{Descripción de API Rest para aplicación Web}
+\label{Descripción de API Rest para aplicación Web}
 
 La API desarrollada utiliza Express junto con Cookie-parser. 
  
@@ -600,10 +601,17 @@ routerAuthenticate.post('/', async function(req, res) {
     })
 
 \end{lstlisting}
-**************************************************************************
-explicar
 
-Luego, la función \textit{auth.isAuthenticated(request,response,next)}, dentro del archivo \textit{./middleware/authentication} filtra el acceso solo a la página web con un usuario administrador logueado.
+En el código \ref{cod:Logueo Web} se presenta la función que se encarga de autenticar al usuario. Al recibir un mensaje de autenticación, el backend genera la siguiente secuencia de comprobación:
+\begin{enumerate}
+\item Verificación que el usuario existe : linea 4
+\item Verificación que el password recibido corresponde con el usuairo : linea 21
+\item Verificación que el usuario es administrador : linea 21
+\end{enumerate}
+
+Luego de eso genera un \textit{token} que espira luego de un cierto tiempo dado por una variable de entorno (JWT_EXP_TIM) y se responde al front end.
+
+Una vez logueado, la función \textit{auth.isAuthenticated(request,response,next)}, dentro del archivo \textit{./middleware/authentication} comprueba que el usuario que solicita el recurso posea el token correspondiente.
 \begin{lstlisting}[label=cod: Autorización,caption=  Control de token]
 exports.isAuthenticated = async(req, res,next)=> {
     let authHeader = (req.headers.authorization || '');
