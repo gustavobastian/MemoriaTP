@@ -12,21 +12,21 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 \label{sec:Descripción de tecnologías web para IoT}
 
 
-Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend .  
+Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend.  
 
-\subsection{ Breve introduccion a tecnologías de backend}
-El backen  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el backend se comunica con los clientes utilizando dos protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT )  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
+\subsection{ Breve introducción a tecnologías de backend}
+El backend  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el backend se comunica con los clientes utilizando dos protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT)  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
 
 El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
 
-MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP (del ingles \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet ), se implementa en la capa de aplicación y utiliza mensajeria bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar dispositivos rápidamente con bajo costo de software, hardware e implementación \citep{ARTICLE:2}.
+MQTT es un protocolo open source simple, liviano y orientado a dispositivos con pocos recursos y baja velocidad de transmisión. Está basado en la pila TCP/IP (del inglés \textit{Transmission Control Protocol/Internet Protocol}, Protocolo de control de transmisión /Protocolo de Internet), se implementa en la capa de aplicación y utiliza mensajería bajo el patrón de publicación/subscripción. Las ventajas que provee es la posibilidad de agregar dispositivos rápidamente con bajo costo de software, hardware e implementación \citep{ARTICLE:2}.
 
-En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP  (\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado ) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demas, y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
+En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del desempeño de varios protocolos de IoT: MQTT, CoAP (\textit{Constrained Application Protocol, Protocolo de Aplicaciones Restringido}), AMQP  (\textit{Advanced Message Queuing Protocol}, Protocolo de Encolamiento de Mensajes Avanzado) y HTTP (\textit{Hypertext Transfer Protocol}, Protocolo de Transferencia de Hipertexto). Se menciona que MQTT es ampliamente utilizado pero muy poco estandarizado en comparación con los demás y se resalta el hecho que tiene limitaciones en lo referido a seguridad.
 
-En las subcciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node} se explicará el funcionamiento del backend.
-\subsection{Breve introduccion a tecnologías frontend}
-\label{Breve introduccion a tecnologías frontend}
-El frontend es la parte del programa o del dispositivo con la que interactua el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el frontend consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las tecnologías más conocidas que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo \citep{WEBSITE:13}).  
+En las subsecciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node} se explicará el funcionamiento del backend.
+\subsection{Breve introducción a tecnologías frontend}
+\label{Breve introducción a tecnologías frontend}
+El frontend es la parte del programa o del dispositivo con la que interactúa el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el frontend consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las tecnologías más conocidas que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo \citep{WEBSITE:13}).  
 
 En los últimos años, se busca facilitar el diseño del frontend mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16} e Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
 
@@ -62,7 +62,7 @@ Con el objetivo de facilitar el desarrollo se utilizó un sistema de contenedore
 \section{Descripción del protocolo MQTT}
 \label{sec:Descripción del protocolo MQTT}
 
-MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería por suscripción/publicación especialmente diseñado para la comunicación M2M (\textit{Machine to Machine}, Máquina a Máquina) en dispositivos con bajos recursos \citep{WEBSITE:5} .
+MQTT fue introducido en 1999 por IBM y Eurotech. Es un protocolo de mensajería por suscripción/publicación especialmente diseñado para la comunicación M2M (\textit{Machine to Machine}, Máquina a Máquina) en dispositivos con bajos recursos \citep{WEBSITE:5}.
 
 Para poder explicar el funcionamiento del protocolo es necesario incorporar conceptos definidos en la especificación \citep{WEBSITE:5}:
 
@@ -74,7 +74,7 @@ Para poder explicar el funcionamiento del protocolo es necesario incorporar conc
 \item suscripción: una  suscripción implica un filtrado de tópicos y una máxima calidad de servicio. Una suscripción está asociada a una sola sesión y una sesión puede poseer varias suscripciones.
 \item Nombre de tópico: etiqueta que se adjunta a un mensaje la cual es comparada con las suscripciones conocidas en el servidor.
 \item Filtro de tópico: es una expresión contenida dentro de la suscripción para indicar interés, por parte del cliente, en uno o más tópicos.
-\item Suscripción con comodín o \textit{Wildcard} : es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\# ', que representan un nivel único y nivel múltiple respectivamente.
+\item Suscripción con comodín o \textit{Wildcard}: es una expresión contenida dentro de la suscripción que contiene un carácter especial o comodín, como ser '+' o '\# ', que representan un nivel único y nivel múltiple respectivamente.
 
 \end{itemize}
 
@@ -94,7 +94,7 @@ Luego el cliente MQTT publica mensajes en un broker MQTT, los cuales son recibid
 La conexión MQTT siempre es entre cliente y broker, nunca entre clientes directamente.
 
 
-Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de dos \textit{bytes} y un dato útil (\textit{"payload"}) de hasta 256 MB \citep{ARTICLE:2} . 
+Cada mensaje es publicado en una dirección conocida como "tópico". Los clientes pueden subscribirse a múltiples tópicos y recibir todos los mensajes publicados en cada tópico. MQTT es un protocolo binario y normalmente requiere un encabezado fijo de dos \textit{bytes} y un dato útil (\textit{"payload"}) de hasta 256 MB \citep{ARTICLE:2}. 
 
 \pagebreak
 Ejemplos de tópicos:
@@ -393,7 +393,7 @@ En el encabezado del mensaje HTTP se puede introducir información de la sesión
 
 Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Múltiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
 
-Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}. Una estructura genera del sistema docker es presentado en la figura \ref{fig:Contenedores Docker. }.
+Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}. Una estructura general del sistema docker es presentado en la figura \ref{fig:Contenedores Docker. }.
 
 
 \pagebreak
@@ -535,7 +535,7 @@ Ejemplo de uso, suponiendo 2 tablas:
 
 Si se quiere obtener el nombre y apellido del paciente con pacienteId igual a 1, una forma de obternerlo es ejecutando el código:
 
-\begin{lstlisting}[label=código:SQL:vControl,caption=Ejecución de comando sql]  
+\begin{lstlisting}[label=código:SQL:vControl,caption=Ejecución de comando SQL.]  
 >SELECT Nombre,Apellido FROM TABLA1 as TB1 \
 JOIN TABLA2 as TB2 ON TB1.pacienteId=TB2.pacienteId \
 WHERE TB1.pacienteId=1;

@@ -14,7 +14,7 @@ Se utilizo FreeRtos \citep{WEBSITE:40} como sistema operativo en tiempo real.
 
 El fragmento de código que publica en el broker se presenta en el código \ref{cod: Publicación llamado}:
 
-\begin{lstlisting}[label=cod: Publicación llamado,caption=Tarea que publica en el broker la simulación de llamada]
+\begin{lstlisting}[label=cod: Publicación llamado,caption=Tarea que publica en el broker la simulación de llamada.]
 
 /**
  * @brief simple task for keyboard polling
@@ -39,7 +39,7 @@ static void keyb_task(void* arg)
 
 La función que genera el mensaje a publicar se presenta en el código \ref{cod: generación de mensaje}:
 
-\begin{lstlisting}[label=cod: generación de mensaje,caption= Función que genera el payload]
+\begin{lstlisting}[label=cod: generación de mensaje,caption= Función que genera el payload.]
 
 void generateJsonKey(char *buffer,int key){
 cJSON *my_json;

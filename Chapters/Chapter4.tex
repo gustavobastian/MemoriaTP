@@ -66,7 +66,7 @@ Para utilizar Newman, que es el cliente de consola, se deben exportar las colecc
 	\label{fig:Colección logueo usuario en Postman}
 \end{figure}
 
-\begin{lstlisting}[label=cod:Newman,caption=  Ejecución de Newman en consola]
+\begin{lstlisting}[label=cod:Newman,caption=  Ejecución de Newman en consola.]
 >>newman run ./logueo_usuario.postman_collection.json -r cli,htmlextra
 \end{lstlisting}
 
@@ -102,7 +102,7 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \item Logearse en la instancia con ssh.
 \item Setear la base temporal como en Buenos Aires Argentina ( importante \\ ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente), ver código \ref{cod:Set DateTime}\\
 
-\begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración zona horaria]
+\begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración zona horaria.]
 	sudo echo "America/Argentina/Buenos_Aires" | sudo tee /etc/timezone
 	sudo dpkg-reconfigure --frontend noninteractive tzdata
 	sudo reboot
@@ -124,7 +124,7 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \item Crear el archivo de entorno(.env) según el código \ref{cod:Entorno_backend}:
 
 
-\begin{lstlisting}[label=cod:Entorno_backend,caption=  Entorno del backend]
+\begin{lstlisting}[label=cod:Entorno_backend,caption=  Entorno del backend.]
 TAG="v1.0.1"
 
 ##SECURITY
