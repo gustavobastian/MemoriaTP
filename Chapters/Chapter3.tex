@@ -101,7 +101,7 @@ La aplicación web utiliza HTTP para interactuar con el backend y las aplicacion
 El broker Mosquitto es una parte central del sistema ya que se encarga de distribuir los mensajes entre los distintos elementos. El único requisito es que se encuentre instalado en la misma red que los clientes (en un dispositivo que no requiere de muchos recursos). Su instalación, en un entorno operativo Ubuntu se realiza con los siguientes comandos:
 
 
-\begin{lstlisting}[caption=  Instalación/lanzamiento del broker Mosquitto]
+\begin{lstlisting}[caption=  Instalación/lanzamiento del broker Mosquitto.]
 		sudo apt-get install mosquitto mosquitto-clients
 		sudo systemctl enable mosquitto.service
 \end{lstlisting}
@@ -859,7 +859,7 @@ const routes: Routes = [
 
 \subsection{Configuración del broker y acceso de usuario}
 
-Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno redirige a la página de configuración del broker MQTT y otro a la página de ingreso.
+Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno redirige a la página de configuración del broker MQTT y otro a la página de ingreso (ver figura \ref{fig_0:1_de_3}).
 %\begin{figure}[ht]
 %	\centering
 %	\includegraphics[scale=.80]{./Figures/app/inicioApp.png}
@@ -891,11 +891,11 @@ Cuando se inicia la aplicación se presenta una pantalla con dos pulsadores, uno
          \caption{Configuración.}
          \label{fig_0:3_de_3}
      \end{subfigure}
-        \caption{Inicio de sistema}
+        \caption{Inicio de sistema.}
         \label{fig:Pantalla inicial, configuración y acceso de la aplicación.}
 \end{figure}
 
-En la página de configuración se ingresa la IP del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo.
+En la página de configuración (figura \ref{fig_0:3_de_3}) se ingresa la IP del broker del sistema y el puerto. Luego se puede probar la comunicación y guardar los parametros en el localStorage del dispositivo, como se presenta en el código \ref{cod:LocalStorage}.
 
 \begin{lstlisting}[label=cod:LocalStorage,caption=  Funciones del servicio que guardan en el localStorage.]
   /**
@@ -907,14 +907,14 @@ En la página de configuración se ingresa la IP del broker del sistema y el pue
   };
 \end{lstlisting}
 
-En la página de logueo se ingresan el nombre de usuario, y su contraseña.
+En la página de logueo (figura \ref{fig_0:2_de_3}) se ingresan el nombre de usuario, y su contraseña.
 
 La aplicación publica la información en el tópico ''/User/username'' con el formato de mensaje correspondiente y recibe en ''/Session/nrodesesión'' el número de usuario y el modo de uso. De esta manera la aplicación se setea en el modo correspondiente.
 
 
 
 \subsection{Modo administrador}
-En el modo administrador se puede monitorear el estado de los usuarios y las camas. Para seleccionar lo que se desea monitorear, se presiona el botón correspondiente.
+En el modo administrador (figura \ref{fig: Pantallas de administración.}) se puede monitorear el estado de los usuarios y las camas. Para seleccionar lo que se desea monitorear, se presiona el botón correspondiente.
 
 \begin{figure}[ht]
 	\centering
@@ -929,7 +929,7 @@ El orden en que se presentan las camas tienen que ver con la prioridad que se le
 
 \pagebreak
 \subsection{Modo médico}
-Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el usuario decida que hacer. El diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.}. 
+Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el usuario decida que hacer. El diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo médico.} y las distintas pantallas a las que se puede acceder se presentan en la figura \ref{fig:Modo médico}. 
 
 \begin{figure}[ht]
 	\centering
@@ -940,9 +940,9 @@ Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el
 
 Las acciones que puede realizar un médico son:
 \begin{itemize}
-\item Actualizar una nota de un paciente: para la gestión de estos mensajes se utiliza el tópico ''/Pacient/id'' donde id es el número de paciente. Cuando el médico solicita información del paciente (nombre, apellido y número ) se responde  en ''/Pacient/id/info''. Cuando se consulta las notas se responde en ''/Pacient/id/notes'' y cuando se quiere ingresar una nueva nota se publica en ''/Pacient/id/newNote''
-\item Responder a una consulta de una enfermera.
-\item Monitorear las camas con los pacientes que le fueron encargados: simplemente filtra por sus pacientes el listado publicado en ''/Beds/status''
+\item Actualizar una nota de un paciente: para la gestión de estos mensajes se utiliza el tópico ''/Pacient/id'' donde id es el número de paciente. Cuando el médico solicita información del paciente (nombre, apellido y número ) se responde  en ''/Pacient/id/info''. Cuando se consulta las notas se responde en ''/Pacient/id/notes'' y cuando se quiere ingresar una nueva nota se publica en ''/Pacient/id/newNote''. La pantalla correspondiente se muestra en la figura \ref{fig_1:2de3}.
+\item Responder a una consulta de una enfermera. La pantalla correspondiente se muestra en la figura \ref{fig_1:3de3}
+\item Monitorear las camas con los pacientes que le fueron encargados: simplemente filtra por sus pacientes el listado publicado en ''/Beds/status''. La pantalla correspondiente se muestra en la figura \ref{fig_1:1de3}
 
 \end{itemize}
 
@@ -969,7 +969,7 @@ Las acciones que puede realizar un médico son:
          \caption{Mensajes.}
          \label{fig_1:3de3}
      \end{subfigure}
-        \caption{Modo médico}
+        \caption{Modo médico.}
         \label{fig:Modo médico}
 \end{figure}
 
@@ -1005,7 +1005,7 @@ Al presionar aceptar automáticamente el estado de la cama cambia a desplazandos
      \begin{subfigure}[b]{0.3\textwidth}
          \centering
          \includegraphics[width=.95\textwidth]{./Figures/app/enfermera-peticion.png}
-         \caption{Se recibe peticion.}
+         \caption{Se recibe petición.}
          \label{fig_2:1de3}
      \end{subfigure}
      \hfill
@@ -1031,7 +1031,7 @@ Cuando el usuario se encuentra frente al paciente, puede ingresar el código cor
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.05]{./Figures/app/capturaQR.jpg}
-	\caption{ Captura de QR en la aplicación}
+	\caption{ Captura de QR en la aplicación.}
 	\label{fig: Captura de QR en la aplicación.}
 \end{figure} 
 
@@ -1070,6 +1070,6 @@ Una vez que se aceptó desde el sistema el código de la cama, en la aplicación
          \caption{Abriendo menú de mensajes.}
          \label{fig_3:3de3}
      \end{subfigure}
-        \caption{Ejecución de tarea}
+        \caption{Ejecución de tarea.}
         \label{fig_3:Ejecución de tarea}
 \end{figure}

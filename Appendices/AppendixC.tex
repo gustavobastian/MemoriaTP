@@ -4,24 +4,22 @@
 
 \label{AppendixC} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-En esta sección se presentará brevemente los pasos para regenerar el código utilizado. Para el desarrollo de aplicaciones se consultó el documento \citep{BOOK:3} donde se menciona la importancia de la seguridad en las aplicaciones y en el resguardo de los datos.
+En esta sección se presenta, brevemente, los pasos para regenerar el código utilizado en un dispositivo con sistema operativo Android (archivo .apk). Para el desarrollo de aplicaciones se consultó el documento \citep{BOOK:3} donde se menciona la importancia de la seguridad en las aplicaciones y en el resguardo de los datos.
 
-Para poder compilar nativamente la aplicación es necesario poseer instalado Android Studio \citep{WEBSITE:41} y asignarle los permisos al software. Eso se logra incorporando componentes al android manifest, se observa en el código \ref{cod:AndroidMan}. Además es necesario incorporar algunas librerías al archivo variables.gradle y setear parametros en build.gradle. Para una descripción detallada de todo el proceso de generación de código ejecutable se puede recurrir a la documentación oficial \citep{WEBSITE:42};
+Para poder compilar nativamente la aplicación es necesario poseer instalado Android Studio \citep{WEBSITE:41} y asignarle los permisos al software. Eso se logra incorporando componentes al android manifest, como se observa en el código \ref{cod:AndroidMan}. Además es necesario incorporar algunas librerías al archivo variables.gradle y setear parametros en build.gradle. Para una descripción detallada de todo el proceso de generación de código ejecutable se puede recurrir a la documentación oficial \citep{WEBSITE:42}.
 
-La API utilizada es Android API:33.
+El archivo Android Manifest describe la información esencial de la aplicación para que pueda ser interpretadas por las herramientas de generación de código ejecutable, el sistema operativo Android y Google Play.
 
-El archivo Android Manifest describe la información esencial de la aplicación para que puedan ser interpretadas por las herramientas de generación de código ejecutable, el sistema operativo Android y Google Play.
-
-Entre muchas otras cosas, el archivo de manifiesto debe declarar lo siguiente:
+Entre muchas otras cosas, el archivo de manifiesto (ver código \ref{cod:AndroidMan}) debe declarar lo siguiente:
 \begin{itemize}
 
 
-\item El nombre del paquete de la aplicación, que normalmente coincide con el espacio de nombres de tu código. Las herramientas de compilación de Android usan esto para determinar la ubicación de las entidades de código cuando se compila el proyecto. Al empaquetar la aplicación, las herramientas de compilación sustituyen este valor por el ID de aplicación de los archivos de compilación de Gradle, que se utiliza como identificador único de la aplicación en el sistema y en Google Play. 
+\item El nombre del paquete de la aplicación, que normalmente coincide con el espacio de nombres del código. Las herramientas de compilación de Android usan esto para determinar la ubicación de las entidades de código cuando se compila el proyecto. Al empaquetar la aplicación, las herramientas de compilación sustituyen este valor por el ID de aplicación de los archivos de compilación de Gradle, que se utiliza como identificador único de la aplicación en el sistema y en Google Play. 
 \item Los componentes de la aplicación, que incluyen todas las actividades, servicios, receptores de emisiones y proveedores de contenido. Cada componente debe definir propiedades básicas, como el nombre de su clase Kotlin o Java. También puede declarar capacidades, como las configuraciones de dispositivos que puede manejar, además de filtros de intents que describen cómo se puede iniciar el componente. 
 \item Los permisos que necesita la aplicación para acceder a las partes protegidas del sistema o a otras aplicaciones. También declara cualquier permiso que otras aplicaciones deben tener si quieren acceder al contenido de esta aplicación. 
 \end{itemize}
 
-El archivo build.gradle de nivel superior, ubicado en el directorio raíz del proyecto, define dependencias que se aplican a todos los módulos de tu proyecto y en el archivo variables.gradle se indica la versión de APK que se utiliza. 
+El archivo build.gradle de nivel superior (ver código \ref{cod:buildGradle}), ubicado en el directorio raíz del proyecto, define dependencias que se aplican a todos los módulos de tu proyecto y en el archivo variables.gradle (ver código \ref{cod:variablesGradle}) se indica la versión de APK que se utiliza. La API utilizada es Android API:33. 
 
 \begin{lstlisting}[label=cod:AndroidMan,caption=Modificaciones al Android Manifest.]  % Start your code-block
 

@@ -4,11 +4,11 @@
 
 \label{AppendixB} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Nginx \citep{WEBSITE:36} es un servidor web liviano y de alta performance diseñado para soportar gran tráfico. Uno de sus casos de uso es ser un servidor proxy inverso.
+Nginx \citep{WEBSITE:36} es un servidor web liviano y de alta performance diseñado para soportar alto tráfico. Uno de sus casos de uso es ser un servidor proxy inverso. Además es soportado por Linux.
 
-Un proxy inverso es un servidor que acepta todo el tráfico y lo reenvía al recurso específico, como ser el frontend.
+Un proxy inverso es un servidor que acepta todo el tráfico y lo reenvía hacia un recurso específico, como ser el frontend.
 
-Nginx trabaja enfocado a eventos. Como consecuencia, puede procesar solicitudes de forma asíncrona, ahorrando memoria y espacio. Es soportado por Linux.
+Nginx trabaja enfocado a eventos, lo que permite procesar solicitudes de forma asíncrona, ahorrando memoria y espacio.
 
 Para instalar Nginx en una instancia AWS ejecutando Ubuntu (o en cualquier sistema linux), se utiliza el comando ''apt install nginx'' ( como usuario root en la consola).
 
@@ -16,7 +16,7 @@ Para la configuración de Nginx en el servidor se utilizan los siguientes archiv
 \begin{itemize}
 \item /etc/nginx : directorio de configuración.
 \item /etc/nginx/nginx.conf : archivo de configuración principal.
-\item /etc/nginx/sites-available : directorio donde se pueden guardar bloques de servidor por sitio. Nginx no utilizará los archivos de configuración de este directorios a menos que esten vinculados a sites-enabled. La configuración se realiza en este directorio y luego se habilita estableciendo un vinculo con el otro directorio.
+\item /etc/nginx/sites-available : directorio donde se pueden guardar bloques de servidor por sitio. Nginx no utiliza los archivos de configuración de este directorios a menos que esten vinculados a sites-enabled. La configuración se realiza en este directorio y luego se habilita estableciendo un vinculo con el otro directorio.
 \item /etc/nginx/sites-enabled : directorio donde se guardan los bloques de servidor habilitados por sitios. 
 \item /etc/nginx/snippets : directorio donde se pueden guardar fragmentos de configuración.
 \end{itemize}
@@ -31,9 +31,9 @@ Los dominios utilizados en las pruebas de este trabajo son:
 \end{itemize}
 
 \pagebreak
-Dentro de la carpeta sites-available se guarda un archivo de nombre ''Nurse.com.conf'' con el contenido presentado en el código\ref{cod:archivo nurse}:
+Dentro de la carpeta sites-available se guarda un archivo de nombre ''Nurse.com.conf'' con el contenido presentado en el código \ref{cod:archivo nurse}:
 
-\begin{lstlisting}[label=cod:archivo nurse,caption=Archivo /etc/nginx/sites-available/Nurse.com.conf.]
+\begin{lstlisting}[label=cod:archivo nurse, caption=Archivo \\/etc/nginx/sites-available/Nurse.com.conf.]
 server {
 	listen 8024 default_server;
 	root /var/www/html;
@@ -41,7 +41,7 @@ server {
 }
 \end{lstlisting}
 
-En la carpeta sites-enabled se genera el enlace dinámico a archivo anterior:
+En la carpeta sites-enabled se genera el enlace dinámico al archivo anterior mediante la instrucción:
 \begin{itemize}
 \item ''sudo ln -s /etc/nginx/sites-available/Nurse.com.conf /etc/nginx/sites-enabled/Nurse.com.conf ''
 \end{itemize}

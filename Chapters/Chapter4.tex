@@ -37,7 +37,7 @@ Esta herramienta fue importante no solo para realizar ensayos sino tambien para 
 Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{subsec: Bases de datos relacionales}. En la figura \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
 
 
-En esta secuencia, el cliente (en este caso Postman), envía en el body el nombre de usuario (''username'') y la contraseña (''password'') en formato JSON. Según lo explicado en la sección  \ref{Descripción de API Rest para aplicación Web} el backend realiza ciertas verificaciones y devuelve un token de sesión en el body.
+En esta secuencia, el cliente (en este caso Postman), envía en el body el nombre de usuario (''username'') y la contraseña (''password'') en formato JSON. Según lo explicado en la sección  \ref{Descripción de API Rest para aplicación Web}, el backend realiza ciertas verificaciones y devuelve un token de sesión en el body.
 
 \begin{figure}[ht]
 	\centering
@@ -73,7 +73,7 @@ Para utilizar Newman, que es el cliente de consola, se deben exportar las colecc
 En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.32]{./Figures/newman-1.png}
+	\includegraphics[scale=.50]{./Figures/newman-1.png}
 	\caption{Reporte en consola de Newman.}
 	\label{fig:reporte cli Newman}
 \end{figure}
@@ -86,9 +86,9 @@ En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola.
 \section{Integración del sistema}
 \label{Integración del sistema}
 
-En esta sección se comenta como se instaló el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrollo un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayo el sistema durante una semana y se analiza los resultados de la simulación de uso.
+En esta sección se explica como se instaló el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrollo un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayó el sistema durante una semana.  Finalmente se analizan los resultados de la simulación de uso.
 
-Se utilizó como máquina remota una instancia en Amazon Web Services y los dispositivos móviles en los cuales se instalo el dispositivos, fueron celulares con el sistema Android como sistema operativo.
+Se utilizó como máquina remota una instancia en Amazon Web Services. Los dispositivos móviles en los cuales se instalo la aplicación poseían el sistema Android como sistema operativo.
 
 \subsection{Instalación del sistema en una instancia de AWS}
 Con el objetivo de no incorporar costos en las pruebas, se generó una instancia Free Tier en Amazon Web Services, en la cual se instaló Ubuntu, el broker Mosquitto, el backend, la página Web y un servidor NGINX para que funcione como proxy reverso. Tambien se contrató el servicio route 53 que permite personalizar las politicas de ruteo.
@@ -100,9 +100,9 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 
 
 \item Logearse en la instancia con ssh.
-\item Setear la base temporal como en Buenos Aires Argentina ( importante \\ ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente), ver código \ref{cod:Set DateTime}\\
+\item Setear la base temporal en Buenos Aires Argentina (esto es importante \\ ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente a este huso horario). Esto se presenta en el código \ref{cod:Set DateTime}.\\
 
-\begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración zona horaria.]
+\begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración de zona horaria.]
 	sudo echo "America/Argentina/Buenos_Aires" | sudo tee /etc/timezone
 	sudo dpkg-reconfigure --frontend noninteractive tzdata
 	sudo reboot
@@ -114,14 +114,14 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \item Instalar el broker Mosquitto:
 	
 	sudo apt-get install mosquitto
-\item Configurar el brocker Mosquitto según sección \ref{Broker Mosquitto}.
-\item Instalar Docker y Docker-compose segun el sitio\citep{WEBSITE:8}
+\item Configurar el brocker Mosquitto según la sección \ref{Broker Mosquitto}.
+\item Instalar Docker y Docker-compose segun el sitio \citep{WEBSITE:8}
 \item Descargar el backend desde GitHub:
 
 	git clone  https://github.com/gustavobastian/ServerNurse
-\item Copiar en la instancia la base de datos (utilizar scp) comprimida y descomprimir dentro de la carpeta /db
+\item Copiar en la instancia la base de datos (utilizar el protocolo SCP) comprimida y descomprimir dentro de la carpeta /db
 \pagebreak
-\item Crear el archivo de entorno(.env) según el código \ref{cod:Entorno_backend}:
+\item Crear el archivo de entorno (.env) según el código \ref{cod:Entorno_backend}:
 
 
 \begin{lstlisting}[label=cod:Entorno_backend,caption=  Entorno del backend.]
@@ -150,9 +150,9 @@ TZ = America/Argentina/Buenos_Aires
 \item Ejecutar Docker-compose up
 \end{enumerate}
 
-Los pasos para configurar la página web:
+Los pasos para configurar la página web son:
 \begin{itemize}
-\item Compilar la página web: dentro del proyecto ejecutar:
+\item Compilar la página web: para ello, dentro del proyecto ejecutar:
 
 ''ionic build --prod''
 \item Comprimir la carpeta www.
@@ -172,7 +172,7 @@ Para poder descargar el archivo ejecutable a un dispositivo Android se debe gene
 
 \item Generar el código con ionic capacitor:
 ''ionic cap build android''
-\item Abrir Android estudio(ver apéndice \ref{AppendixC}).
+\item Abrir Android Studio (ver apéndice \ref{AppendixC}).
 \item Generar el bundle o en su defecto, conectar el celular en modo debug y descargar la aplicación. 
 \end{enumerate}
 \pagebreak
@@ -189,8 +189,8 @@ Se desarrollo un dispositivo que simula los llamadores con un microcontrolador E
 	\label{fig:Simulador de llamadores}
 \end{figure}
 
-\subsection{Resultados de utilizar el sistema}
-\label{Resultados de utilizar el sistema}
+\subsection{Resultados de las pruebas de integración}
+\label{Resultados de las pruebas de integración}
 El sistema permaneció funcionando de manera adecuada durante una semana completa, generando los eventos programados y permitiendo la interacción de dispositivos.
 
 \pagebreak
