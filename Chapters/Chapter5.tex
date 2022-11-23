@@ -28,10 +28,10 @@ En este capítulo se presentan los resultados del desarrollo del trabajo,  las h
 %\end{itemize}
 
 
-El proyecto se pudo finalizar cumpliendo con los requerimientos en un porcentaje muy alto. La validación del mismo no se pudo realizar en su totalidad. El principal obstaculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional el software debe estar homologado en el país.  
+El proyecto se pudo finalizar cumpliendo con los requerimientos en un porcentaje muy alto. La validación del mismo no se pudo realizar en su totalidad. El principal obstáculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional el software debe estar homologado en el país.  
 
 
-El principal aporte que presenta este trabajo es el modelo del sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto , se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante fue el uso de MQTT para una aplicación de estas características con el modelo de subcripción a tópicos.
+El principal aporte que presenta este trabajo es el modelo del sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto , se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante fue el uso de MQTT para una aplicación de estas características con el modelo de suscripción a tópicos.
 
 
 
@@ -41,7 +41,7 @@ El principal aporte que presenta este trabajo es el modelo del sistema de backen
 No se pudo seguir con la planificación original ya que se presentaron situaciones no contempladas, que se enumeran a continuación:
 \begin{enumerate}
 \item Agregado de funcionalidades necesarias pero no contempladas en un inicio.
-\item Configuración de los dispositivos para la aplicación (fue hablado con el cliente y se llegó a concenso).
+\item Configuración de los dispositivos para la aplicación (fue hablado con el cliente y se llegó a consenso).
 
 \end{enumerate}
 
@@ -78,7 +78,7 @@ Este trabajo sirve de base para la implementación de un sistema de gestión hos
 \item Generar el código para que la aplicación se ejecute en IOS.
 \item Utilizar una base de dato clave-valor para reemplazar la lista de usuarios en el monitoreo del backend.
 \item Mejorar la seguridad utilizando TLS en el broker Mosquitto (por una razón de tiempo no se pudo desarrollar).
-\item Utilizar otra identificación suplementaria como ser nombre y apellido en el logeo de eventos (se guardan números de referencia de usuario que realizó la acción y número de paciente). 
+\item Utilizar otra identificación suplementaria como ser nombre y apellido en el logueo de eventos (se guardan números de referencia de usuario que realizó la acción y número de paciente). 
 \item La estadística que se consulta a la base de datos es mínima. Se recomienda agregar otras consultas.
 \item Desarrollar un dispositivo llamador que se pueda utilizar en ámbitos hospitalarios.
 \item Certificar los paquetes de software (aplicación móvil, backend y página web) de modo que se pueda comercializar.

@@ -2,7 +2,7 @@
 
 \chapter{Ensayos y resultados} % Main chapter title
 
-En este capítulo se describen los ensayos realizados, se comentan las herramientas que se utilizaron y se presentan los resultados.
+En este capítulo se describen los ensayos realizados, se comentan las herramientas que se utilizaron y se presentan los resultados. Se fragmenta el capítulo en dos partes : pruebas unitarias e integración del sistema.
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
@@ -10,10 +10,6 @@ En este capítulo se describen los ensayos realizados, se comentan las herramien
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Generación del sistema de pruebas}
-\label{sec:pruebasHW}
-
-En esta sección se explica cómo se hicieron los ensayos, qué resultados se obtuvieron, se presenta su análisis y se contrasta con los requerimientos.
 
 \section{Pruebas unitarias}
 En esta sección se presentan las herramientas que se utilizaron para ensayar las distintas partes del sistema en forma separada.
@@ -28,13 +24,13 @@ Para simular mensajes y observar el comportamiento de cada una de las partes del
 	\label{fig:MQTT Explorer}
 \end{figure}
 
-Esta herramienta fue importante no solo para realizar ensayos sino tambien para el desarrollo de las funcionalidades propiamente dichas.
+Esta herramienta fue importante no solo para realizar ensayos sino también para el desarrollo de las funcionalidades propiamente dichas.
 
 \pagebreak
 
 \subsection{Pruebas unitarias de la API Rest}
 
-Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{subsec: Bases de datos relacionales}. En la figura \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al logearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
+Para simular el logeo y la consulta a la base de datos se utilizó la herramienta PostMan \citep{WEBSITE:30}, Newman \citep{WEBSITE:35} y la consola de administrador de phpMyAdmin mencionada en \ref{subsec: Bases de datos relacionales}. En la figura \ref{fig:Logueo en el sistema con Postman} se observa el \textit{token} devuelto por el backend al loguearse con las credenciales correspondientes y en \ref{fig:Rechazo Logueo en el sistema con Postman} se observa la respuesta al ingresar una contraseña inadecuada.
 
 
 En esta secuencia, el cliente (en este caso Postman), envía en el body el nombre de usuario (''username'') y la contraseña (''password'') en formato JSON. Según lo explicado en la sección  \ref{Descripción de API Rest para aplicación Web}, el backend realiza ciertas verificaciones y devuelve un token de sesión en el body.
@@ -55,9 +51,9 @@ En esta secuencia, el cliente (en este caso Postman), envía en el body el nombr
 
 Postman permite automatizar los test utilizando colecciones (que son secuencias de consultas a la API). Las colecciones se pueden exportar a un formato JSON de modo de poder ser utilizadas por otras herramientas. 
 
-En un entorno de integración continua y entrega continua, una herramienta de testeo automático permite, una vez definidas las colecciones de test, volver a ejecutarlas luego de haber realizado una modificación,  asegurar que no se modificó lo que ya funcionaba y que las mejoras pasan los nuevos test. La ventaja de utilizar newman radica en que al tener un cliente de consola se puede generar un script autómatico.
+En un entorno de integración continua y entrega continua, una herramienta de testeo automático permite, una vez definidas las colecciones de test, volver a ejecutarlas luego de haber realizado una modificación,  asegurar que no se modificó lo que ya funcionaba y que las mejoras pasan los nuevos test. La ventaja de utilizar newman radica en que al tener un cliente de consola se puede generar un script automático.
 
-Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la linea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}). Existen varias opciones de reportes de resultados, en este trabajo se utiliza cli y htmlextra, ejecutando en la consola el código \ref{cod:Newman}.
+Para utilizar Newman, que es el cliente de consola, se deben exportar las colecciones y luego utilizar la línea de comandos con dicha colección (ver figura \ref{fig:Colección logueo usuario en Postman}). Existen varias opciones de reportes de resultados, en este trabajo se utiliza cli y htmlextra, ejecutando en la consola el código \ref{cod:Newman}.
 
 \begin{figure}[ht]
 	\centering
@@ -86,12 +82,12 @@ En la figura \ref{fig:reporte cli Newman} se observa el reporte por consola.
 \section{Integración del sistema}
 \label{Integración del sistema}
 
-En esta sección se explica como se instaló el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrollo un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayó el sistema durante una semana.  Finalmente se analizan los resultados de la simulación de uso.
+En esta sección se explica como se instaló el backend y el servidor web en una máquina remota, se instaló la aplicación en múltiples dispositivos, se desarrolló un dispositivo que simula los eventos de los llamadores de los hospitales, se ensayó el sistema durante una semana.  Finalmente se analizan los resultados de la simulación de uso.
 
-Se utilizó como máquina remota una instancia en Amazon Web Services. Los dispositivos móviles en los cuales se instalo la aplicación poseían el sistema Android como sistema operativo.
+Se utilizó como máquina remota una instancia en Amazon Web Services. Los dispositivos móviles en los cuales se instaló la aplicación poseían el sistema Android como sistema operativo.
 
 \subsection{Instalación del sistema en una instancia de AWS}
-Con el objetivo de no incorporar costos en las pruebas, se generó una instancia Free Tier en Amazon Web Services, en la cual se instaló Ubuntu, el broker Mosquitto, el backend, la página Web y un servidor NGINX para que funcione como proxy reverso. Tambien se contrató el servicio route 53 que permite personalizar las politicas de ruteo.
+Con el objetivo de no incorporar costos en las pruebas, se generó una instancia Free Tier en Amazon Web Services, en la cual se instaló Ubuntu, el broker Mosquitto, el backend, la página Web y un servidor NGINX para que funcione como proxy reverso. También se contrató el servicio route 53 que permite personalizar las políticas de ruteo.
 De esta manera, se puede acceder al sistema desde cualquier dispositivo móvil conectado a una red.
 Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \pagebreak
@@ -99,7 +95,7 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \begin{enumerate}
 
 
-\item Logearse en la instancia con ssh.
+\item Loguearse en la instancia con ssh.
 \item Setear la base temporal en Buenos Aires Argentina (esto es importante \\ ya que hay eventos de calendario que se deben realizar en el tiempo correspondiente a este huso horario). Esto se presenta en el código \ref{cod:Set DateTime}.\\
 
 \begin{lstlisting}[label=cod:Set DateTime,caption=  Configuración de zona horaria.]
@@ -115,7 +111,7 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 	
 	sudo apt-get install mosquitto
 \item Configurar el brocker Mosquitto según la sección \ref{Broker Mosquitto}.
-\item Instalar Docker y Docker-compose segun el sitio \citep{WEBSITE:8}
+\item Instalar Docker y Docker-compose según el sitio \citep{WEBSITE:8}
 \item Descargar el backend desde GitHub:
 
 	git clone  https://github.com/gustavobastian/ServerNurse
@@ -156,7 +152,7 @@ Los pasos para configurar la página web son:
 
 ''ionic build --prod''
 \item Comprimir la carpeta www.
-\item Logearse con ssh en la instancia EC2.
+\item Loguearse con ssh en la instancia EC2.
 \item Copiar el archivo comprimido en la instancia y descomprimirlo en ''/var/www/hmtl''.
 \item Configurar nginx para redirigir a la página (ver apéndice \ref{AppendixB}).
 
@@ -180,7 +176,7 @@ Para poder descargar el archivo ejecutable a un dispositivo Android se debe gene
 
 \subsection{Equipo simulador de llamadores}
 
-Se desarrollo un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} y se presentan algunos detalles del código en el anexo \ref{AppendixA}. Es importante mencionar que el dispositivo desarrollado posee la funcionalidad mínima, pero permite simular multiples habitaciónes (no fue pensado para un uso real).
+Se desarrolló un dispositivo que simula los llamadores con un microcontrolador ESP32, una fuente y un teclado matricial. Presionando una tecla, se genera un evento en MQTT. El código y el esquemático del mismo se encuentra en \citep{WEBSITE:33} y se presentan algunos detalles del código en el anexo \ref{AppendixA}. Es importante mencionar que el dispositivo desarrollado posee la funcionalidad mínima, pero permite simular múltiples habitaciones (no fue pensado para un uso real).
 
 \begin{figure}[ht]
 	\centering
@@ -203,7 +199,7 @@ En esta subsección se detalla el grado de cumplimiento de los requerimientos re
 
 1.1 debe tener instalado el broker mosquitto.
 
-Verificación: Se muesta el funcionamiento del servidor utilizando la aplicación MQTT explorer.
+Verificación: Se muestra el funcionamiento del servidor utilizando la aplicación MQTT explorer.
 
 \item Requerimientos de la base de datos: 
 
@@ -213,19 +209,19 @@ Verificación: Se muesta el funcionamiento del servidor utilizando la aplicació
 
 2.2 La base de datos debe poseer datos cargados por default.
 
-Verificación: Se muesta el contendio de la base de datos con la aplicación phpMyAdmin.
+Verificación: Se muestra el contenido de la base de datos con la aplicación phpMyAdmin.
 
 \item Requerimientos de la página web 
 
 3.1 Debe ser cliente del broker MQTT. 
 
-Verificación: Se presenta la configuración del broker. Se presenta el monitoreo de las habitaciones y los usuarios conectandose al broker.
+Verificación: Se presenta la configuración del broker. Se presenta el monitoreo de las habitaciones y los usuarios conectándose al broker.
 
 3.2 La página debe poseer funciones de consulta o modificación de la base de datos.
 
 Verificación: Se muestra como la página web permite cambiar contraseñas de usuarios y otros parámetros.
 
-3.3 La página debe permitir observar estadística de pacientes y enfermeras.
+3.3 La página debe permitir observar la estadística de pacientes y enfermeras.
 
 Verificación: Se muestra como la página web permite observar distintas gráficas.
 
@@ -275,7 +271,7 @@ Verificación: se verifica con este documento.
 
 6.1 El sistema debe integrar el funcionamiento del servidor con la base de datos, aplicación web y aplicaciones móviles.
 
-Verificación: se verifico el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
+Verificación: se verificó el funcionamiento en un laboratorio con 4 usuarios y un simulador de 8 llamadores durante una semana.
 
 (*) Cumplimiento parcial:
 Validación: No se pudo validar el sistema en un nosocomio.

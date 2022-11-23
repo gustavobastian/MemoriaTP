@@ -12,7 +12,7 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 \label{sec:Descripción de tecnologías web para IoT}
 
 
-Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdivide las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend.  
+Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdividen las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend.  
 
 \subsection{ Breve introducción a tecnologías de backend}
 El backend  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el backend se comunica con los clientes utilizando dos protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT)  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
@@ -26,7 +26,7 @@ En la referencia \citep{ARTICLE:2} se realiza un estudio en profundidad del dese
 En las subsecciones \ref{sec: Introducción a las bases de datos},\ref{sec:Docker},\ref{subsec:Docker-compose},\ref{subsec: Node} se explicará el funcionamiento del backend.
 \subsection{Breve introducción a tecnologías frontend}
 \label{Breve introducción a tecnologías frontend}
-El frontend es la parte del programa o del dispositivo con la que interactúa el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de telefono celular (también llamado telefono inteligente, o \textit{smartphone}). El equipo que desarrolla el frontend consiste en programadores diseñadores UX/UI (del ingles \textit{User Experience / User Iterface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las tecnologías más conocidas que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo \citep{WEBSITE:13}).  
+El frontend es la parte del programa o del dispositivo con la que interactúa el usuario. Son tecnologías que se ejecutan en un navegador o en una aplicación de teléfono celular (también llamado teléfono inteligente, o \textit{smartphone}). El equipo que desarrolla el frontend consiste en programadores diseñadores UX/UI (del inglés \textit{User Experience / User Interface}, Experiencia de Usuario/Interfaz de Usuario) y diseñadores gráficos. Las tecnologías más conocidas que se utilizan son: el lenguaje de programación Javascript, HTML (\textit{HyperText Markup Language}, Lenguaje de Marcas de Hipertexto) y CSS (\textit{Cascading Style Sheets}, Hojas de Estilo en Cascada) \citep{ARTICLE:4}. Si se desea profundizar en estas tecnologías, existen muchos sitios web donde se ofrecen referencias de las mismas (ver, por ejemplo \citep{WEBSITE:13}).  
 
 En los últimos años, se busca facilitar el diseño del frontend mediante librerías como React \citep{WEBSITE:14},  JQuery \citep{WEBSITE:17} o Frameworks como Vue \citep{WEBSITE:15}, Angular \citep{WEBSITE:16} e Ionic \citep{WEBSITE:18}. En este trabajo se seleccionó la combinación Ionic/Angular para el desarrollo de la página Web y de la aplicación móvil. En la sección \ref{subsec: Ionic}, se presenta una breve introducción.
 
@@ -117,10 +117,10 @@ En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes
 Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
 
 
-Por otro lado, el protocolo posee tres niveles de calidad de servicio   ("QoS", del ingles \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
+Por otro lado, el protocolo posee tres niveles de calidad de servicio   ("QoS", del inglés \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
 
 \begin{itemize}
-\item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo mas rápido de entrega.
+\item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo más rápido de entrega.
 \item Calidad 1: el mensaje se entrega como mínimo una vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. Si no se confirma la recepción se envía de nuevo con el distintivo ''DUP'' establecido hasta que se reciba acuse de recibo.
 \item Calidad 2: el mensaje se entrega exactamente una sola vez. El mensaje se almacena localmente en el emisor y el receptor hasta que se procese. El emisor recibe un mensaje acuse de recibo. Si el emisor no recibe un acuse de recibo, el mensaje se envía de nuevo con el distintivo DUP establecido hasta que se reciba un acuse de recibo.
 
@@ -134,7 +134,7 @@ El receptor puede procesar el mensaje proporcionado en la primera o segunda fase
 
 Actualmente no es posible utilizar MQTT natural en un \textit{browser} o navegador debido a la imposibilidad de abrir una conexión TCP pura. 
 
-Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un \textit{browser} pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de telefono móvil \citep{WEBSITE:6}. 
+Una solución a este problema puede ser transmitir el mensaje MQTT sobre una conexión WebSocket lo que permite que un \textit{browser} pueda utilizar todas las características del protocolo directamente. Esto es muy útil en el caso de las aplicaciones de teléfono móvil \citep{WEBSITE:6}. 
 
 
 WebSocket es un protocolo de red que provee comunicación bidireccional entre un \textit{browser} y un servidor web. El protocolo fue estandarizado en 2011 y es soportado por todos los navegadores modernos. Como MQTT, el protocolo WebSocket está basado en TCP. En la figura \ref{fig:WebSockets MQTT} se muestra conceptualmente como se encapsula la información del protocolo MQTT dentro de una trama WebSocket:
@@ -380,9 +380,9 @@ Entre las características principales figuran \citep{WEBSITE:19}:
 La secuencia de la comunicación entre el cliente y el servidor es la siguiente \citep{WEBSITE:19}:
 \begin{enumerate}
 \item Se abre conexión TCP: la conexión TCP se utiliza para hacer una petición, o varias, y recibir la respuesta. El cliente puede abrir una conexión nueva, reusar la existente o abrir varias a la vez hacia el servidor.
-\item Hacer una peticion HTTP: los mensajes HTTP son legibles en texto plano.
+\item Hacer una petición HTTP: los mensajes HTTP son legibles en texto plano.
 \item Se lee la respuesta enviada por el servidor.
-\item Se cierra o reusa la conexión.
+\item Se cierra o reutiliza la conexión.
 \end{enumerate}
 
 En el encabezado del mensaje HTTP se puede introducir información de la sesión. Esto resulta muy importante en referencia a la seguridad. 
@@ -391,9 +391,9 @@ En el encabezado del mensaje HTTP se puede introducir información de la sesión
 \section{Sistemas de contenedores Docker}
 \label{sec:Docker}
 
-Desde los origenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Múltiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estandar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
+Desde los orígenes de la programación, existió una necesidad de abstraer la aplicación desarrollada de la plataforma en la que se ejecuta. Múltiples avances se fueron dando desde ese entonces: sistemas operativos con interfaces de aplicaciones estándar, librerías portables y lenguajes interpretados en máquinas virtuales son algunos de ellos.
 
-Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estandar en la industria del Software \citep{WEBSITE:8}. Una estructura general del sistema docker es presentado en la figura \ref{fig:Contenedores Docker. }.
+Docker es un proyecto de código abierto que permite automatizar el despliegue de aplicaciones dentro de contenedores de software proporcionando una capa de abstracción y automatización. Fue desarrollado por Docker Inc. y su primera versión fue liberada en 2013. Está escrito en el lenguaje Golang y actualmente es un estándar en la industria del Software \citep{WEBSITE:8}. Una estructura general del sistema docker es presentado en la figura \ref{fig:Contenedores Docker. }.
 
 
 \pagebreak
@@ -408,13 +408,13 @@ Docker es un proyecto de código abierto que permite automatizar el despliegue d
 \footnotetext{Imagen tomada de \citep{WEBSITE:8}}
 
 
-Un contenedor de software es un componente aislado que se ejecuta como un proceso mas dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutandose en el sistema \citep{WEBSITE:8}.
+Un contenedor de software es un componente aislado que se ejecuta como un proceso más dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutándose en el sistema \citep{WEBSITE:8}.
 
 Las partes que componen del ecosistema Docker pueden resumirse de la siguiente manera \citep{WEBSITE:8}\citep{WEBSITE:9}:
 
 \begin{itemize}
 \item \textit{Images}: son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
-\item \textit{Containers}: son instancias de ejecución de una imagen. Se pueden iniciar, detener, mover o eliminar mediante comandos. Se puede conectar un contenedor a una o mas redes.
+\item \textit{Containers}: son instancias de ejecución de una imagen. Se pueden iniciar, detener, mover o eliminar mediante comandos. Se puede conectar un contenedor a una o más redes.
 \item \textit{Networks}: Docker utiliza una interfaz virtual para comunicarse con la red del equipo host.
 \item \textit{Volumes}: permiten generar espacios de almacenamiento dentro de cada contenedor, el funcionamiento es similar a las carpetas compartidas en las máquinas virtuales.
 \item \textit{Registry}: un registro almacena imágenes de docker. Dockerhub es un registro público que cualquiera puede utilizar.
@@ -440,19 +440,19 @@ Con esta herramienta se facilita el paso de parámetros al contenedor y posibili
 
 Se define un dato como un elemento o característica que permite hacer la descripción de un objeto \citep{WEBSITE:12}. En el contexto de los sistemas de Internet de las Cosas, es la mínima expresión de información que se puede gestionar.
 
-Una base de datos es una colección de datos (o información) organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada \citep{WEBSITE:11}.
+Una base de datos es una colección de datos organizados, estructurados y almacenados electrónicamente en un sistema de computadoras. En su mayoría son controladas por un DBMS (\textit{database management system}, sistema gestor de bases de datos). Los datos, el DBMS y la aplicación que está asociada a ellos, conforman el llamado sistema de base de datos, o base de datos en forma abreviada \citep{WEBSITE:11}.
 
-Durante los años 80 se popularizó el tipo de base de dato relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.
+Durante los años 80 se popularizó el tipo de base de datos relacional, cuya información se organizaba como un conjunto de tablas con columnas y filas. Este tipo de base de datos provee la forma más eficiente y flexible de acceder a información estructurada.
 
-En 1970, IBM junto a Oracle desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es apliamente utilizado hoy en día, aún cuando surgen nuevos.
+En 1970, IBM junto a Oracle desarrollaron un lenguaje de programación llamado SQL (\textit{Structured Query Language}, Lenguaje de Colas Estructurado). Su principal objetivo era manipular, encolar, definir datos y proveer control de acceso en las bases de datos relacionales. Este lenguaje es ampliamente utilizado hoy en día, aún cuando surgen nuevos.
 
-Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y estan diseñadas para manejar grandes volumentes de datos \citep{WEBSITE:12}.
+Se podría empezar a clasificar las bases de datos en relacionales y no relacionales. Las primeras utilizan SQL como su lenguaje de programación y entre ellas podemos encontrar: PostgreSQL, MySQL y SQL Server. Las segundas no utilizan un lenguaje SQL, ya que no trabajan en base a estructuras definidas, poseen una gran escalabilidad y están diseñadas para manejar grandes volúmenes de datos \citep{WEBSITE:12}.
 
 
 \subsection{Descripción de MySQL}
 \label{subsec: Bases de datos relacionales}
 
-En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con mas de 10 millones de instalaciones. Fue desarrollado a mediados de la década de los 90, y es de uso libre. Es potente, rápido y altamente escalable \citep{BOOK:2}.
+En este trabajo se seleccionó el DBMS MySQL. Es un sistema de gestión de bases de datos con más de 10 millones de instalaciones. Fue desarrollado a mediados de la década de los 90, y es de uso libre. Es potente, rápido y altamente escalable \citep{BOOK:2}.
 
 Existen tres formas de interactuar con una base de datos MySQL: utilizando la consola, a través de una interfaz web como phpMyAdmin y mediante un lenguaje de programación.
 
@@ -568,14 +568,14 @@ El trabajo realizado utiliza como lenguaje de programación  Javascript para las
 
 Además de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
 
-Por ultimo, es importante mecionar que Node.js posee un gestor de paquetes/librerías llamado NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
+Por último, es importante mencionar que Node.js posee un gestor de paquetes/librerías llamado NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
 
 
 Para el ruteo de los endpoints con los que se comunica la página web se utiliza Express.js \citep{WEBSITE:21} que es una infraestructura web rápida, minimalista y flexible para Node.js. 
 
-Express.js facilita la creación de la API (\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), asi como la incorporación de software \textit{Middleware}. 
+Express.js facilita la creación de la API (\textit{Application Program Interface}, Interfaz de Programación de Aplicaciones), así como la incorporación de software \textit{Middleware}. 
 
-Con respecto a la seguridad para el acceso de la página web, existen dos métodos: por medio de \textit{cookies} o por medio de web \textit{tokens}. Se seleccionó utilizar el segundo y para ello se utiliza JWT \citep{WEBSITE:22} que implementa el estandar RFC 7519. 
+Con respecto a la seguridad para el acceso de la página web, existen dos métodos: por medio de \textit{cookies} o por medio de web \textit{tokens}. Se seleccionó utilizar el segundo y para ello se utiliza JWT \citep{WEBSITE:22} que implementa el estándar RFC 7519. 
 
 
 
@@ -593,5 +593,5 @@ Por ejemplo, el método de desarrollo para una aplicación que se ejecutará en 
 \begin{enumerate}
 \item Desarrollo: se genera el código fuente en una pc.
 \item Prueba virtual en el navegador:  se realiza debug localmente, utilizando los comandos ionic serve o ionic-lab
-\item Prueba en el disposito: se genera un \textit{build} (construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
+\item Prueba en el dispositivo: se genera un \textit{build} (construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
 \end{enumerate}
