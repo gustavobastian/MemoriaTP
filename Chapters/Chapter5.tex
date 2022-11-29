@@ -28,10 +28,20 @@ En este capítulo se presentan los resultados del desarrollo del trabajo,  las h
 %\end{itemize}
 
 
-El proyecto se pudo finalizar cumpliendo con los requerimientos en un porcentaje muy alto. La validación del mismo no se pudo realizar en su totalidad. El principal obstáculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional el software debe estar homologado en el país.  
+El proyecto se pudo finalizar cumpliendo con los requerimientos en un porcentaje muy alto, según se analizó en la subsección \ref{Contraste con los requerimientos}. Los principales logros se resumen en:
+\begin{itemize}
+\item Se desarrolló una base de datos relacional.
+\item Se instaló y configuró un broker MQTT Mosquitto.
+\item Se desarrolló un backend con dos API, una utilizando HTTP y otra MQTT.
+\item Se desarrolló una página web de administración para cargar datos, monitorear el estado de las camas/pacientes y obtener estadísticas del uso del sistema.
+\item Se desarrolló una aplicación móvil que interactúa con el backend utilizando MQTT y permite recibir notificaciones desde las habitaciones, intercomunicar médicos y enfermeras (ya sea mediante texto o audios), consultar a la base de datos, monitorear el estado del sistema y leer códigos QR. La aplicación fue probada en dispositivos con sistema operativo Android.
+\end{itemize}
 
 
-El principal aporte que presenta este trabajo es el modelo del sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto , se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante fue el uso de MQTT para una aplicación de estas características con el modelo de suscripción a tópicos.
+La validación del sistema no se pudo realizar en las condiciones deseadas. El principal obstáculo para realizar una validación en un establecimiento radica en que legalmente no se puede utilizar en una situación real, ya que por la normativa nacional el software debe estar homologado en el país.  
+
+
+El principal aporte que presenta este trabajo es el modelo del sistema de backend, con dos APIs totalmente separadas para interactuar con la base de datos. De esta manera, si se quiere escalar el proyecto, se pueden agregar funcionalidades de manera independiente a la página de administración y a la aplicación móvil. Otro aporte importante fue el uso de MQTT para una aplicación de estas características con el modelo de suscripción a tópicos.
 
 
 
@@ -42,7 +52,6 @@ No se pudo seguir con la planificación original ya que se presentaron situacion
 \begin{enumerate}
 \item Agregado de funcionalidades necesarias pero no contempladas en un inicio.
 \item Configuración de los dispositivos para la aplicación (fue hablado con el cliente y se llegó a consenso).
-
 \end{enumerate}
 
 

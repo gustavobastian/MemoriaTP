@@ -1,10 +1,9 @@
 % Chapter Template
 
 \chapter{Ensayos y resultados} % Main chapter title
-
-En este capítulo se describen los ensayos realizados, se comentan las herramientas que se utilizaron y se presentan los resultados. Se fragmenta el capítulo en dos partes : pruebas unitarias e integración del sistema.
-
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+En este capítulo se describen los ensayos realizados, se comentan las herramientas que se utilizaron y se presentan los resultados. Se fragmenta el capítulo en tres partes: pruebas unitarias, integración del sistema y contraste contra requerimientos.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -26,7 +25,6 @@ Para simular mensajes y observar el comportamiento de cada una de las partes del
 
 Esta herramienta fue importante no solo para realizar ensayos sino también para el desarrollo de las funcionalidades propiamente dichas.
 
-\pagebreak
 
 \subsection{Pruebas unitarias de la API Rest}
 
@@ -115,7 +113,11 @@ Los pasos para configurar el sistema backend en la instancia EC2 con ubuntu son:
 \item Descargar el backend desde GitHub:
 
 	git clone  https://github.com/gustavobastian/ServerNurse
-\item Copiar en la instancia la base de datos (utilizar el protocolo SCP) comprimida y descomprimir dentro de la carpeta /db
+\item Descargar desde \citep{WEBSITE:44} el archivo con la base de datos de ejemplo. Luego transferir a la instancia el archivo (utilizar el protocolo SCP)  y descomprimir dentro de la carpeta /db (ver \citep{WEBSITE:43}). Para descomprimir, dentro de la carpeta /db ejecutar:
+
+sudo tar xvjf <dirección relativa del archivo comprimido>
+
+
 \pagebreak
 \item Crear el archivo de entorno (.env) según el código \ref{cod:Entorno_backend}:
 

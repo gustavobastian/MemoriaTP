@@ -14,7 +14,8 @@ En este capítulo se presentan las bases teóricas que sustentan el trabajo real
 
 Los sistemas web utilizan (en su mayoría) una arquitectura cliente/servidor en donde se subdividen las tareas a desarrollar en dos partes. El cliente solicita una acción y el servidor la ejecuta. Las acciones pueden ser obtener información para mostrar en una pantalla, modificar un valor en una base de datos, obtener información para reproducir un sonido o un video, etc. En la programación web, se suele dividir el modelo en dos partes: backend y frontend.  
 
-\subsection{ Breve introducción a tecnologías de backend}
+\subsection{Breve introducción a tecnologías de backend}
+\label{Breve introducción a tecnologías de backend}
 El backend  generalmente se encarga de almacenar y gestionar la información \citep{ARTICLE:4}. En el contexto de este trabajo, el backend se comunica con los clientes utilizando dos protocolos: \textit{Message Queuing Telemetry Transport} (en adelante MQTT)  y HTTP. El primero se utilizó para interactuar con los clientes móviles y el segundo se utilizó para brindar los servicios a la página web de configuración.
 
 El protocolo MQTT \citep{ WEBSITE:5} se ha probado como un protocolo confiable, altamente eficiente y ampliamente utilizado en sistemas IoT \citep{ARTICLE:2}.
@@ -114,10 +115,10 @@ En el ejemplo 2, el cliente recibirá todos los mensajes dirigidos al usuario 1.
 En el ejemplo 3, el cliente que se suscriba a ese tópico recibirá los mensajes enviados a "question" independientemente del número de usuario.
 
 
-Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4} \citep{WEBSITE:5} .
+Utiliza usualmente TCP/IP como protocolo de transporte y puede implementar TLS/SLL para seguridad. Por lo que el servicio cliente-broker es del tipo orientado a la conexión. También puede utilizar otros protocolos de red con soporte bidireccional y sin pérdidas de datos \citep{ARTICLE:4}\citep{WEBSITE:5} .
 
 
-Por otro lado, el protocolo posee tres niveles de calidad de servicio   ("QoS", del inglés \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28} :
+Por otro lado, el protocolo posee tres niveles de calidad de servicio   ("QoS", del inglés \textit{Quality of Service}) que permite seleccionar la fiabilidad de la entrega de los mensajes \citep{WEBSITE:5}\citep{WEBSITE:28}:
 
 \begin{itemize}
 \item Calidad 0: el mensaje se entrega como máximo una vez, sino no se entrega. Es el modo más rápido de entrega.
@@ -146,7 +147,7 @@ WebSocket es un protocolo de red que provee comunicación bidireccional entre un
 	\label{fig:WebSockets MQTT}
 \end{figure}
 
-En MQTT sobre WebSockets, el mensaje MQTT se transfiere a través de la red y es encapsulado por una o más tramas WebSockets. La ventaja de este método de transmisión es que provee una comunicación bi-direcional, ordenada y sin pérdidas \citep{WEBSITE:6} .
+En MQTT sobre WebSockets, el mensaje MQTT se transfiere a través de la red y es encapsulado por una o más tramas WebSockets. La ventaja de este método de transmisión es que provee una comunicación bi-direcional, ordenada y sin pérdidas \citep{WEBSITE:6}.
 
 Para poder utilizar MQTT sobre WebSockets el Broker debe ser capaz de manejar WebSocket nativos. 
 
@@ -357,7 +358,7 @@ Otra característica que lo hace muy conveniente es que se encuentra disponible 
 \section{Descripción del protocolo HTTP}
 \label{sec:Descripción del protocolo HTTP}
 
-HTTP es un protocolo que nos permite realizar una petición de datos y recursos como ser documentos HTML que pueden mostrarse en navegadores. Es la base de cualquier intercambio en la red \citep{WEBSITE:19}. En la figura \ref{fig:Protocolo HTTP } se observa donde se ubica el protocolo dentro del modelo de comunicación TCP/IP :
+HTTP es un protocolo que nos permite realizar una petición de datos y recursos como ser documentos HTML que pueden mostrarse en navegadores. Es la base de cualquier intercambio en la red \citep{WEBSITE:19}. En la figura \ref{fig:Protocolo HTTP } se observa donde se ubica el protocolo dentro del modelo de comunicación TCP/IP:
 
 
 \begin{figure}[ht]
@@ -410,7 +411,7 @@ Docker es un proyecto de código abierto que permite automatizar el despliegue d
 
 Un contenedor de software es un componente aislado que se ejecuta como un proceso más dentro del sistema operativo del host y posee todas las dependencias y requerimientos que la aplicación necesita para funcionar correctamente. Por cada contenedor en ejecución hay un proceso ejecutándose en el sistema \citep{WEBSITE:8}.
 
-Las partes que componen del ecosistema Docker pueden resumirse de la siguiente manera \citep{WEBSITE:8}\citep{WEBSITE:9}:
+Las partes que componen del ecosistema Docker pueden resumirse de la siguiente manera\citep{WEBSITE:8}\citep{WEBSITE:9}:
 
 \begin{itemize}
 \item \textit{Images}: son plantillas que describen el contenedor. Se componen de una base y sobre estas se modifica según necesidad.
@@ -533,7 +534,7 @@ Ejemplo de uso, suponiendo 2 tablas:
 
 \end{frame}
 
-Si se quiere obtener el nombre y apellido del paciente con pacienteId igual a 1, una forma de obternerlo es ejecutando el código:
+Si se quiere obtener el nombre y apellido del paciente con pacienteId igual a 1, una forma de obtenerlo es ejecutando el código:
 
 \begin{lstlisting}[label=código:SQL:vControl,caption=Ejecución de comando SQL.]  
 >SELECT Nombre,Apellido FROM TABLA1 as TB1 \
@@ -566,7 +567,7 @@ En esta sección se presentan las librerías y frameworks que se utilizaron para
 \label{subsec: Node}
 El trabajo realizado utiliza como lenguaje de programación  Javascript para las tareas del backend. Para generar el servidor se utiliza Node.js \citep{WEBSITE:20}, que es un \textit{runtime environment} (entorno de ejecución) de Javascript. Node.js se encuentra orientado a eventos asíncronos y está diseñado para crear aplicaciones de red escalables.
 
-Además de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida de que se aumentan las conexiones.
+Además de la alta velocidad de ejecución, Node.js posee un bucle de eventos (\textit{Event loop}), que permite gestionar múltiples clientes de forma asíncrona. La principal ventaja que posee el método de bucle de eventos de Node.js con respecto al método tradicional (que se valían de programación basada en hilos) es que no escala la cantidad de memoria a utilizar a medida que se aumentan las conexiones.
 
 Por último, es importante mencionar que Node.js posee un gestor de paquetes/librerías llamado NPM, que permite fácilmente incorporar piezas de software probadas a los proyectos.
 
@@ -591,7 +592,7 @@ El código que genera Ionic debe compilarse para generar el archivo ejecutable (
 Por ejemplo, el método de desarrollo para una aplicación que se ejecutará en un dispositivo Android es el siguiente:
 
 \begin{enumerate}
-\item Desarrollo: se genera el código fuente en una pc.
+\item Desarrollo: se genera el código fuente en una PC.
 \item Prueba virtual en el navegador:  se realiza debug localmente, utilizando los comandos ionic serve o ionic-lab
 \item Prueba en el dispositivo: se genera un \textit{build} (construcción de software) y se carga Android Studio. Luego se descarga en el dispositivo.
 \end{enumerate}

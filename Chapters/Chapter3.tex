@@ -48,7 +48,7 @@ En este capítulo se explica la forma en que se utilizaron las herramientas menc
 \section{Generación del entorno base para el desarrollo del sistema de backend}
 \label{Generación del entorno base para el desarrollo del sistema de backend}
  En esta sección se presentan las distintas partes que componen el sistema.
-La solución fue concebida como un sistema distribuido, por lo que la página web de configuración, el backend, el \textit{broker} y las aplicaciones móviles pueden estar en distintos dispositivos físicamente. La única condición necesaria es que se encuentren en una red que permite la conexión entre ellos. La red puede ser una red local (implementada con router ) o bien internet.
+La solución fue concebida como un sistema distribuido, por lo que la página web de configuración, el backend, el \textit{broker} y las aplicaciones móviles pueden estar en distintos dispositivos físicamente. La única condición necesaria es que se encuentren en una red que permite la conexión entre ellos. La red puede ser una red local (implementada con router) o bien internet.
 La aplicación web utiliza HTTP para interactuar con el backend y las aplicaciones móviles utilizan MQTT.
 %La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones que se hayan tomado.
 
@@ -106,7 +106,7 @@ El broker Mosquitto es una parte central del sistema ya que se encarga de distri
 		sudo systemctl enable mosquitto.service
 \end{lstlisting}
 
-Para configurarlo se debe editar el archivo : "/etc/mosquitto/mosquitto.conf", donde se especifica el puerto que se utiliza, en este caso, el puerto 9001 con el protocolo Websockets. Se permite la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log".
+Para configurarlo se debe editar el archivo: "/etc/mosquitto/mosquitto.conf", donde se especifica el puerto que se utiliza, en este caso, el puerto 9001 con el protocolo Websockets. Se permite la interconexión de cualquier cliente y el archivo donde se guarda el log de todos los eventos se encuentra en la ubicación "/var/log/mosquitto/mosquitto.log".
 
 \begin{lstlisting}[label=cod:mosquitto.conf,caption=  Contenido archivo mosquitto.conf.]
 log_dest file /var/log/mosquitto/mosquitto.log
@@ -123,7 +123,7 @@ allow_anonymous true
 \pagebreak
 \section{Sistema Docker}
 
-Para iniciar el contenedor \textit{Docker} se ejecuta el comando : ''\textit{Docker-compose up}''.  Este comando busca en el archivo docker-compose.yml la información de los distintos servicios que debe inicializar y su configuración.
+Para iniciar el contenedor \textit{Docker} se ejecuta el comando: ''\textit{Docker-compose up}''.  Este comando busca en el archivo docker-compose.yml la información de los distintos servicios que debe inicializar y su configuración.
 
 Los siguientes servicios son instalados:
 
@@ -142,7 +142,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 
 \begin{enumerate}
 
-\item Tabla usuarios (\textit{User}): tabla que contiene la información de los usuarios del sistema. El campo id se incrementa automáticamente, es decir, al incorporar un nuevo usuario al sistema la base de datos asigna el id (se utiliza este campo como llave primaria). En el campo contraseña se almacena el hash de la misma (generado con Bcrypt \citep{WEBSITE:31}). El campo ocupación representa la actividad a la que se dedica el usuario en el establecimiento y puede tomar uno de los siguientes valores: ''Enfermero'',''Médico'' o ''Administrador''. El campo estado (\textit{State}) se utiliza en versiones posteriores del sistema. La estructura de la tabla se presenta en la figura \ref{fig:Tabla Usuarios (base de datos)}.
+\item Tabla usuarios (\textit{User}): tabla que contiene la información de los usuarios del sistema. El campo id se incrementa automáticamente, es decir, al incorporar un nuevo usuario al sistema la base de datos asigna el id (se utiliza este campo como llave primaria). En el campo contraseña se almacena el hash de la misma (generado con Bcrypt \citep{WEBSITE:31}). El campo ocupación representa la actividad a la que se dedica el usuario en el establecimiento y puede tomar uno de los siguientes valores: ''Enfermero'', ''Médico'' o ''Administrador''. El campo estado (\textit{State}) se utiliza en versiones posteriores del sistema. La estructura de la tabla se presenta en la figura \ref{fig:Tabla Usuarios (base de datos)}.
 
 \begin{figure}[ht]
 	\centering
@@ -172,7 +172,7 @@ En esta sección se describen las distintas tablas que se almacenan en la base d
 \end{figure}
 
 
-\item Relación médicos-pacientes : para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos asignados. Además, un paciente puede utilizar a los mismos médicos de otro paciente. Se presenta la relación en la figura \ref{fig:Relación médicos-pacientes}.
+\item Relación médicos-pacientes: para generar la relación se utilizan un par de tablas intermedias que permiten que un mismo paciente posea varios médicos asignados. Además, un paciente puede utilizar a los mismos médicos de otro paciente. Se presenta la relación en la figura \ref{fig:Relación médicos-pacientes}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=.65]{./Figures/tabla-medicos-pacientes.png}
@@ -309,7 +309,7 @@ Los componentes de cada elemento son
 
 
 \item \textit{ Monitoreo de usuarios} (código \ref{cod:Userlist}):\\
-La clase\textit{UserList} contiente una lista de elementos JSON con información de cada usuario (se instancia al iniciar el backend):
+La clase\textit{UserList} contiene una lista de elementos JSON con información de cada usuario (se instancia al iniciar el backend):
 
 \begin{lstlisting}[label=cod:Userlist,caption=  Clase Userlist.]
 class  UserList  {   
@@ -509,8 +509,7 @@ La API desarrollada utiliza Express junto con Cookie-parser.
  
 En este trabajo se utiliza un \textit{middleware} (capa de software intermedia entre los recursos y la consulta de los usuarios), el cual consiste en una función que realiza el control de acceso a los endpoints. Para lograr la autenticación el backend utiliza las librería \textit{jsonwebtoken} \citep{WEBSITE:32} y \textit{bcrypt} \citep{WEBSITE:31}. En una primera versión, solo se habilita el uso de la página de administración a usuarios administradores.
 
-Se denomina ruteo a la forma que una aplicación express direcciona a las peticiones del cliente a los respectivos módulos que se encargan de su tratamiento.%un \textit{endpoint} de una aplicación responde a las peticiones de los clientes. 
-El objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema. El fragmento de código con las rutas express se observa en el código \ref{cod:Rutas_Express}:
+Se denomina ruteo a la forma que una aplicación express direcciona a las peticiones del cliente a los respectivos módulos que se encargan de su tratamiento. El objeto express posee métodos que realizan las operaciones sobre la base de datos o el sistema. El fragmento de código con las rutas express se observa en el código \ref{cod:Rutas_Express}:
 
 \begin{lstlisting}[label=cod:Rutas_Express,caption=  Rutas express.]
 app.use('/api/patient',auth.isAuthenticated,routerPatient);
@@ -555,7 +554,7 @@ Un ejemplo de uso de esta información puede ser: al observarse un incremento de
 \item /api/authentication: endpoint que permite loguearse al sistema. Se explica con más detalle por su importancia.
 \item /api/specTable: endpoint que permite modificar la tabla de especialidades de enfermeros (tratamientos para los pacientes). Se permite agregar o quitar especialidades.
 \item /api/nurseSpecTable: endpoint que permite asignar o quitar especialidades a una enfermera. Por ejemplo, una enfermera recibió una capacitación y desde ese momento queda habilitada para atender pacientes con una cierta necesidad.
-\item /api/treatment : endpoint que permite asignar a  un paciente un tratamiento o bien modificar el tratamiento.
+\item /api/treatment: endpoint que permite asignar a  un paciente un tratamiento o bien modificar el tratamiento.
 
 \end{itemize}
 
@@ -608,9 +607,9 @@ routerAuthenticate.post('/', async function(req, res) {
 
 En el código \ref{cod:Logueo Web} se presenta la función que se encarga de autenticar al usuario. Al recibir un mensaje de autenticación, el backend genera la siguiente secuencia de comprobación:
 \begin{enumerate}
-\item Verificación que el usuario existe : línea 4
-\item Verificación que el password recibido corresponde con el usuario : línea 21
-\item Verificación que el usuario es administrador : línea 21
+\item Verificación que el usuario existe: línea 4
+\item Verificación que el password recibido corresponde con el usuario: línea 21
+\item Verificación que el usuario es administrador: línea 21
 \end{enumerate}
 
 Luego de eso genera un token que expira luego de un cierto tiempo dado por una variable de entorno y se responde al frontend.
@@ -699,7 +698,7 @@ Dentro de la carpeta \textit{models} se encuentran las distintas clases que se u
 \item note: modelo de nota para un paciente (no utilizado en la aplicación web).
 \item nurseSpec: clase que se utiliza para observar las especialidades de los distintos enfermeros (número, número de especialidad y nombre de especialidad).
 \item patient: clase que contiene información del paciente (id, nombre, apellido, cama, índice en la tabla de notas, índice en la tabla de médicos)
-\item patientTreat: clase que relaciona un paciente con un tratamiento ( índice, número de paciente, número de tratamiento y nombre de tratamiento).
+\item patientTreat: clase que relaciona un paciente con un tratamiento (índice, número de paciente, número de tratamiento y nombre de tratamiento).
 \item qr: relaciona un índice con un texto (se utiliza para guardar o recuperar índices de qr)
 \item spec: clase que contiene una especialidad o tratamiento. Contiene un índice y un texto con el nombre.
 \item user-status: clase que permite obtener desde el sistema el estado de los usuarios (identificación de usuario y estado ''logueado'' o ''no logeado'').
@@ -940,7 +939,7 @@ Al ingresar en modo médico, la aplicación queda en modo de espera hasta que el
 
 Las acciones que puede realizar un médico son:
 \begin{itemize}
-\item Actualizar una nota de un paciente: para la gestión de estos mensajes se utiliza el tópico ''/Pacient/id'' donde id es el número de paciente. Cuando el médico solicita información del paciente (nombre, apellido y número ) se responde  en ''/Pacient/id/info''. Cuando se consulta las notas se responde en ''/Pacient/id/notes'' y cuando se quiere ingresar una nueva nota se publica en ''/Pacient/id/newNote''. La pantalla correspondiente se muestra en la figura \ref{fig_1:2de3}.
+\item Actualizar una nota de un paciente: para la gestión de estos mensajes se utiliza el tópico ''/Pacient/id'' donde id es el número de paciente. Cuando el médico solicita información del paciente (nombre, apellido y número) se responde  en ''/Pacient/id/info''. Cuando se consulta las notas se responde en ''/Pacient/id/notes'' y cuando se quiere ingresar una nueva nota se publica en ''/Pacient/id/newNote''. La pantalla correspondiente se muestra en la figura \ref{fig_1:2de3}.
 \item Responder a una consulta de una enfermera. La pantalla correspondiente se muestra en la figura \ref{fig_1:3de3}
 \item Monitorear las camas con los pacientes que le fueron encargados: simplemente filtra por sus pacientes el listado publicado en ''/Beds/status''. La pantalla correspondiente se muestra en la figura \ref{fig_1:1de3}
 
@@ -978,13 +977,13 @@ Las acciones que puede realizar un médico son:
 
 Es el modo más complejo por la cantidad de opciones que se pueden presentar.
 
-Al ingresar en modo enfermera, la aplicación consulta al backend por la especialización del enfermero correspondiente y la respuesta se obtiene de escuchar en el tópico ''/User/userId/Specs''donde userId se recibió al loguearse.
+Al ingresar en modo enfermera, la aplicación consulta al backend por la especialización del enfermero correspondiente y la respuesta se obtiene de escuchar en el tópico ''/User/userId/Specs'' donde userId se recibió al loguearse.
 
 Para el usuario, la aplicación queda en modo espera hasta que se reciba una notificación de necesidad de atención. El diagrama de estados se presenta en la figura \ref{fig: Diagrama de estados en modo enfermera.}.
 
  
 
-La aplicación se encuentra escuchando al tópico MQTT ''/Beds/status'', y filtra los estados (solo acepta estados con llamadas , llamadas programadas o ayuda) y por especialidad del enfermero. De esta manera, cuando un enfermero acepta una tarea, automáticamente se actualiza el backend y ningún otro enfermero puede aceptarla.
+La aplicación se encuentra escuchando al tópico MQTT ''/Beds/status'', y filtra los estados (solo acepta estados con llamadas, llamadas programadas o ayuda) y por especialidad del enfermero. De esta manera, cuando un enfermero acepta una tarea, automáticamente se actualiza el backend y ningún otro enfermero puede aceptarla.
 
 
 

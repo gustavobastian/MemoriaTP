@@ -4,7 +4,7 @@
 
 \label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-En este anexo se menciona el dispositivo utilizado en las pruebas de integración del sistema. Solo fue diseñado con el objetivo de facilitar las pruebas de integración. El funcionamiento es el siguiente: una tarea energiza un grupo de pines, que hacen de columnas en el teclado matricial y observa el estado de otros (las filas). Con lo los valores de columna y fila publica el número de llamador correspondiente. 
+En este anexo se menciona el dispositivo utilizado en las pruebas de integración del sistema. Solo fue diseñado con el objetivo de facilitar las pruebas de integración. El funcionamiento es el siguiente: una tarea energiza un grupo de pines, que hacen de columnas en el teclado matricial y observa el estado de otros (las filas). Con los valores de columna y fila publica el número de llamador correspondiente. 
 
 Para la simulación solo se utilizaron 8 pulsadores de la placa keyboard  \citep{WEBSITE:37} y la placa procesadora utilizada es la ESP32-WROOM-32 \citep{WEBSITE:38}. 
 
@@ -41,31 +41,30 @@ La función que genera el mensaje a publicar se presenta en el código \ref{cod:
 
 \begin{lstlisting}[label=cod: generación de mensaje,caption= Función que genera el payload.]
 
-void generateJsonKey(char *buffer,int key){
-cJSON *my_json;
-cJSON *keyId = NULL;
-char *string = NULL;    
-my_json = cJSON_CreateObject();
-if (my_json == NULL)
-    {
-        return;
-    }
-keyId = cJSON_CreateNumber(key);
-    if (keyId == NULL)
-    {
-        return;
-    }    
-//Populate my_json
-
-cJSON_AddItemToObject(my_json, "callerId",keyId);
-
-string = cJSON_Print(my_json);
-
-sprintf(buffer,string);
-
-//Free the memory
-cJSON_Delete(my_json);
-
+void generateJsonKey(char *buffer,int key)
+{
+	cJSON *my_json;
+	cJSON *keyId = NULL;
+	char *string = NULL;    
+	my_json = cJSON_CreateObject();
+	if (my_json == NULL)
+	{
+			return;
+	}
+	keyId = cJSON_CreateNumber(key);
+	if (keyId == NULL)
+	{
+			return;
+	}    
+	//Populate my_json
+	//my_json.
+	cJSON_AddItemToObject(my_json, "callerId",keyId);
+	//Convert my_json to char array, for sending in an API perhaps
+	string = cJSON_Print(my_json);
+	//printf(string);
+	sprintf(buffer,string);
+	//Free the memory
+	cJSON_Delete(my_json);
 }
 
 \end{lstlisting}
